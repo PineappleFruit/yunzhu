@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+    	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<title></title>
+		<link rel="stylesheet" href="../../../css/mui.min.css" />
+		<link rel="stylesheet" href="../../../css/base.css" />
+		<link rel="stylesheet" href="../../../css/main.css" />
+		<script type="text/javascript" src="../../../js/e_fish.js" ></script>
+		<script type="text/javascript" src="../../../js/mui.min.js" ></script>
+		<script type="text/javascript" src="../../../js/vue.js" ></script>
+	</head>
+	<style>
+		body,.mui-table-view{
+			background: #f7f7f9;
+		}
+		.mui-table-view-cell{
+			padding: 0;
+		}
+		.mui-table-view-cell:after{
+			background-color: transparent;
+		}
+		.mui-bar-nav~.mui-content{
+			padding-top: 1.28rem;
+		}
+		.mui-table-view-chevron .mui-table-view-cell{
+			padding-right: 0;
+		}
+		.y_right{
+			padding-top: 0.4rem;
+		}
+		.mui-popup-inner{
+			text-align: center;
+		}
+	</style>
+	<body id="e_fish_container">
+		<div id="app">
+			<header class="mui-bar mui-bar-nav mui-bar-transparent header">
+				<a id="icon-menu" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+				<h2 class="mui-title">项目关注</h2>
+				<div class="fz32 y_right" @tap="clear">清空</div>
+			</header>
+			<!--下拉刷新容器-->
+			<div id="pullrefresh6" class="mui-content mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<!--数据列表-->
+					<ul class="mui-table-view mui-table-view-chevron">
+						<li class="mui-table-view-cell">
+							<div class="y_details_item bg-ff mb20">
+								<div class="bb plr30 ptb25">
+									<div class="ub">
+										<div class="ub-f1 word-break pr20">
+											<p class="fz32 c33 fw-b word-break">打桩工</p>
+											<div class="fz24 c66 y_label pt20 word-break">
+												<span>新疆-和田</span>
+												<span class="cc7">|</span>
+												<span>持证</span>
+												<span class="cc7">|</span>
+												<span>男</span>
+												<span class="cc7">|</span>
+												<span>28-40岁</span>
+											</div>
+											<ul class="y_tag_list clear pt30 mb30">
+												<li>保险</li>
+												<li>按月发放</li>
+												<li>包吃住</li>
+											</ul>
+										</div>
+										<div class="tx-r">
+											<p class="fz28 c-red fw-b">8000元/月</p>
+											<p class="fz24 c66 pt20">2018年6月11日</p>
+										</div>
+									</div>
+									<p class="fz28 c33">房建工程项目</p>
+									<p class="fz28 c99">新疆天坤昊泰工程项目管理有限公司</p>
+								</div>
+								<div class="c66 fz28 ptb25 tx-c">取消关注</div>
+							</div>
+						</li>
+						<li class="mui-table-view-cell">
+							<div class="y_details_item bg-ff mb20">
+								<div class="bb plr30 ptb25">
+									<div class="ub">
+										<div class="ub-f1 word-break pr20">
+											<p class="fz32 c33 fw-b word-break">打桩工</p>
+											<div class="fz24 c66 y_label pt20 word-break">
+												<span>新疆-和田</span>
+												<span class="cc7">|</span>
+												<span>持证</span>
+												<span class="cc7">|</span>
+												<span>男</span>
+												<span class="cc7">|</span>
+												<span>28-40岁</span>
+											</div>
+											<ul class="y_tag_list clear pt30 mb30">
+												<li>保险</li>
+												<li>按月发放</li>
+												<li>包吃住</li>
+											</ul>
+										</div>
+										<div class="tx-r">
+											<p class="fz28 c-red fw-b">8000元/月</p>
+											<p class="fz24 c66 pt20">2018年6月11日</p>
+										</div>
+									</div>
+									<p class="fz28 c33">房建工程项目</p>
+									<p class="fz28 c99">新疆天坤昊泰工程项目管理有限公司</p>
+								</div>
+								<div class="c66 fz28 ptb25 tx-c">取消关注</div>
+							</div>
+						</li>
+						<li class="mui-table-view-cell">
+							<div class="y_details_item bg-ff mb20">
+								<div class="bb plr30 ptb25">
+									<div class="ub">
+										<div class="ub-f1 word-break pr20">
+											<p class="fz32 c33 fw-b word-break">打桩工</p>
+											<div class="fz24 c66 y_label pt20 word-break">
+												<span>新疆-和田</span>
+												<span class="cc7">|</span>
+												<span>持证</span>
+												<span class="cc7">|</span>
+												<span>男</span>
+												<span class="cc7">|</span>
+												<span>28-40岁</span>
+											</div>
+											<ul class="y_tag_list clear pt30 mb30">
+												<li>保险</li>
+												<li>按月发放</li>
+												<li>包吃住</li>
+											</ul>
+										</div>
+										<div class="tx-r">
+											<p class="fz28 c-red fw-b">8000元/月</p>
+											<p class="fz24 c66 pt20">2018年6月11日</p>
+										</div>
+									</div>
+									<p class="fz28 c33">房建工程项目</p>
+									<p class="fz28 c99">新疆天坤昊泰工程项目管理有限公司</p>
+								</div>
+								<div class="c66 fz28 ptb25 tx-c">取消关注</div>
+							</div>
+						</li>
+						<li class="mui-table-view-cell">
+							<div class="y_details_item bg-ff mb20">
+								<div class="bb plr30 ptb25">
+									<div class="ub">
+										<div class="ub-f1 word-break pr20">
+											<p class="fz32 c33 fw-b word-break">打桩工</p>
+											<div class="fz24 c66 y_label pt20 word-break">
+												<span>新疆-和田</span>
+												<span class="cc7">|</span>
+												<span>持证</span>
+												<span class="cc7">|</span>
+												<span>男</span>
+												<span class="cc7">|</span>
+												<span>28-40岁</span>
+											</div>
+											<ul class="y_tag_list clear pt30 mb30">
+												<li>保险</li>
+												<li>按月发放</li>
+												<li>包吃住</li>
+											</ul>
+										</div>
+										<div class="tx-r">
+											<p class="fz28 c-red fw-b">8000元/月</p>
+											<p class="fz24 c66 pt20">2018年6月11日</p>
+										</div>
+									</div>
+									<p class="fz28 c33">房建工程项目</p>
+									<p class="fz28 c99">新疆天坤昊泰工程项目管理有限公司</p>
+								</div>
+								<div class="c66 fz28 ptb25 tx-c">取消关注</div>
+							</div>
+						</li>
+						<li class="mui-table-view-cell">
+							<div class="y_details_item bg-ff mb20">
+								<div class="bb plr30 ptb25">
+									<div class="ub">
+										<div class="ub-f1 word-break pr20">
+											<p class="fz32 c33 fw-b word-break">打桩工</p>
+											<div class="fz24 c66 y_label pt20 word-break">
+												<span>新疆-和田</span>
+												<span class="cc7">|</span>
+												<span>持证</span>
+												<span class="cc7">|</span>
+												<span>男</span>
+												<span class="cc7">|</span>
+												<span>28-40岁</span>
+											</div>
+											<ul class="y_tag_list clear pt30 mb30">
+												<li>保险</li>
+												<li>按月发放</li>
+												<li>包吃住</li>
+											</ul>
+										</div>
+										<div class="tx-r">
+											<p class="fz28 c-red fw-b">8000元/月</p>
+											<p class="fz24 c66 pt20">2018年6月11日</p>
+										</div>
+									</div>
+									<p class="fz28 c33">房建工程项目</p>
+									<p class="fz28 c99">新疆天坤昊泰工程项目管理有限公司</p>
+								</div>
+								<div class="c66 fz28 ptb25 tx-c">取消关注</div>
+							</div>
+						</li>
+						<li class="mui-table-view-cell">
+							<div class="y_details_item bg-ff mb20">
+								<div class="bb plr30 ptb25">
+									<div class="ub">
+										<div class="ub-f1 word-break pr20">
+											<p class="fz32 c33 fw-b word-break">打桩工</p>
+											<div class="fz24 c66 y_label pt20 word-break">
+												<span>新疆-和田</span>
+												<span class="cc7">|</span>
+												<span>持证</span>
+												<span class="cc7">|</span>
+												<span>男</span>
+												<span class="cc7">|</span>
+												<span>28-40岁</span>
+											</div>
+											<ul class="y_tag_list clear pt30 mb30">
+												<li>保险</li>
+												<li>按月发放</li>
+												<li>包吃住</li>
+											</ul>
+										</div>
+										<div class="tx-r">
+											<p class="fz28 c-red fw-b">8000元/月</p>
+											<p class="fz24 c66 pt20">2018年6月11日</p>
+										</div>
+									</div>
+									<p class="fz28 c33">房建工程项目</p>
+									<p class="fz28 c99">新疆天坤昊泰工程项目管理有限公司</p>
+								</div>
+								<div class="c66 fz28 ptb25 tx-c">取消关注</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<script>
+			new Vue({
+				el:"#app",
+				methods:{
+					clear(){
+						var btnArray = ['取消', '确定']; 
+						mui.confirm('清空后关注列表将不可恢复，是否 清空？', '清空关注', btnArray, function(e) {
+							if (e.index == 0) {
+								console.log(e.index)
+							} else {
+								console.log(e.index)
+							}
+						})
+					}
+				},
+				mounted:function(){
+					mui.init({
+						pullRefresh: {
+							container: '#pullrefresh6',
+							down: {
+								style:'circle',
+								callback: function() {
+									mui('#pullrefresh6').pullRefresh().refresh(true);
+									mui('#pullrefresh6').pullRefresh().endPulldown();
+								}.bind(this)
+							},
+							up: {
+								auto:true,
+								contentrefresh: '正在加载...',
+								callback: function() {
+									
+								}.bind(this)
+							}
+						}
+					});
+				}
+			})
+		</script>
+	</body>
+</html>

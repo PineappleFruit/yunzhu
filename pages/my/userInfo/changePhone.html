@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+    	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link rel="stylesheet" href="../../../css/mui.min.css" />
+		<link rel="stylesheet" href="../../../css/base.css" />
+		<link rel="stylesheet" href="../../../css/main.css" />
+		<script type="text/javascript" src="../../../js/e_fish.js" ></script>
+		<script type="text/javascript" src="../../../js/mui.min.js" ></script>
+		<script type="text/javascript" src="../../../js/vue.js" ></script>
+	</head>
+	<body id="e_fish_container">
+		<div id="app">
+			<header class="mui-bar mui-bar-nav mui-bar-transparent header">
+				<a id="icon-menu" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+				<h2 class="mui-title">修改手机号</h2>
+			</header>
+			<div class="fix_hd">
+				<div class="y_container plr40">
+					<form action="" method="">
+						<div class="y_change_phone">
+							<img src="../../../images/y-change-phone.png" alt="" />
+						</div>
+						<div class="tx-c fz32 c66">
+							<p class="pb20">您当前手机账号为 </p>
+							<p><span class="c-green">1563****587</span>更换后可用新手机号登陆</p>
+						</div>
+						<div class="y_change">
+							<div class="mui-input-row y_input_item">
+						    	<input type="text" class="mui-input-clear" placeholder="请输入手机号">
+						    </div> 
+	                        <div class="y_input_item ub  ub-ac">
+	                            <input type="text" placeholder="请输入验证码" class="ub-f1">
+	                            <span class="y_getcode">获取验证码</span>
+	                        </div>
+						</div>
+						<button class="btn btn-green" type="button" @tap="sure">确认</button>
+					</form>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			new Vue({
+				el:'#app',
+				methods:{
+					sure(){
+						mui.openWindow({
+						    url: './success.html', 
+						    id:'success'
+						});
+					}
+				}
+			})
+		</script>
+	</body>
+	
+</html>

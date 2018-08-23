@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+    	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<title></title>
+		<link rel="stylesheet" href="../../../css/mui.min.css" />
+		<link rel="stylesheet" href="../../../css/mui.picker.min.css" />
+		<link rel="stylesheet" href="../../../css/base.css" />
+		<link rel="stylesheet" href="../../../css/main.css" />
+		<script type="text/javascript" src="../../../js/e_fish.js" ></script>
+		<script type="text/javascript" src="../../../js/mui.min.js" ></script>
+		<script type="text/javascript" src="../../../js/vue.js" ></script>
+		<script type="text/javascript" src="../../../js/mui.picker.min.js" ></script>
+	</head>
+	<style>
+		.y_right{
+			padding-top: 0.4rem;
+		}
+		.mui-table-view-cell{
+			padding:  0 ;
+		}
+		.mui-table-view-cell:after{
+			background-color: transparent;
+		}
+		.y_input_item{
+			border-bottom: none;
+			margin-top: 0;
+			height: 1rem;
+		}
+		.mui-table-view-cell>a:not(.mui-btn){
+			margin: 0 0.3rem;
+		}
+		.upload_box{
+			padding: 0 0.3rem;
+		}
+		.upload{
+			width: 2.4rem;
+			height: 2rem;
+			border: 1px dashed #d7d7d7;
+		}
+		.mui-btn-blue{
+			background: #52a557;
+			border-color: #52a557;
+		}
+		[data-type="datetime"] [data-id="picker-i"],{
+			display: none;
+		}
+	</style>
+	<body id="e_fish_container">
+		<div id="app">
+			<header class="mui-bar mui-bar-nav mui-bar-transparent header">
+				<a id="icon-menu" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+				<h2 class="mui-title">添加技能</h2>
+				<div class="fz32 y_right">保存</div>
+			</header>
+			<div class="fix_hd">
+				<div class="y_choose_skill bg-grey pt20">
+					<div class="mui-table-view-cell bg-ff">
+						<div class="bb ptb35 ub ub-ac plr30" @tap="chooseSkill">
+							<p class="fz32 c33 y_title">技能</p>
+							<div class="ub-f1"></div>
+							<div class="y_arrow"></div>
+						</div>
+					</div>
+					<div class="mui-table-view-cell bg-ff">
+						<div class="bb ptb35 ub ub-ac plr30" @tap="salaryMethod">
+							<p class="fz32 c33 y_title">薪资方式</p>
+							<div class="ub-f1"></div>
+							<div class="y_arrow"></div>
+						</div>
+					</div>
+					<div class="mui-table-view-cell bg-ff">
+						<div class="bb ptb35 ub ub-ac plr30" @tap="expectSalary">
+							<p class="fz32 c33 y_title">期望薪资</p>
+							<div class="ub-f1"></div>
+							<div class="y_arrow"></div>
+						</div>
+					</div>
+					<div class="mui-table-view-cell bg-ff">
+						<div class="bb ptb35 ub ub-ac plr30">
+							<p class="fz32 c33 y_title">技能证书</p>
+							<div class="ub-f1"></div>
+							<div class="mui-switch mui-switch-mini">
+							  	<div class="mui-switch-handle"></div>
+							</div>
+						</div>
+					</div>
+					<div class="bg-ff">
+						<div class="bb ub ub-ac plr30">
+							<p class="fz32 c33 y_title">证书名称</p>
+							<div class="ub-f1"></div>
+							<div class="mui-input-row y_input_item">
+						    	<input type="text" class="mui-input-clear" placeholder="请输入证书名称">
+						    </div>
+						</div>
+					</div>
+					<div class="bg-ff">
+						<div class="bb ub ub-ac plr30">
+							<p class="fz32 c33 y_title">证书等级</p>
+							<div class="ub-f1"></div>
+							<div class="mui-input-row y_input_item">
+						    	<input type="text" class="mui-input-clear" placeholder="请输入证书等级">
+						    </div>
+						</div>
+					</div>
+					<div class="mui-table-view-cell bg-ff">
+						<div class="bb ptb35 ub ub-ac plr30" @tap="getTime">
+							<p class="fz32 c33 y_title">获得证书时间</p>
+							<div class="ub-f1"></div>
+							<div class="y_arrow"></div>
+						</div>
+					</div>
+					<div class="mui-table-view-cell bg-ff">
+						<div class="ptb35 ub ub-ac plr30">
+							<p class="fz32 c33 y_title">上传证书图片</p>
+							<div class="ub-f1"></div>
+						</div>
+					</div>
+					<div class="bg-ff mb30 plr30">
+						<a href="#upload" class="upload_box">
+							<div class="ub ub-pac ub-ver upload" >
+								<i class="mui-icon mui-icon-plusempty"></i>
+								<p>更换证书图片</p>
+							</div>
+						</a>
+					</div>
+				</div>
+			</div>
+			<div id="upload" class="mui-popover mui-popover-action mui-popover-bottom">
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell">
+						<div class="ub ub-ac">
+							<p class="fz40 c66">从相册选取</p>
+						</div>
+					</li>
+				</ul>
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell">
+						<a href="#picture" class="fz40"><b>取消</b></a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<script>
+			var _oldBack = mui.back; 
+			var backButtonPress = 0;
+			mui.back = function(event) {             
+			    var btnArray = ['退出', '取消']; 
+				mui.confirm('当前意向未保存，是否退出', '', btnArray, function(e) {
+					console.log(e.index)
+					if (e.index == 0) {
+						_oldBack()
+					} else {
+						return
+					}
+				})
+			};
+			new Vue({
+				el:'#app',
+				methods:{
+					chooseSkill(){
+						mui.openWindow({
+						    url: './chooseSkill.html', 
+						    id:'chooseSkill'
+						});
+					},
+					salaryMethod(){
+						var picker = new mui.PopPicker(); 
+						picker.setData([{
+							value: 'ywj',
+							text: '董事长 叶文洁'
+						}, {
+							value: 'aaa',
+							text: '总经理 艾AA'
+						}, {
+							value: 'lj',
+							text: '罗辑'
+						}, {
+							value: 'ymt',
+							text: '云天明'
+						}, {
+							value: 'shq',
+							text: '史强'
+						}, {
+							value: 'zhbh',
+							text: '章北海'
+						}, {
+							value: 'zhy',
+							text: '庄颜'
+						}, {
+							value: 'gyf',
+							text: '关一帆'
+						}, {
+							value: 'zhz',
+							text: '智子'
+						}, {
+							value: 'gezh', 
+							text: '歌者'
+						}]);
+						picker.show(function (selectItems) {
+						    console.log(selectItems[0].text);//智子
+						    console.log(selectItems[0].value);//zz 
+						})
+					},
+					expectSalary(){
+						var picker2 = new mui.PopPicker(); 
+						picker2.setData([{
+							value: 'ywj',
+							text: '叶文洁'
+						}, {
+							value: 'aaa',
+							text: '总经理 艾AA'
+						}, {
+							value: 'lj',
+							text: '罗辑'
+						}, {
+							value: 'ymt',
+							text: '云天明'
+						}, {
+							value: 'shq',
+							text: '史强'
+						}, {
+							value: 'zhbh',
+							text: '章北海'
+						}, {
+							value: 'zhy',
+							text: '庄颜'
+						}, {
+							value: 'gyf',
+							text: '关一帆'
+						}, {
+							value: 'zhz',
+							text: '智子'
+						}, {
+							value: 'gezh', 
+							text: '歌者'
+						}]);
+						picker2.show(function (selectItems) {
+						    console.log(selectItems[0].text);//智子
+						    console.log(selectItems[0].value);//zz 
+						})
+					},
+					getTime(){
+						var dtPicker = new mui.DtPicker({
+							type: 'date',
+							beginDate: new Date(1990) //设置开始日期
+							//   endDate: new Date(2016)//设置结束日期 
+						});
+						dtPicker.show(function(selectItems) {
+//							this.item.skill_time = selectItems.y.value + '-' + selectItems.m.value + '-' + selectItems.d.value;
+						}.bind(this))
+					}
+				},
+				mounted:function(){
+					
+				}
+			})
+		</script>
+	</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <script src="js/mui.min.js"></script>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_789951_kyusbimc9e.css" />
+    <script type="text/javascript" src="js/e_fish.js" ></script>
+    <style>
+    	
+    	
+    </style>
+    <script type="text/javascript" charset="utf-8">
+      	mui.init();
+    </script>
+</head>
+<body id="e_fish_container">
+	<nav class="mui-bar mui-bar-tab">
+	    <a id="defaultTab" class="mui-tab-item mui-active" href="pages/project/index.html">
+			<span class="mui-icon mui-icon-home-filled"></span>
+			<span class="mui-tab-label">项目</span>
+		</a>
+
+		<a class="mui-tab-item" href="pages/find/index.html">
+			<span class="mui-icon mui-icon-navigate"></span>
+			<span class="mui-tab-label">发现</span>
+		</a>
+		<a class="mui-tab-item"  href="pages/my/index.html">
+			<span class="mui-icon mui-icon-contact mui-icon-icon-contact-filled"></span>
+			<span class="mui-tab-label">我的</span>
+		</a>
+	</nav>
+</body>
+<script>
+	var appIsBackground = false;
+	var subpages = ['pages/project/index.html','pages/find/index.html', 'pages/my/index.html'];
+	var subpage_style = {
+		top: '0px',
+		bottom: '51px',
+		color: '#777'
+	};
+	var activeTab = subpages[0];
+	//创建子页面，首个选项卡页面显示，其它均隐藏；
+	mui.plusReady(function() {
+		plus.navigator.setFullscreen(false);
+		var self = plus.webview.currentWebview();
+		for(var i = 0; i < 3; i++) {
+			var temp = {};
+			var sub = plus.webview.create(subpages[i], subpages[i], subpage_style);
+			if(i > 0) {
+				sub.hide();
+			}
+			self.append(sub);
+		}
+
+		mui('.mui-bar-tab').on('tap', 'a', function(e) {
+			var targetTab = this.getAttribute('href');
+			if(targetTab == activeTab) { 
+				return;
+			}
+
+			plus.webview.show(targetTab);
+			plus.webview.hide(activeTab);
+			//更改当前活跃的选项卡
+			activeTab = targetTab;
+		});
+	});
+	var token = localStorage.getItem("Name");;
+	
+//	判断是否登陆 
+//	if(token == null) {
+//		var page = {
+//			"url": "my/login/login",
+//			"title": "none",
+//			"ani": "none"
+//		};
+//		mui.plusReady(function() {
+//			mui.openWindow({
+//			    url: 'pages/my/login/login.html', 
+//			    id:'info'
+//			});
+//		});
+//	}
+	//前台进入后台
+//	document.addEventListener("pause", function() {
+//		App.setItem('isBackground', true);
+//		plus.push.setAutoNotification(true);
+//	}, false);
+//	//后台进入前台
+//	document.addEventListener("resume", function() {
+//		App.setItem('isBackground', false);
+//		plus.push.setAutoNotification(false);
+//	}, false);
+//	/**
+//	 * 网络变化事件
+//	 */
+//	document.addEventListener("netchange", function() {
+//		App.networkStatus();
+//	}, false);
+</script>
+</html>

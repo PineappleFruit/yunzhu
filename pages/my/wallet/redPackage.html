@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+    	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link rel="stylesheet" href="../../../css/mui.min.css" />
+		<link rel="stylesheet" href="../../../css/base.css" />
+		<link rel="stylesheet" href="../../../css/main.css" />
+		<script type="text/javascript" src="../../../js/e_fish.js" ></script>
+		<script type="text/javascript" src="../../../js/mui.min.js" ></script>
+		<script type="text/javascript" src="../../../js/vue.js" ></script>
+	</head>
+	<style>
+		.mui-table-view-cell{
+			padding: 0;
+		}
+		.mui-table-view-cell:after{
+			background-color: transparent;
+		}
+		.mui-table-view-chevron .mui-table-view-cell{
+			padding-right: 0;
+		}
+	</style>
+	<body id="e_fish_container">
+		<div id="app">
+			<div class="header_redpacket header_hight plr30">
+				<div class="ub ub-pac header_wallet_hd">
+					<a id="icon-menu" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left cff"></a>
+					<h2 class="ub-f1 tx-c fz36">我的红包</h2>
+				</div>
+				<p class="header_wallet_tip">共收到红包</p>
+				<p class="tx-c header_wallet_money">504.26</p>
+			</div>
+			<div class="y_container bg-grey pt20 ">
+				<!--下拉刷新容器-->
+				<div id="pullrefresh4" class="mui-content mui-scroll-wrapper y_payroll_box fix_btn">
+					<div class="mui-scroll">
+						<!--数据列表-->
+						<ul class="mui-table-view mui-table-view-chevron">
+							<li class="mui-table-view-cell">
+								<div class="y_redpacket_item plr30 ptb25 bb">
+									<div class="ub ub-ac pb10">
+										<p class="fz32 c33 ub-f1">红包提现</p>
+										<span class="fw-b fz28 c33">-200.00元</span>
+									</div>
+									<p class="fz28 c99">2018/06/12 21:15:40</p>
+								</div>
+							</li>
+							<li class="mui-table-view-cell">
+								<div class="y_redpacket_item plr30 ptb25 bb">
+									<div class="ub ub-ac pb10">
+										<p class="fz32 c33 ub-f1">红包提现</p>
+										<span class="fw-b fz28 c33">-200.00元</span>
+									</div>
+									<p class="fz28 c99">2018/06/12 21:15:40</p>
+								</div>
+							</li>
+							<li class="mui-table-view-cell">
+								<div class="y_redpacket_item plr30 ptb25 bb">
+									<div class="ub ub-ac pb10">
+										<p class="fz32 c33 ub-f1">红包提现</p>
+										<span class="fw-b fz28 c33">-200.00元</span>
+									</div>
+									<p class="fz28 c99">2018/06/12 21:15:40</p>
+								</div>
+							</li>
+							<li class="mui-table-view-cell">
+								<div class="y_redpacket_item plr30 ptb25 bb">
+									<div class="ub ub-ac pb10">
+										<p class="fz32 c33 ub-f1">红包提现</p>
+										<span class="fw-b fz28 c33">-200.00元</span>
+									</div>
+									<p class="fz28 c99">2018/06/12 21:15:40</p>
+								</div>
+							</li>
+							<li class="mui-table-view-cell">
+								<div class="y_redpacket_item plr30 ptb25 bb">
+									<div class="ub ub-ac pb10">
+										<p class="fz32 c33 ub-f1">红包提现</p>
+										<span class="fw-b fz28 c33">-200.00元</span>
+									</div>
+									<p class="fz28 c99">2018/06/12 21:15:40</p>
+								</div>
+							</li>
+							<li class="mui-table-view-cell">
+								<div class="y_redpacket_item plr30 ptb25 bb">
+									<div class="ub ub-ac pb10">
+										<p class="fz32 c33 ub-f1">红包提现</p>
+										<span class="fw-b fz28 c33">-200.00元</span>
+									</div>
+									<p class="fz28 c99">2018/06/12 21:15:40</p>
+								</div>
+							</li>
+							<li class="mui-table-view-cell">
+								<div class="y_redpacket_item plr30 ptb25 bb">
+									<div class="ub ub-ac pb10">
+										<p class="fz32 c33 ub-f1">红包提现</p>
+										<span class="fw-b fz28 c33">-200.00元</span>
+									</div>
+									<p class="fz28 c99">2018/06/12 21:15:40</p>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="fix_box">
+				<button class="btn btn-defalut">全部转入余额</button>
+			</div>
+		</div>
+		<script>
+			new Vue({
+				el:"#app",
+				mounted:function(){
+					mui.init({
+						pullRefresh: {
+							container: '#pullrefresh4',
+							down: {
+								style:'circle',
+								callback: function() {
+									mui('#pullrefresh4').pullRefresh().refresh(true);
+									mui('#pullrefresh4').pullRefresh().endPulldown();
+								}.bind(this)
+							},
+							up: {
+								auto:true,
+								contentrefresh: '正在加载...',
+								callback: function() {
+									
+								}.bind(this)
+							}
+						}
+					});
+				}
+			})
+		</script>
+	</body>
+</html>

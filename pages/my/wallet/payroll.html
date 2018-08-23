@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+    	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link rel="stylesheet" href="../../../css/mui.min.css" />
+		<link rel="stylesheet" href="../../../css/base.css" />
+		<link rel="stylesheet" href="../../../css/main.css" />
+		<script type="text/javascript" src="../../../js/e_fish.js" ></script>
+		<script type="text/javascript" src="../../../js/mui.min.js" ></script>
+		<script type="text/javascript" src="../../../js/vue.js" ></script>
+	</head>
+	<style>
+		.mui-table-view-cell{
+			padding: 0;
+		}
+		.mui-table-view-cell:after{
+			background-color: transparent;
+		}
+		.mui-table-view-chevron .mui-table-view-cell{
+			padding-right: 0;
+		}
+	</style>
+	<body id="e_fish_container">
+		<div id="app">
+			<div class="header_green header_hight plr30">
+				<div class="ub ub-pac header_wallet_hd">
+					<a id="icon-menu" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left cff"></a>
+					<h2 class="ub-f1 tx-c fz36">工资条</h2>
+					<div class="fz32 y_wallet_right"></div>
+				</div>
+				<p class="header_wallet_tip">未发总额（元）</p>
+				<p class="tx-c header_wallet_money">504.26</p>
+			</div>
+			<div class="y_container bg-grey pt20">
+				<!--下拉刷新容器-->
+				<div id="pullrefresh3" class="mui-content mui-scroll-wrapper y_payroll_box">
+					<div class="mui-scroll">
+						<!--数据列表-->
+						<ul class="mui-table-view mui-table-view-chevron">
+							<li class="mui-table-view-cell">
+								<div class="plr30 bb y_payroll_item">
+									<p class="fz32 c33 pb20 word-break fw-b">慕墙安装部分4月工资</p>
+									<p class="fz28 c66 word-break pb30">项目名称：双流县2017年农村学前双语幼师学院</p>
+									<div class="ub ub-ac fz28 c33">
+										<p class="ub-f1">应发工资：</p>
+										<span>5000.00元</span>
+									</div>
+									<div class="ub ub-ac fz28 c33 pb30">
+										<p class="ub-f1">实发工资：</p>
+										<span class="c-red">4000.00元</span>
+									</div>
+									<p class="fz28 c66">2018/06/11  20:15:40</p>
+								</div>
+							</li>
+							<li class="mui-table-view-cell">
+								<div class="plr30 bb y_payroll_item">
+									<p class="fz32 c33 pb20 word-break fw-b">慕墙安装部分4月工资</p>
+									<p class="fz28 c66 word-break pb30">项目名称：双流县2017年农村学前双语幼师学院</p>
+									<div class="ub ub-ac fz28 c33">
+										<p class="ub-f1">应发工资：</p>
+										<span>5000.00元</span>
+									</div>
+									<div class="ub ub-ac fz28 c33 pb30">
+										<p class="ub-f1">实发工资：</p>
+										<span class="c-red">4000.00元</span>
+									</div>
+									<p class="fz28 c66">2018/06/11  20:15:40</p>
+								</div>
+							</li>
+							<li class="mui-table-view-cell">
+								<div class="plr30 bb y_payroll_item">
+									<p class="fz32 c33 pb20 word-break fw-b">慕墙安装部分4月工资</p>
+									<p class="fz28 c66 word-break pb30">项目名称：双流县2017年农村学前双语幼师学院</p>
+									<div class="ub ub-ac fz28 c33">
+										<p class="ub-f1">应发工资：</p>
+										<span>5000.00元</span>
+									</div>
+									<div class="ub ub-ac fz28 c33 pb30">
+										<p class="ub-f1">实发工资：</p>
+										<span class="c-red">4000.00元</span>
+									</div>
+									<p class="fz28 c66">2018/06/11  20:15:40</p>
+								</div>
+							</li>
+							<li class="mui-table-view-cell">
+								<div class="plr30 bb y_payroll_item">
+									<p class="fz32 c33 pb20 word-break fw-b">慕墙安装部分4月工资</p>
+									<p class="fz28 c66 word-break pb30">项目名称：双流县2017年农村学前双语幼师学院</p>
+									<div class="ub ub-ac fz28 c33">
+										<p class="ub-f1">应发工资：</p>
+										<span>5000.00元</span>
+									</div>
+									<div class="ub ub-ac fz28 c33 pb30">
+										<p class="ub-f1">实发工资：</p>
+										<span class="c-red">4000.00元</span>
+									</div>
+									<p class="fz28 c66">2018/06/11  20:15:40</p>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+			new Vue({
+				el:"#app",
+				mounted:function(){
+					mui.init({
+						pullRefresh: {
+							container: '#pullrefresh3',
+							down: {
+								style:'circle',
+								callback: function() {
+									mui('#pullrefresh3').pullRefresh().refresh(true);
+									mui('#pullrefresh3').pullRefresh().endPulldown();
+								}.bind(this)
+							},
+							up: {
+								auto:true,
+								contentrefresh: '正在加载...',
+								callback: function() {
+									
+								}.bind(this)
+							}
+						}
+					});
+				}
+			})
+		</script>
+	</body>
+</html>

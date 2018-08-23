@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="../../../css/mui.min.css" />
+		<link rel="stylesheet" href="../../../css/base.css" />
+		<link rel="stylesheet" href="../../../css/main.css" />
+		<script type="text/javascript" src="../../../js/e_fish.js" ></script>
+		<script type="text/javascript" src="../../../js/mui.min.js" ></script>
+		<script type="text/javascript" src="../../../js/vue.js" ></script>
+		<style>
+			.mui-popover .mui-table-view{
+				max-height: 600px;
+			}
+			.y_action_left{
+				width: 2.45rem;
+				text-align: right;
+			}
+			.y_action_left div{
+				float: right;
+			}
+			.mui-popover.mui-popover-action .mui-table-view{
+				border-radius: 0.3rem;
+			}
+		</style>
+	</head>
+
+	<body id="e_fish_container">
+		<div id="app">
+			<header class="mui-bar mui-bar-nav mui-bar-transparent header">
+				<a id="icon-menu" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+				<h2 class="mui-title">添加银行卡</h2>
+			</header>
+			<div class="fix_hd">
+				<p class="c-red word-break fz24 plr30 ptb30">请确定绑定银行卡为您本人的银行卡账户信息，否则将无法进行 金额提现交易。</p>
+				<form action="" method="">
+					<div class="bg-ff plr30">
+						<div class=" bb ptb25 ub ub-ac">
+							<p class="y_title_180">真实姓名</p>
+							<div class="ub-f1">张利龙</div>
+						</div>
+						<div class="bg-ff bb ptb25 ub ub-ac">
+							<p class="y_title_180">身份证号</p>
+							<div class="ub-f1">510122199001140072</div>
+						</div>
+						<a href="#picture">
+							<div class="bg-ff bb ptb25 ub ub-ac">
+								<p class="y_title_180">开户银行</p>
+								<div class="ub-f1 ca7">请选择</div>
+								<div class="y_arrow"></div>
+							</div>
+						</a>
+						
+						<div class="bg-ff bb ub ub-ac">
+							<p class="y_title_180">银行卡号</p>
+							<div class="ub-f1 y_back_input">
+								<input type="text" name="" id="" value="" placeholder="请输入银行卡号"/>
+							</div>
+						</div>
+						<div class="bg-ff bb ub ub-ac">
+							<p class="y_title_180">手机号码</p>
+							<div class="ub-f1 y_back_input">
+								<input type="text" name="" id="" value="" placeholder="请输入银行预留手机号"/>
+							</div>
+						</div>
+					</div>
+					<div class="plr30">
+						<div class="ub ub-ac">
+							<input type="checkbox" name="" id="" value="" class="y_checkbox"/>
+							<p class="fz32 ca7 ptb20 pl20">我已阅读并同意<span class="c-green">《银行卡使用协议》</span></p>
+						</div>
+						<button class="btn btn-green mt20">确定</button>
+					</div>
+				</form>
+				
+				
+			</div>
+		</div>
+		<div id="picture" class="mui-popover mui-popover-action mui-popover-bottom">
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					<div class="ub ub-ac">
+						<div class="y_action_left clear">
+							<div class="y_icon y_chian_small"></div>
+						</div>
+						<p class="fz40 c66">中国银行</p>
+					</div>
+				</li>
+				<li class="mui-table-view-cell">
+					<div class="ub ub-ac">
+						<div class="y_action_left clear">
+							<div class="y_icon y_nongye_small"></div>
+						</div>
+						<p class="fz40 c66">中国农业银行</p>
+					</div>
+				</li>
+				<li class="mui-table-view-cell">
+					<div class="ub ub-ac">
+						<div class="y_action_left clear">
+							<div class="y_icon y_jiaotong_small"></div>
+						</div>
+						<p class="fz40 c66">交通银行</p>
+					</div>
+				</li>
+				<li class="mui-table-view-cell">
+					<div class="ub ub-ac">
+						<div class="y_action_left clear">
+							<div class="y_icon y_gongshang_small"></div>
+						</div>
+						<p class="fz40 c66">中国工商银行</p>
+					</div>
+				</li>
+				<li class="mui-table-view-cell">
+					<div class="ub ub-ac">
+						<div class="y_action_left clear">
+							<div class="y_icon y_mingsheng_small"></div>
+						</div>
+						<p class="fz40 c66">中国民生银行</p>
+					</div>
+				</li>
+				<li class="mui-table-view-cell">
+					<div class="ub ub-ac">
+						<div class="y_action_left clear">
+							<div class="y_icon y_zhaoshang_small"></div>
+						</div>
+						<p class="fz40 c66">招商银行</p>
+					</div>
+				</li>
+				<li class="mui-table-view-cell">
+					<div class="ub ub-ac">
+						<div class="y_action_left clear">
+							<div class="y_icon y_youzheng_small"></div>
+						</div>
+						<p class="fz40 c66">中国邮政</p>
+					</div>
+				</li>
+				<li class="mui-table-view-cell">
+					<div class="ub ub-ac">
+						<div class="y_action_left clear">
+							<div class="y_icon y_jianshe_small"></div>
+						</div>
+						<p class="fz40 c66">中国建设银行</p>
+					</div>
+				</li>
+			</ul>
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					<a href="#picture" class="fz40"><b>取消</b></a>
+				</li>
+			</ul>
+		</div>
+
+	</body>
+
+</html>

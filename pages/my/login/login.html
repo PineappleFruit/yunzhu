@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+    	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="../../../css/mui.min.css" />
+		<link rel="stylesheet" href="../../../css/base.css" />
+		<link rel="stylesheet" href="../../../css/main.css" />
+		<link rel="stylesheet" href="http://at.alicdn.com/t/font_789951_jgy9npcg4pe.css" />
+		<script type="text/javascript" src="../../../js/e_fish.js" ></script>
+		<script type="text/javascript" src="../../../js/mui.min.js" ></script>
+		<script type="text/javascript" src="../../../js/vue.js" ></script>
+	</head>
+	<style>
+		
+	</style>
+	<body id="e_fish_container">
+		<div id="app">
+	        <div class="y_logo">
+	            <img src="../../../images/y-logo.png" alt="">
+	        </div> 
+	        <div class="plr40 y_login_box">
+	            <form>
+	                <div class="y_method  ub ub-pac">
+	                    <div class="ub-f1" :class="{'active' : index == 0}" @tap='change(0)'>注册</div>
+	                    <div class="ub-f1" :class="{'active' : index == 1}" @tap='change(1)'>登录</div>
+	                </div>
+	                <!-- 注册 -->
+	                <div class="y_input" v-if="index == 0">
+	                    <!-- 验证码 -->
+	                    <div class="y_code" v-if="nextTap">
+	                    	<div class="mui-input-row y_input_item">
+						    	<input type="text" class="mui-input-clear" placeholder="请输入手机号">
+						    </div> 
+	                        <div class="y_input_item ub  ub-ac">
+	                            <input type="text" placeholder="请输入验证码" class="ub-f1">
+	                            <span class="y_getcode">获取验证码</span>
+	                        </div>
+	                        <div class="y_input_item ub pr40 ub-ac">
+	                            <input type="text" placeholder="注册邀请码（可不填）" class="ub-f1">
+	                        </div>
+	                        <button class="btn btn-green" type="button" @tap="nextstep">下一步</button>
+	                    </div>
+	                    <!-- 密码 --> 
+	                    <div class="y_pwd" v-else>
+	                    	<div class="mui-input-row y_input_item">
+						    	<input type="password" class="mui-input-password" placeholder="请输入6-16位字母数字密码">
+						    </div>
+						    <div class="mui-input-row y_input_item">
+						    	<input type="password" class="mui-input-password" placeholder="请再次输入密码">
+						    </div>
+	                        <div class="ub ub-ac y_agreement">
+	                        	<div class="y_agree" :class="{'active':agree}" @tap="isAgree"></div>
+	                        	<p>同意<a href="#">《用户使用协议）</a></p>
+	                        </div>
+	                        <button class="btn btn-green" :class="{'btn-none':!agree}" type="button">注册</button> 
+	                    </div>
+	                </div>
+	                <!-- 登陆 -->
+	                <div class="y_input" v-if="index == 1">
+	                	<div class="y_login">
+	                		<div class="mui-input-row y_input_item">
+						    	<input type="text" class="mui-input-clear" placeholder="请输入手机号/身份证号">
+						    </div>
+						    <div class="mui-input-row y_input_item">
+						    	<input type="password" class="mui-input-password" placeholder="请输入密码">
+						    </div>
+	                        <span class="c-green fz32 y_codelogin" @tap="messgeCode">使用短信验证码登录</span>
+	                        <button class="btn btn-green" type="button">登录</button>
+	                        <div class="tx-c">
+	                        	<a href="#" class="c-green fz32 y_codelogin">找回密码</a>
+	                        </div> 
+	                	</div>
+	                </div>
+	                
+	            </form>
+	        </div>
+	    </div>
+	</body>
+	<script>
+		var _oldBack = mui.back; 
+		var backButtonPress = 0;
+		mui.back = function(event) {                    
+		    backButtonPress++;
+		    if (backButtonPress > 1) {
+		        plus.runtime.quit();
+		    } else {
+		        plus.nativeUI.toast('再按一次退出应用');
+		    }
+		    setTimeout(function() {
+		        backButtonPress = 0;
+		    }, 1000);
+		    return false;
+		};
+		new Vue({
+			el:'#app',
+			data:{
+				index : 1,
+				nextTap : true,
+				agree : false
+			},
+			methods:{
+				change(index){
+					this.index = index
+				},
+				nextstep(){
+					this.nextTap = false
+					console.log(this.nextTap)
+				},
+				isAgree(){
+					this.agree = !this.agree
+				},
+				messgeCode(){
+					mui.openWindow({
+					    url: './messageCode.html', 
+					    id:'mess'
+					});
+				}
+			}
+		})
+	</script>
+</html>

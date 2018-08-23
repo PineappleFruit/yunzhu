@@ -1,0 +1,73 @@
+.btn{
+	width: 100%;
+	height: .87rem;
+	line-height: .87rem;
+	border-radius: 0.06rem;
+	border: none;
+	font-size: 0.36rem;
+}
+.btn-green{
+	background: #53a656;
+	color: #fff;
+}
+.btn-defalut{
+	background: #f7f7f9;
+	color: #333;
+	border: 1px solid #dcdcdc;
+}
+.btn-white{
+	background: #cccccc;
+	color: #fff;
+	border: 1px solid #cccccc;
+}
+.btn-none{
+	background: #95c697;
+}
+.fix-bd{
+	position: fixed;
+	bottom: 0.3rem;
+	z-index: 100;
+	width: 6.9rem;
+	
+}
+.y_reflect_success{
+	color: #53a656;
+	font-size: 0.28rem;
+}
+.y_reflect_examine{
+	color: #f4c936;
+	font-size: 0.28rem;
+}
+.y_reflect_error{
+	color: #f26363;
+	font-size: 0.28rem;
+}
+.fix_box{
+	position: fixed;
+	bottom: 0;
+	background: #fff;
+	width: 100%;
+	height: 1.46rem;
+	padding: 0.3rem 0.3rem;
+	box-shadow: 0 0 0.18rem rgba(0,0,0,0.04);
+	z-index: 99999;
+}
+.y_green_btn{
+	color: #53a656;
+	font-size: 0.24rem;
+	border-radius: 0.04rem;
+	border: 1px solid #53A656;
+	height: 0.48rem;
+	line-height: 0.48rem;
+	padding: 0 0.2rem;
+}
+.y_green_bigbtn{
+	border-radius: 0.04rem;
+	border: 1px solid #53A656;
+	color: #53a656;
+	font-size: 0.32rem;
+	background: #fff;
+	height: 0.68rem;
+	line-height: 0.68rem;
+	padding: 0 0.36rem;
+}

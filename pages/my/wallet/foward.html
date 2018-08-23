@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+    	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link rel="stylesheet" href="../../../css/mui.min.css" />
+		<link rel="stylesheet" href="../../../css/base.css" />
+		<link rel="stylesheet" href="../../../css/main.css" />
+		<script type="text/javascript" src="../../../js/e_fish.js" ></script>
+		<script type="text/javascript" src="../../../js/mui.min.js" ></script>
+		<script type="text/javascript" src="../../../js/vue.js" ></script>
+	</head>
+	<style>
+		body{
+			background-color: #f7f7f9;
+		}
+		.mui-table-view-cell{
+			padding: 0;
+		}
+		.mui-table-view-cell:after{
+			background-color: transparent;
+		}
+	</style>
+	<body id="e_fish_container">
+		<div id="app">
+			<header class="mui-bar mui-bar-nav mui-bar-transparent header">
+				<a id="icon-menu" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+				<h2 class="mui-title">申请提现</h2>
+			</header>
+			<div class="fix_hd">
+				<div class="y_container bg-grey pt20">
+					<form action="" method="">
+						<div class="mui-table-view-cell">
+							<div class="y_back_type bg-ff plr30 ub ub-ac ptb20" @tap="chooseCard">
+								<div class="y_back_chian y_icon"></div>
+								<div class="ub-f1 pl30">
+									<p class="fz32 c33">中国银行</p>
+									<p class="fz32 c66">尾号9380 储蓄卡</p>
+								</div>
+								<div class="y_arrow"></div>
+							</div>
+						</div>
+						<div class="mt20 bg-ff plr30 pt40">
+							<div class="bb"> 
+								<p class="fz32 c66 pb30">提现金额</p>
+								<div class="y_forward_money ub ub-ac">
+									<span>￥</span>
+									<input type="number" name="" id="" value="" placeholder="0" class="ub-f1 mui-input-clear"/>
+									<div class="y_cha">
+		                                <i class="iconfont icon-guanbi"></i>
+		                            </div>
+								</div>
+							</div>
+							<div class="ub ub-ac ptb25 fz28">
+								<p class="ub-f1  c99">可用余额 0.60元</p>
+								<!--<p class="ub-f1  c-red">金额已超出可提现余额</p>-->
+								<span class="c-green">全部提现</span>
+							</div>
+						</div>
+						<div class="plr30 pb30">
+							<p class="ptb20 fz28 c66">预计7个工作日内到账,实际到账情况请关注银行账户</p>
+							<button class="btn btn-green btn-none mt20">申请提现</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<script>
+			new Vue({
+				el:"#app",
+				methods:{
+					chooseCard(){
+						mui.openWindow({
+						    url: './chooseCard.html', 
+						    id:'chooseCard'
+						});
+					}
+				}
+			})
+		</script>
+	</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+    	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<title></title>
+		<link rel="stylesheet" href="../../../css/mui.min.css" />
+		<link rel="stylesheet" href="../../../css/base.css" />
+		<link rel="stylesheet" href="../../../css/main.css" />
+		<script type="text/javascript" src="../../../js/e_fish.js" ></script>
+		<script type="text/javascript" src="../../../js/mui.min.js" ></script>
+		<script type="text/javascript" src="../../../js/vue.js" ></script>
+	</head>
+	<style>
+		body{
+			background-color: rgba(247,247,249,1);
+		}
+		.mui-table-view-cell{
+			padding:  0 ;
+		}
+		.mui-table-view-cell:after{
+			background-color: transparent;
+		}
+		.fix_hd{
+			padding-top: .58rem;
+		}
+		.mui-off-canvas-left, .mui-off-canvas-right{
+			background: #fff;
+		}
+	</style>
+	<body id="e_fish_container">
+		<div id="app" class="mui-off-canvas-wrap mui-draggable mui-slide-in">
+			<!--菜单部分-->
+			<aside id="offCanvasSide" class="mui-off-canvas-right">
+				<div id="offCanvasSideScroll" class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<ul class="fz28 c66 plr30">
+							<li class="word-break ptb40">附着升降脚手架安装拆卸工</li>
+							<li class="word-break ptb40">电器设备安装工（电气安装调 试工</li>
+							<li class="word-break ptb40">安装钳工</li>
+							<li class="word-break ptb40">变电安装工</li>
+						</ul>
+					</div>
+				</div>
+			</aside>
+			<div class="mui-inner-wrap">
+				<header class="mui-bar mui-bar-nav mui-bar-transparent header">
+					<a id="icon-menu" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+					<h2 class="mui-title">选择技能类型</h2>
+				</header>
+				<div id="offCanvasContentScroll" class="mui-content mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<div class="fix_hd">
+							<div class="mui-table-view-cell bg-ff">
+								<div class="bb ptb35 ub ub-ac plr30" @tap="offcanvasShow">
+									<p class="fz32 c33 y_title">国家注册类</p>
+									<div class="ub-f1"></div>
+									<div class="y_arrow"></div>
+								</div>
+							</div>
+							<div class="mui-table-view-cell bg-ff">
+								<div class="bb ptb35 ub ub-ac plr30" @tap="offcanvasShow">
+									<p class="fz32 c33 y_title">管理类</p>
+									<div class="ub-f1"></div>
+									<div class="y_arrow"></div>
+								</div>
+							</div>
+							<div class="mui-table-view-cell bg-ff" >
+								<div class="bb ptb35 ub ub-ac plr30" @tap="offcanvasShow">
+									<p class="fz32 c33 y_title">技能类</p>
+									<div class="ub-f1"></div>
+									<div class="y_arrow"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- off-canvas backdrop -->
+				<div class="mui-off-canvas-backdrop"></div>
+			</div>
+		</div>
+		<script>
+			new Vue({
+				el:'#app',
+				methods:{
+					offcanvasShow(){
+						mui('.mui-off-canvas-wrap').offCanvas('show');
+					}
+				}
+			})
+		</script>
+	</body>
+</html>

@@ -1,0 +1,99 @@
+{
+	"index.html": {
+		"resources": [
+			"pages/my/index.html",
+			"pages/project/index.html"
+		],
+		"refer": [
+			"pages/find/index.html",
+			"pages/project/index.html",
+			"pages/my/index.html",
+			"pages/my/login/login.html"
+		]
+	},
+	"pages/my/login/login.html": {
+		"refer": [
+			"pages/my/login/login.html",
+			"pages/my/login/messageCode.html"
+		]
+	},
+	"pages/my/login/messageCode.html": {
+		"refer": [
+			"pages/my/login/messageCode.html",
+			"pages/project/index.html"
+		]
+	},
+	"pages/my/index.html": {
+		"refer": [
+			"pages/my/userInfo/index.html",
+			"pages/my/wallet/wallet.html",
+			"pages/my/wallet/redPackage.html",
+			"pages/my/integral/index.html",
+			"pages/my/skill/index.html",
+			"pages/my/follow/index.html",
+			"pages/my/collection/index.html"
+		]
+	},
+	"pages/my/userInfo/index.html": {
+		"refer": [
+			"pages/my/userInfo/attestation/attes.html",
+			"pages/my/userInfo/phone/changePhone.html",
+			"pages/my/userInfo/address/address.html",
+			"pages/my/userInfo/attes.html",
+			"pages/my/userInfo/changePhone.html",
+			"pages/my/userInfo/address.html"
+		]
+	},
+	"pages/my/userInfo/attestation/attes.html": {
+		"refer": [
+			"pages/my/userInfo/attestation/attesSuccess.html"
+		]
+	},
+	"pages/my/userInfo/attes.html": {
+		"refer": [
+			"pages/my/userInfo/attesSuccess.html"
+		]
+	},
+	"pages/my/wallet/wallet.html": {
+		"refer": [
+			"pages/my/wallet/walletDetailed.html",
+			"pages/my/wallet/payroll.html",
+			"pages/my/wallet/foward.html",
+			"pages/my/wallet/manageCard.html"
+		]
+	},
+	"pages/my/wallet/foward.html": {
+		"refer": [
+			"pages/my/wallet/chooseCard.html"
+		]
+	},
+	"pages/my/wallet/chooseCard.html": {
+		"refer": [
+			"pages/my/wallet/addCard.html"
+		]
+	},
+	"pages/my/wallet/manageCard.html": {
+		"refer": [
+			"pages/my/wallet/addCard.html"
+		]
+	},
+	"pages/my/integral/index.html": {
+		"refer": [
+			"pages/my/integral/signin.html",
+			"pages/my/integral/rule.html",
+			"pages/my/integral/exchange.html",
+			"pages/my/integral/integralDetail.html",
+			"pages/my/integral/share.html"
+		]
+	},
+	"pages/my/skill/index.html": {
+		"refer": [
+			"pages/my/skill/addSkill.html"
+		]
+	},
+	"pages/my/skill/addSkill.html": {
+		"refer": [
+			"pages/my/skill/chooseSkill.html"
+		]
+	}
+}

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+    	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link rel="stylesheet" href="../../../css/mui.min.css" />
+		<!--<link rel="stylesheet" href="../../../css/base.css" />
+		<link rel="stylesheet" href="../../../css/main.css" />-->
+		<!--<script type="text/javascript" src="../../../js/e_fish.js" ></script>-->
+		<script type="text/javascript" src="../../../js/mui.min.js" ></script>
+		<script type="text/javascript" src="../../../js/vue.js" ></script>
+	</head>
+	<style>
+		.mui-card {
+            box-shadow: 0 2px 4px #e5e5e5;
+        }
+
+        .mui-card-header {
+            padding: 10px;
+            background-color: #e9e9e9;
+            text-align: left;
+            
+        }
+
+        .mui-card-header:after {
+            height: 0;
+        }
+
+        .mui-card-content {
+            padding: 10px 15px;
+        }
+
+        .mui-card-content>div {
+            margin-top: 0.5rem;
+        }
+
+        .header-text {
+            font-size: 1rem;
+            color: #555;
+            margin-left: 1rem;
+            font-weight: 500;
+        }
+
+        .content_div {
+            float: left;
+        }
+
+        .content-text {
+            margin-left: 12%;
+            color: #333;
+            font-size: 0.8rem;
+            line-height: 1.3rem;
+        }
+
+        .greed_div {
+            display: inline-block;
+            width: 35px;
+            height: 35px;
+            line-height: 35px;
+            background: #1ea958;
+            border-radius: 50%;
+            font-size: 1rem;
+            text-align: center;
+            color: #fff;
+        }
+
+        .yellow_div {
+            display: inline-block;
+            width: 22px;
+            height: 22px;
+            line-height: 22px;
+            background: #ffa82e;
+            border-radius: 50%;
+            font-size: 0.6rem;
+            text-align: center;
+            color: #fff;
+        }
+		.header{
+			background-color: rgba(82,165,87,1);
+			color: #fff;
+			height: 64px;
+			padding-top: 20px;
+		}
+		.header a,.header h2{
+			color: #fff;
+		}
+		.mui-bar-nav~.mui-content{
+			padding-top: 64px;
+		}
+	</style>
+	<body>
+		<header class="mui-bar mui-bar-nav mui-bar-transparent header">
+			<a id="icon-menu" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h2 class="mui-title">登录</h2>
+		</header>
+		<div class="mui-content">
+			<div class="mui-card">
+				<!--页眉，放置标题-->
+				<div class="mui-card-header mui-card-media">
+					<span class="greed_div">Q1</span>
+					<span class="header-text">如何获取积分?</span>
+				</div>
+				<!--内容区-->
+				<div class="mui-card-content">
+					<div>
+						<div class="content_div">
+							<span class="yellow_div">A1</span>
+						</div>
+						<div class="content-text">
+							每日签到可获取积分。连续签到1~5天，每天可获取5积分; 连续签到6~10天，每天获取10积分; 连续签到11~20天，每天获取15积分; 连续签到大于20天，每天获取20积分
+						</div>
+					</div>
+					<div>
+						<div class="content_div">
+							<span class="yellow_div">A2</span>
+						</div>
+						<div class="content-text">
+							每完成一次技能证书认证可获得200积分，最高可获得1000积分。
+						</div>
+					</div>
+					<div>
+						<div class="content_div">
+							<span class="yellow_div">A3</span>
+						</div>
+						<div class="content-text">
+							分享推荐APP给好友可获取积分,每次分享可获得得20积分，每天最高可获得200积分；好友通过分享推荐码完成注册，则额外奖励100积分；
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="mui-card">
+				<!--页眉，放置标题-->
+				<div class="mui-card-header mui-card-media">
+					<span class="greed_div">Q2</span>
+					<span class="header-text">积分有何用途?</span>
+				</div>
+				<!--内容区-->
+				<div class="mui-card-content">
+					<div class="content_div">
+						<span class="yellow_div">A1</span>
+					</div>
+					<div class="content-text">
+						总积分=历史积分+可用积分；
+					</div>
+					<div>
+		
+						<div class="content_div">
+							<span class="yellow_div">A2</span>
+						</div>
+						<div class="content-text">
+							“可用积分”能在积分商城里用积分来兑换心仪的礼品；
+						</div>
+					</div>
+					<div>
+						<div class="content_div">
+							<span class="yellow_div">A3</span>
+						</div>
+						<div class="content-text">
+							“总积分”可升级信誉等级。
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="mui-card">
+			<!--页眉，放置标题-->
+			<div class="mui-card-header mui-card-media">
+				<span class="greed_div">Q3</span>
+				<span class="header-text">如何查看我的积分？</span>
+			</div>
+			<!--内容区-->
+			<div class="mui-card-content">
+				<div class="content_div">
+					<span class="yellow_div">A</span>
+				</div>
+				<div class="content-text">
+					用户可点击(我的]- [积分] 来查看用户当前持有的积分数量，以及积分的获得和使用数记录。
+				</div>
+			</div>
+		</div>
+		<div class="mui-card">
+			<!--页眉，放置标题-->
+			<div class="mui-card-header mui-card-media">
+				<span class="greed_div">Q4</span>
+				<span class="header-text">“可用积分”有效期多长?</span>
+			</div>
+			<!--内容区-->
+			<div class="mui-card-content">
+				<div class="content_div">
+					<span class="yellow_div">A1</span>
+				</div>
+				<div class="content-text">
+					“可用积分”一年清理一次,年底（12月31日）自动清零,逾期则自动归为历史积分，不可再进行兑换礼品使用；
+				</div>
+				<div class="content_div">
+					<span class="yellow_div">A2</span>
+				</div>
+				<div class="content-text">
+					所有积分升级信誉等级，长期有效。
+				</div>
+			</div>
+		</div>
+		<div class="mui-card">
+			<!--页眉，放置标题-->
+			<div class="mui-card-header mui-card-media">
+				<span class="greed_div">Q5</span>
+				<span class="header-text">积分换算信誉等级规则？</span>
+			</div>
+			<!--内容区-->
+			<div class="mui-card-content">
+				<div class="content_div">
+					<span class="yellow_div">A</span>
+				</div>
+				<div class="content-text">
+					信誉等级不清零；
+					<div>学徒：Lv1~5，500积分升一级；</div>
+					<div>工匠：Lv6~10，1000积分升一级；</div>
+					<div>巧匠：Lv11~15，2000积分升一级；</div>
+					<div>师傅：Lv16~20，4000积分升一级；</div>
+					<div>鲁班：Lv21以上，5000积分升一级。</div>
+				</div>
+			</div>
+		</div>
+		</div>
+	</body>
+</html>

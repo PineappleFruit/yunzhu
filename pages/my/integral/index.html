@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+    	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<title></title>
+		<link rel="stylesheet" href="../../../css/mui.min.css" />
+		<link rel="stylesheet" href="../../../css/base.css" />
+		<link rel="stylesheet" href="../../../css/main.css" />
+		<script type="text/javascript" src="../../../js/e_fish.js" ></script>
+		<script type="text/javascript" src="../../../js/mui.min.js" ></script>
+		<script type="text/javascript" src="../../../js/vue.js" ></script>
+	</head>
+	<style>
+		body{
+			background-color: rgba(247,247,249,1);
+		}
+		.mui-table-view-cell{
+			padding: 0.3rem 0;
+		}
+		.mui-table-view-cell:after{
+			background-color: transparent;
+		}
+	</style>
+	<body id="e_fish_container">
+		<div id="app">
+			<div class="header_integral header_hight plr30">
+				<div class="ub ub-pac header_wallet_hd">
+					<a id="icon-menu" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left cff"></a>
+					<h2 class="ub-f1 tx-c fz36">我的积分</h2>
+					<div class="fz32 y_wallet_right" @tap="integralDetail">明细</div>
+				</div>
+				<p class="tx-c header_wallet_money mb20">504.26</p>
+				<div class="ub ub-pac" @tap="rule">
+					<div class="y_question y_icon"></div>
+					<p class="fz28 cff">积分规则</p>
+				</div>
+			</div>
+			<div class="y_container pt20">
+				<div class="y_integral">
+					<div class="mui-table-view-cell bg-ff bb">
+						<div class=" ub ub-ac plr30 " @tap="signin">
+							<div class="y_sign y_icon"></div>
+							<p class="pl30 fz32 c33">每日签到</p>
+						</div>
+					</div>
+					<div class="mui-table-view-cell bg-ff bb">
+						<div class="ub ub-ac plr30" @tap="share">
+							<div class="y_share y_icon"></div>
+							<p class="pl30 fz32 c33">分享推荐</p>
+						</div>
+					</div>
+					<div class="mui-table-view-cell mt20 bg-ff bb">
+						<div class="ub ub-ac plr30" @tap="exchange">
+							<div class="y_gift y_icon"></div>
+							<p class="pl30 fz32 c33">我的兑换记录</p>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		<script>
+			new Vue({
+				el:'#app',
+				methods:{
+					signin(){
+						mui.openWindow({
+						    url: './signin.html', 
+						    id:'signin'
+						});
+					},
+					exchange(){
+						mui.openWindow({
+						    url: './exchange.html', 
+						    id:'exchange'
+						});
+					},
+					share(){
+						mui.openWindow({
+						    url: './share.html', 
+						    id:'share'
+						});
+					},
+					rule(){
+						mui.openWindow({
+						    url: './rule.html', 
+						    id:'rule'
+						});
+					},
+					integralDetail(){
+						mui.openWindow({
+						    url: './integralDetail.html', 
+						    id:'integralDetail'
+						});
+					}
+				}
+			})
+		</script>
+	</body>
+</html>

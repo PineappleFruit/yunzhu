@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<title></title>
+		<link rel="stylesheet" href="../../css/mui.min.css" />
+		<link rel="stylesheet" href="../../css/base.css" />
+		<link rel="stylesheet" href="../../css/main.css" />
+		<script type="text/javascript" src="../../js/e_fish.js"></script>
+		<script type="text/javascript" src="../../js/mui.min.js"></script>
+		<script type="text/javascript" src="../../js/vue.js"></script>
+	</head>
+	<style>
+		.mui-table-view:before {
+			background-color: transparent;
+		} 
+		.mui-table-view li{
+			position: relative;
+		}
+		.mui-table-view-cell{
+			padding: 0;
+		}
+		.mui-table-view-cell:after{
+			background-color: transparent;
+		}
+		.mui-table-view-chevron .mui-table-view-cell{
+			padding-right: 0;
+		}
+	</style>
+
+	<body id="e_fish_container">
+		<div id="app">
+			<div id="slider" class="mui-slider">
+				<div class="mui-slider-group">
+					<!-- 第一张 -->
+					<div class="mui-slider-item">
+						<a href="#">
+							<img src="../../images/y-course.jpg">
+						</a>
+					</div>
+					<!-- 第二张 -->
+					<div class="mui-slider-item">
+						<a href="#">
+							<img src="../../images/y-course.jpg">
+						</a>
+					</div>
+				</div>
+				<div class="mui-slider-indicator">
+					<div class="mui-indicator mui-active"></div>
+					<div class="mui-indicator"></div>
+				</div>
+			</div> 
+			<div class="y_type ub ptb35 bb">
+				<div class="y_type_item ub-f1 tx-c">
+					<div class="y_dispatch y_icon"></div>
+					<p class="pt20 fz28 c33">技能派单</p>
+				</div>
+				<div class="y_type_item ub-f1 tx-c">
+					<div class="y_robbing y_icon"></div>
+					<p class="pt20 fz28 c33">我的抢单</p>
+				</div>
+				<div class="y_type_item ub-f1 tx-c">
+					<div class="y_project y_icon"></div>
+					<p class="pt20 fz28 c33">我的项目</p>
+				</div>
+				<div class="y_type_item ub-f1 tx-c">
+					<div class="y_signin y_icon"></div>
+					<p class="pt20 fz28 c33">每日签到</p>
+				</div>
+			</div>
+			<!--下拉刷新容器-->
+			<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<!--数据列表-->
+					<ul class="mui-table-view mui-table-view-chevron">
+						<li class="mui-table-view-cell">
+							<div class="bb plr30 ptb25">
+								<div class="ub">
+									<div class="ub-f1">
+										<p class="fz32 c33 fw-b">打桩工</p>
+										<div class="fz24 c66 y_label pt20">
+											<span>新疆-和田</span>
+											<span class="cc7">|</span>
+											<span>持证</span>
+											<span class="cc7">|</span>
+											<span>男</span>
+											<span class="cc7">|</span>
+											<span>28-40岁</span>
+										</div>
+										<ul class="y_tag_list clear pt30 mb30">
+											<li>保险</li>
+											<li>按月发放</li>
+											<li>包吃住</li>
+										</ul>
+									</div>
+									<div class="tx-r">
+										<p class="fz28 c-red fw-b">8000元/月</p>
+										<p class="fz24 c66 pt20">2018年6月11日</p>
+									</div>
+								</div>
+								<p class="fz28 c33">房建工程项目</p>
+								<p class="fz28 c99">新疆天坤昊泰工程项目管理有限公司</p>
+							</div>
+							<div class="y_full y_icon y_classify"></div>
+						</li>
+						<li class="mui-table-view-cell">
+							<div class="bb plr30 ptb25">
+								<div class="ub">
+									<div class="ub-f1">
+										<p class="fz32 c33 fw-b">打桩工</p>
+										<div class="fz24 c66 y_label pt20">
+											<span>新疆-和田</span>
+											<span class="cc7">|</span>
+											<span>持证</span>
+											<span class="cc7">|</span>
+											<span>男</span>
+											<span class="cc7">|</span>
+											<span>28-40岁</span>
+										</div>
+										<ul class="y_tag_list clear pt30 mb30">
+											<li>保险</li>
+											<li>按月发放</li>
+											<li>包吃住</li>
+										</ul>
+									</div>
+									<div class="tx-r">
+										<p class="fz28 c-red fw-b">8000元/月</p>
+										<p class="fz24 c66 pt20">2018年6月11日</p>
+									</div>
+								</div>
+								<p class="fz28 c33">房建工程项目</p>
+								<p class="fz28 c99">新疆天坤昊泰工程项目管理有限公司</p>
+							</div>
+							<div class="y_full y_icon y_classify"></div>
+						</li>
+						<li class="mui-table-view-cell">
+							<div class="bb plr30 ptb25">
+								<div class="ub">
+									<div class="ub-f1">
+										<p class="fz32 c33 fw-b">打桩工</p>
+										<div class="fz24 c66 y_label pt20">
+											<span>新疆-和田</span>
+											<span class="cc7">|</span>
+											<span>持证</span>
+											<span class="cc7">|</span>
+											<span>男</span>
+											<span class="cc7">|</span>
+											<span>28-40岁</span>
+										</div>
+										<ul class="y_tag_list clear pt30 mb30">
+											<li>保险</li>
+											<li>按月发放</li>
+											<li>包吃住</li>
+										</ul>
+									</div>
+									<div class="tx-r">
+										<p class="fz28 c-red fw-b">8000元/月</p>
+										<p class="fz24 c66 pt20">2018年6月11日</p>
+									</div>
+								</div>
+								<p class="fz28 c33">房建工程项目</p>
+								<p class="fz28 c99">新疆天坤昊泰工程项目管理有限公司</p>
+							</div>
+							<div class="y_full y_icon y_classify"></div>
+						</li>
+						<li class="mui-table-view-cell">
+							<div class="bb plr30 ptb25">
+								<div class="ub">
+									<div class="ub-f1">
+										<p class="fz32 c33 fw-b">打桩工</p>
+										<div class="fz24 c66 y_label pt20">
+											<span>新疆-和田</span>
+											<span class="cc7">|</span>
+											<span>持证</span>
+											<span class="cc7">|</span>
+											<span>男</span>
+											<span class="cc7">|</span>
+											<span>28-40岁</span>
+										</div>
+										<ul class="y_tag_list clear pt30 mb30">
+											<li>保险</li>
+											<li>按月发放</li>
+											<li>包吃住</li>
+										</ul>
+									</div>
+									<div class="tx-r">
+										<p class="fz28 c-red fw-b">8000元/月</p>
+										<p class="fz24 c66 pt20">2018年6月11日</p>
+									</div>
+								</div>
+								<p class="fz28 c33">房建工程项目</p>
+								<p class="fz28 c99">新疆天坤昊泰工程项目管理有限公司</p>
+							</div>
+							<div class="y_full y_icon y_classify"></div>
+						</li>
+						<li class="mui-table-view-cell">
+							<div class="bb plr30 ptb25">
+								<div class="ub">
+									<div class="ub-f1">
+										<p class="fz32 c33 fw-b">打桩工</p>
+										<div class="fz24 c66 y_label pt20">
+											<span>新疆-和田</span>
+											<span class="cc7">|</span>
+											<span>持证</span>
+											<span class="cc7">|</span>
+											<span>男</span>
+											<span class="cc7">|</span>
+											<span>28-40岁</span>
+										</div>
+										<ul class="y_tag_list clear pt30 mb30">
+											<li>保险</li>
+											<li>按月发放</li>
+											<li>包吃住</li>
+										</ul>
+									</div>
+									<div class="tx-r">
+										<p class="fz28 c-red fw-b">8000元/月</p>
+										<p class="fz24 c66 pt20">2018年6月11日</p>
+									</div>
+								</div>
+								<p class="fz28 c33">房建工程项目</p>
+								<p class="fz28 c99">新疆天坤昊泰工程项目管理有限公司</p>
+							</div>
+							<div class="y_full y_icon y_classify"></div>
+						</li>
+						<li class="mui-table-view-cell">
+							<div class="bb plr30 ptb25">
+								<div class="ub">
+									<div class="ub-f1">
+										<p class="fz32 c33 fw-b">打桩工</p>
+										<div class="fz24 c66 y_label pt20">
+											<span>新疆-和田</span>
+											<span class="cc7">|</span>
+											<span>持证</span>
+											<span class="cc7">|</span>
+											<span>男</span>
+											<span class="cc7">|</span>
+											<span>28-40岁</span>
+										</div>
+										<ul class="y_tag_list clear pt30 mb30">
+											<li>保险</li>
+											<li>按月发放</li>
+											<li>包吃住</li>
+										</ul>
+									</div>
+									<div class="tx-r">
+										<p class="fz28 c-red fw-b">8000元/月</p>
+										<p class="fz24 c66 pt20">2018年6月11日</p>
+									</div>
+								</div>
+								<p class="fz28 c33">房建工程项目</p>
+								<p class="fz28 c99">新疆天坤昊泰工程项目管理有限公司</p>
+							</div>
+							<div class="y_full y_icon y_classify"></div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<script>
+			new Vue({
+				el:"#app",
+				mounted:function(){
+					mui.init({
+						pullRefresh: {
+							container: '#pullrefresh',
+							down: {
+								style:'circle',
+								callback: function() {}.bind(this)
+							},
+							up: {
+								auto:true,
+								contentrefresh: '正在加载...',
+								callback: function() {}.bind(this)
+							}
+						}
+					});
+				}
+			})
+		</script>
+	</body>
+	<!--<script type="text/javascript">
+		new Vue({
+			el: '#app',
+			mounted: function() {
+				mui(".mui-scroll-wrapper").scroll();
+				this.$nextTick(function() {
+					mui.init({
+						pullRefresh: {
+							container: "#refreshContainer2", //下拉刷新容器标识，querySelector能定位的css选择器均可，比如：id、.class等
+							up: {
+								height: 50, //可选.默认50.触发上拉加载拖动距离
+								auto: false, //可选,默认false.自动上拉加载一次
+								contentrefresh: "正在加载...", //可选，正在加载状态时，上拉加载控件上显示的标题内容
+								contentnomore: '', //可选，请求完毕若没有更多数据时显示的提醒内容；
+								callback: function() {}.bind(this)
+							},
+							down: {
+								style: 'circle', //必选，下拉刷新样式，目前支持原生5+ ‘circle’ 样式
+								color: '#2BD009', //可选，默认“#2BD009” 下拉刷新控件颜色
+								height: '50px', //可选,默认50px.下拉刷新控件的高度,
+								range: '0', //可选 默认100px,控件可下拉拖拽的范围
+								offset: '0px', //可选 默认0px,下拉刷新控件的起始位置
+								auto: false, //可选,默认false.首次加载自动上拉刷新一次
+								callback: function() {
+									mui('#refreshContainer2').pullRefresh().refresh(true);
+									mui('#refreshContainer2').pullRefresh().endPulldown();
+								}.bind(this)
+							}
+						}
+					});
+				})
+			}
+		})
+	</script>-->
+
+</html>

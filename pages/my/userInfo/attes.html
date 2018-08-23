@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+    	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link rel="stylesheet" href="../../../css/mui.min.css" />
+		<link rel="stylesheet" href="../../../css/base.css" />
+		<link rel="stylesheet" href="../../../css/main.css" />
+		<script type="text/javascript" src="../../../js/e_fish.js" ></script>
+		<script type="text/javascript" src="../../../js/mui.min.js" ></script>
+		<script type="text/javascript" src="../../../js/vue.js" ></script>
+	</head>
+	<style>
+		.y_input_item{
+			margin-top: 0;
+		}
+	</style>
+	<body id="e_fish_container">
+		<div id="app">
+			<header class="mui-bar mui-bar-nav mui-bar-transparent header">
+				<a id="icon-menu" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+				<h2 class="mui-title">实名认证</h2>
+			</header>
+			<div class="fix_hd">
+				<div class="y_container plr40 pt30">
+					<p class="c-red2 fz28 word-break pb30 y_error_tip">认证失败原因：上传身份证照片模糊。</p>
+					<div class="y_name_tip plr30">
+						<p class="fz28 c66 pt20 word-break">实名认证成功后</p>
+						<ul class="y_name_rulse fz28 c99 word-break">
+							<li>1.完成实名认证即可开始抢单。</li>
+							<li>2.您的页面中将明确显示“已认证”，提升您的个人 形象，赢得更多工作。 </li>
+							<li>3.所有项目真实有效，平台所有工人/企业均已通过 实名认证。</li>
+							<li>4.可使用身份证号进行登录。</li>
+						</ul>
+					</div>
+					<form action="" method="">
+						<div class="y_card_fill">
+							<div class="y_card_item ub ub-ac">
+								<p>真实姓名</p>
+								<div class="mui-input-row y_input_item ub-f1 y_card_input ub  ub-ac">
+							    	<input type="number" class="mui-input-clear" placeholder="请输入手机号">
+							    </div>
+							</div>
+							<div class="y_card_item ub ub-ac">
+								<p>身份证号码</p>
+								<div class="mui-input-row y_input_item ub-f1 y_card_input ub  ub-ac">
+							    	<input type="number" class="mui-input-clear" placeholder="请输入身份证号码">
+							    </div>
+							</div>
+							<div class="y_card_item ub ub-ac">
+								<p>身份证住址</p>
+								<div class="ub-f1 y_card_input ub  ub-ac">
+									<input type="text" name="" id="" value="" placeholder="请选择身份证住址" class="ub-f1 pr20" readonly="readonly"/>
+								</div>
+							</div>
+						</div>
+						<div class="y_photo_box tx-c">
+							<p class="fz28 c33">上传身份证正反面及本人手持身份证照片</p>
+							<div class="y_card_face y_card_pic">
+								<img src="../../../images/y-card-face.png" alt="" />
+							</div>
+							<div class="y_photot_btn"></div>
+							<p class="fz32 c00 pt20">身份证正面照</p>
+							<div class="y_card_back y_card_pic">
+								<img src="../../../images/y-card-back.png" alt="" />
+							</div>
+							<div class="y_photot_btn"></div>
+							<p class="fz32 c00 pt20">身份证背面照</p>
+							<div class="y_card_people y_card_pic">
+								<img src="../../../images/y-card-people.png" alt="" />
+							</div>
+							<div class="y_photot_btn"></div>
+							<p class="fz32 c00 pt20">本人手持身份证照</p>
+						</div>
+						<button class="btn btn-green mb30" type="button" @tap="attesSubmit">提交实名认证</button>
+					</form>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			new	Vue({
+				el:"#app",
+				methods:{
+					attesSubmit(){
+						mui.openWindow({
+						    url: './attesSuccess.html', 
+						    id:'attesSuccess'
+						});
+					}
+				}
+			})
+		</script>
+	</body>
+</html>

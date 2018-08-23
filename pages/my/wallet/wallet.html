@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+    	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link rel="stylesheet" href="../../../css/mui.min.css" />
+		<link rel="stylesheet" href="../../../css/base.css" />
+		<link rel="stylesheet" href="../../../css/main.css" />
+		<script type="text/javascript" src="../../../js/e_fish.js" ></script>
+		<script type="text/javascript" src="../../../js/mui.min.js" ></script>
+		<script type="text/javascript" src="../../../js/vue.js" ></script>
+	</head>
+	<style>
+		.mui-table-view-cell{
+			padding: 0;
+			padding-left: 0.3rem;
+		}
+		.mui-table-view-cell:after{
+			background-color: transparent;
+		}
+	</style>
+	<body id="e_fish_container">
+		<div id="app">
+			<div class="header_wallet header_hight plr30">
+				<div class="ub ub-pac header_wallet_hd">
+					<a id="icon-menu" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left cff"></a>
+					<h2 class="ub-f1 tx-c fz36">我的钱包</h2>
+					<div class="fz32 y_wallet_right" @tap="walletDetailed">明细</div>
+				</div>
+				<p class="header_wallet_tip">账户余额（元）</p>
+				<p class="tx-c header_wallet_money">504.26</p>
+			</div>
+			<div class="y_container">
+				<div class="y_wallet">
+					<div class="mui-table-view-cell">
+						<div class="bb ptb35 ub ub-ac pr30" @tap="payroll">
+							<div class="y_payroll y_wallet_icon"></div>
+							<div class="ub-f1 plr30">
+								<p class="fz32 c33">工资条</p>
+								<p class="fz28 c99">查看各项目工资条</p>
+							</div>
+							<div class="y_arrow"></div>
+						</div>
+					</div>
+					<div class="mui-table-view-cell">
+						<div class="bb ptb35 ub ub-ac pr30" @tap="foward">
+							<div class="y_forward y_wallet_icon"></div>
+							<div class="ub-f1 plr30">
+								<p class="fz32 c33">申请提现</p>
+								<p class="fz28 c99">提现到你已添加的银行卡</p>
+							</div>
+							<div class="y_arrow"></div>
+						</div>
+					</div>
+					<div class="mui-table-view-cell">
+						<div class="bb ptb35 ub ub-ac pr30" @tap="manageCard">
+							<div class="y_bank y_wallet_icon"></div>
+							<div class="ub-f1 plr30">
+								<p class="fz32 c33">管理银行卡</p>
+								<p class="fz28 c99">银行卡管理，新增、删除银行卡等</p>
+							</div>
+							<div class="y_arrow"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+			new Vue({
+				el:"#app",
+				methods:{
+					walletDetailed(){
+						mui.openWindow({
+						    url: './walletDetailed.html', 
+						    id:'walletDetailed'
+						});
+					},
+					payroll(){
+						mui.openWindow({
+						    url: './payroll.html', 
+						    id:'payroll'
+						});
+					},
+					foward(){
+						mui.openWindow({
+						    url: './foward.html', 
+						    id:'foward'
+						});
+					},
+					manageCard(){
+						mui.openWindow({
+						    url: './manageCard.html', 
+						    id:'manageCard'
+						});
+					}
+				}
+			})
+		</script>
+	</body>
+</html>

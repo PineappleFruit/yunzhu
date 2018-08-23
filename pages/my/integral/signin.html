@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+    	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link rel="stylesheet" href="../../../css/mui.min.css" />
+		<link rel="stylesheet" href="../../../css/base.css" />
+		<link rel="stylesheet" href="../../../css/main.css" />
+		<script type="text/javascript" src="../../../js/e_fish.js" ></script>
+		<script type="text/javascript" src="../../../js/mui.min.js" ></script>
+		<script type="text/javascript" src="../../../js/vue.js" ></script>
+	</head>
+	<style>
+		.signheader {
+			position: relative;
+			/*background: #f8f8f8;*/
+		}
+		
+		.signheader img {
+			width: 100%;
+		}
+		
+		.head {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			color: #fff;
+		}
+		
+		.navBack {
+			padding: 27px 15px 7px 15px;
+			/*background: linear-gradient(to right, #95D363 , #5BB048);*/
+			display: flex;
+			justify-content: space-between;
+			font-weight: 500;
+		}
+		
+		.navBack a {
+			color: #fff;
+		}
+		
+		.salaryAllTitle {
+			text-align: center;
+			margin-top: 10px;
+			font-size: 15px;
+		}
+		
+		.salaryAllTitle .salaryAllTitle-content {
+			display: inline-block;
+			width: 140px;
+			position: relative;
+		}
+		
+		.salaryAllTitle .salaryAllTitle .content-tian {
+			position: absolute;
+			left: 0;
+			top: 90px;
+			right: 0;
+			bottom: 0;
+			color: #63B44F;
+		}
+		
+		.salaryAllTitle .salaryAllTitle .content-tian img {
+			width: 100%;
+			vertical-align: text-bottom;
+		}
+		
+		.salaryAllTitle .salaryAllTitle .content-tian span {
+			font-size: 11px;
+		}
+		
+		.salaryAll {
+			text-align: center;
+			font-size: 14px;
+			margin-top: 5px;
+			font-weight: 500;
+		}
+		
+		.salaryAll>span {
+			display: inline-block;
+			background: #4AB224;
+			padding: 0.4rem 1rem;
+			border-radius: 20px;
+		}
+		
+		.salaryAll-a {
+			text-align: center;
+			font-size: 14px;
+			margin-top: 10px;
+			text-decoration: underline;
+		}
+		
+		.salaryAll-a>a {
+			color: #E4F314;
+		}
+		
+		.salaryAll-bottom {
+			margin-top: 7rem;
+			color: #333;
+			text-align: center;
+		}
+		
+		.salaryAll-bottom>p {
+			color: #5cb048;
+			font-size: 16px;
+			font-weight: 600;
+		}
+		
+		.salary_ul {
+			color: #666;
+			font-size: 14px;
+			line-height: 1.6rem;
+		}
+	</style>
+	<body id="">
+		<div class="signheader" id="app">
+			<img src="../../../images/signInBG.png">
+			<div class="head">
+				<div class="navBack">
+					<i class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></i>
+				</div>
+				<div class="salaryAllTitle">
+					<div v-if="sign!=1" class="salaryAllTitle-content" @click="signin">
+						<img src="../../../images/signIns.png">
+					</div>
+					 <div v-else class="salaryAllTitle-content">
+		                <img src="../../../images/signInSuccess.png" >
+		                <div class="content-tian">连续{{ day }}天</div>
+		            </div> 
+				</div>
+				
+				<div v-if="sign != 1" class="salaryAll">
+					<span v-for="val in sign_rule" v-if='day>=val.min_day && day<=val.max_day'>
+						今日签到可获得{{val.score}}积分
+					</span>
+					<span v-if="max_day<=day">今日签到可获得{{max_score}}积分</span>
+				</div>
+				<div class="salaryAll-a" to="user/integral/index" title="none">查看我的积分</div>
+				<div class="salaryAll-bottom">
+					<p>签到规则</p>
+					<div>
+						<ul class="salary_ul">
+							<li v-for="val in sign_rule">
+								<p v-if="val.max_day>0">连续签到{{val.min_day}}-{{val.max_day}}天，每天可获得{{val.score}}积分;</p>
+								<p v-if="val.max_day==0 || val.max_day>999">连续签到{{val.min_day-1}}天以上，每天可获得{{val.score}}积分;</p>
+							</li>
+							
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script>
+		new Vue({
+			el:'#app',
+			data: function () {
+			    return {
+			        day:0,
+			        sign:0,
+			        sign_rule:[],
+			        max_day:0,
+			        max_score:0
+			    }
+			},
+		})
+	</script>
+</html>
