@@ -12,7 +12,6 @@
 		<link rel="stylesheet" href="../../css/main.css" />
 		<script type="text/javascript" src="../../js/e_fish.js"></script>
 		<script type="text/javascript" src="../../js/mui.min.js"></script>
-		<script type="text/javascript" src="../../js/vue.js"></script>
 	</head>
 	<style>
 		.mui-table-view:before {
@@ -54,20 +53,20 @@
 					<div class="mui-indicator"></div>
 				</div>
 			</div> 
-			<div class="y_type ub ptb35 bb">
-				<div class="y_type_item ub-f1 tx-c">
+			<div class="y_type ub ub-ac bb ">
+				<div class="y_type_item ub-f1 ub ub-ver ub-pac mui-table-view-cell">
 					<div class="y_dispatch y_icon"></div>
 					<p class="pt20 fz28 c33">技能派单</p>
 				</div>
-				<div class="y_type_item ub-f1 tx-c">
+				<div class="y_type_item ub-f1 ub ub-ver ub-pac mui-table-view-cell">
 					<div class="y_robbing y_icon"></div>
 					<p class="pt20 fz28 c33">我的抢单</p>
 				</div>
-				<div class="y_type_item ub-f1 tx-c">
+				<div class="y_type_item ub-f1 ub ub-ver ub-pac mui-table-view-cell">
 					<div class="y_project y_icon"></div>
 					<p class="pt20 fz28 c33">我的项目</p>
 				</div>
-				<div class="y_type_item ub-f1 tx-c">
+				<div class="y_type_item ub-f1 ub ub-ver ub-pac mui-table-view-cell">
 					<div class="y_signin y_icon"></div>
 					<p class="pt20 fz28 c33">每日签到</p>
 				</div>
@@ -75,99 +74,8 @@
 			<!--下拉刷新容器-->
 			<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
 				<div class="mui-scroll">
-					<!--数据列表-->
 					<ul class="mui-table-view mui-table-view-chevron">
-						<li class="mui-table-view-cell">
-							<div class="bb plr30 ptb25">
-								<div class="ub">
-									<div class="ub-f1">
-										<p class="fz32 c33 fw-b">打桩工</p>
-										<div class="fz24 c66 y_label pt20">
-											<span>新疆-和田</span>
-											<span class="cc7">|</span>
-											<span>持证</span>
-											<span class="cc7">|</span>
-											<span>男</span>
-											<span class="cc7">|</span>
-											<span>28-40岁</span>
-										</div>
-										<ul class="y_tag_list clear pt30 mb30">
-											<li>保险</li>
-											<li>按月发放</li>
-											<li>包吃住</li>
-										</ul>
-									</div>
-									<div class="tx-r">
-										<p class="fz28 c-red fw-b">8000元/月</p>
-										<p class="fz24 c66 pt20">2018年6月11日</p>
-									</div>
-								</div>
-								<p class="fz28 c33">房建工程项目</p>
-								<p class="fz28 c99">新疆天坤昊泰工程项目管理有限公司</p>
-							</div>
-							<div class="y_full y_icon y_classify"></div>
-						</li>
-						<li class="mui-table-view-cell">
-							<div class="bb plr30 ptb25">
-								<div class="ub">
-									<div class="ub-f1">
-										<p class="fz32 c33 fw-b">打桩工</p>
-										<div class="fz24 c66 y_label pt20">
-											<span>新疆-和田</span>
-											<span class="cc7">|</span>
-											<span>持证</span>
-											<span class="cc7">|</span>
-											<span>男</span>
-											<span class="cc7">|</span>
-											<span>28-40岁</span>
-										</div>
-										<ul class="y_tag_list clear pt30 mb30">
-											<li>保险</li>
-											<li>按月发放</li>
-											<li>包吃住</li>
-										</ul>
-									</div>
-									<div class="tx-r">
-										<p class="fz28 c-red fw-b">8000元/月</p>
-										<p class="fz24 c66 pt20">2018年6月11日</p>
-									</div>
-								</div>
-								<p class="fz28 c33">房建工程项目</p>
-								<p class="fz28 c99">新疆天坤昊泰工程项目管理有限公司</p>
-							</div>
-							<div class="y_full y_icon y_classify"></div>
-						</li>
-						<li class="mui-table-view-cell">
-							<div class="bb plr30 ptb25">
-								<div class="ub">
-									<div class="ub-f1">
-										<p class="fz32 c33 fw-b">打桩工</p>
-										<div class="fz24 c66 y_label pt20">
-											<span>新疆-和田</span>
-											<span class="cc7">|</span>
-											<span>持证</span>
-											<span class="cc7">|</span>
-											<span>男</span>
-											<span class="cc7">|</span>
-											<span>28-40岁</span>
-										</div>
-										<ul class="y_tag_list clear pt30 mb30">
-											<li>保险</li>
-											<li>按月发放</li>
-											<li>包吃住</li>
-										</ul>
-									</div>
-									<div class="tx-r">
-										<p class="fz28 c-red fw-b">8000元/月</p>
-										<p class="fz24 c66 pt20">2018年6月11日</p>
-									</div>
-								</div>
-								<p class="fz28 c33">房建工程项目</p>
-								<p class="fz28 c99">新疆天坤昊泰工程项目管理有限公司</p>
-							</div>
-							<div class="y_full y_icon y_classify"></div>
-						</li>
-						<li class="mui-table-view-cell">
+						<li class="mui-table-view-cell" to="project/projectDefault" title='none'>
 							<div class="bb plr30 ptb25">
 								<div class="ub">
 									<div class="ub-f1">
@@ -270,7 +178,10 @@
 							container: '#pullrefresh',
 							down: {
 								style:'circle',
-								callback: function() {}.bind(this)
+								callback: function() {
+									alert('刷新完成')
+									mui('#pullrefresh').pullRefresh().endPulldown();
+								}.bind(this)
 							},
 							up: {
 								auto:true,

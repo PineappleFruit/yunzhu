@@ -41,7 +41,7 @@
 	var subpage_style = {
 		top: '0px',
 		bottom: '51px',
-		color: '#777'
+		color: '#777',
 	};
 	var activeTab = subpages[0];
 	//创建子页面，首个选项卡页面显示，其它均隐藏；
@@ -69,37 +69,36 @@
 			activeTab = targetTab;
 		});
 	});
-	var token = localStorage.getItem("Name");;
-	
+	var token = localStorage.getItem("token");;
 //	判断是否登陆 
-//	if(token == null) {
-//		var page = {
-//			"url": "my/login/login",
-//			"title": "none",
-//			"ani": "none"
-//		};
-//		mui.plusReady(function() {
-//			mui.openWindow({
-//			    url: 'page/my/login/login.html', 
-//			    id:'info'
-//			});
-//		});
-//	}
+	if(token == null) {
+		var page = {
+			"url": "my/login/login",
+			"title": "none",
+			"ani": "none"
+		};
+		mui.plusReady(function() {
+			mui.openWindow({
+			    url: 'page/my/login/login.html', 
+			    id:'info'
+			});
+		});
+	}
 	//前台进入后台
-//	document.addEventListener("pause", function() {
-//		App.setItem('isBackground', true);
-//		plus.push.setAutoNotification(true);
-//	}, false);
-//	//后台进入前台
-//	document.addEventListener("resume", function() {
-//		App.setItem('isBackground', false);
-//		plus.push.setAutoNotification(false);
-//	}, false);
-//	/**
-//	 * 网络变化事件
-//	 */
-//	document.addEventListener("netchange", function() {
-//		App.networkStatus();
-//	}, false);
+	document.addEventListener("pause", function() {
+		App.setItem('isBackground', true);
+		plus.push.setAutoNotification(true);
+	}, false);
+	//后台进入前台
+	document.addEventListener("resume", function() {
+		App.setItem('isBackground', false);
+		plus.push.setAutoNotification(false);
+	}, false);
+	/**
+	 * 网络变化事件
+	 */
+	document.addEventListener("netchange", function() {
+		App.networkStatus();
+	}, false);
 </script>
 </html>

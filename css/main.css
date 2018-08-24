@@ -787,8 +787,11 @@ input:-ms-input-placeholder{  /* Internet Explorer 10-11 */
 	background: green;
 }
 .y_type{
-	height: 2.24rem;
+	
 	background: #fff;
+}
+.y_type_item{
+	height: 2.24rem;
 }
 .y_type.active{
 	position: fixed;
@@ -837,11 +840,13 @@ input:-ms-input-placeholder{  /* Internet Explorer 10-11 */
 .y_collect{
 	z-index: 100;
 	width: 0.5rem;
+	height: 0.55rem;
 	background-image: url(../images/y-collect.png);
 	background-size: 0.35rem 0.33rem;
-	background-position: right center;
+	background-position: center center;
 	position: absolute;
 	right: 1rem;
+	padding-left: 0;
 }
 .y_collect.active{
 	background-image: url(../images/y-collect-checked.png);
@@ -1063,3 +1068,6 @@ i.y_rotete{
 	background-repeat: no-repeat;
 	border-color: #53a656;
 }
+ .mui-input-row .mui-input-password~.mui-icon-eye.mui-active{
+ 	color: #53a656;
+ }

@@ -30,46 +30,40 @@
 	</style>
 	<body id="e_fish_container">
 		<div id="app">
-			<header class="mui-bar mui-bar-nav mui-bar-transparent header">
-				<a id="icon-menu" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-				<h2 class="mui-title">技能工种</h2>
-			</header>
-			<div class="fix_hd">
-				<ul id="OA_task_1" class="mui-table-view">
-					<li class="mui-table-view-cell">
-						<div class="mui-slider-right mui-disabled">
-							<a class="mui-btn mui-btn-red">删除</a>
-						</div>
-						<div class="mui-slider-handle">
-							<div class="ub ub-ac plr30 ptb25">
-								<div class="ub-f1">
-									<p class="fz32 c33">项目经理</p>
-									<p class="fz28 c66">证书：高级木工（待认证）</p>
-								</div>
-								<span class="fz32 c-red">100-300元/立方</span>
-							</div>
-						</div>
-					</li>
-					<li class="mui-table-view-cell">
-						<div class="mui-slider-right mui-disabled">
-							<a class="mui-btn mui-btn-red">删除</a>
-						</div>
-						<div class="mui-slider-handle">
-							<div class="ub ub-ac plr30 ptb25">
-								<div class="ub-f1">
-									<p class="fz32 c33">项目经理</p>
-									<p class="fz28 c66">证书：高级木工（待认证）</p>
-								</div>
-								<span class="fz32 c-red">100-300元/立方</span>
-							</div>
-						</div>
-					</li>
-				</ul>
-				<div class="y_skill_list">
-					<div class="y_add_skill ub ub-pac" @tap="addSkill">
-						<div class="y_add_green y_icon"></div>
-						<p class="fz32 c-green pl20">添加技能</p>
+			<ul id="OA_task_1" class="mui-table-view">
+				<li class="mui-table-view-cell">
+					<div class="mui-slider-right mui-disabled">
+						<a class="mui-btn mui-btn-red">删除</a>
 					</div>
+					<div class="mui-slider-handle">
+						<div class="ub ub-ac plr30 ptb25">
+							<div class="ub-f1">
+								<p class="fz32 c33">项目经理</p>
+								<p class="fz28 c66">证书：高级木工（待认证）</p>
+							</div>
+							<span class="fz32 c-red">100-300元/立方</span>
+						</div>
+					</div>
+				</li>
+				<li class="mui-table-view-cell">
+					<div class="mui-slider-right mui-disabled">
+						<a class="mui-btn mui-btn-red">删除</a>
+					</div>
+					<div class="mui-slider-handle">
+						<div class="ub ub-ac plr30 ptb25">
+							<div class="ub-f1">
+								<p class="fz32 c33">项目经理</p>
+								<p class="fz28 c66">证书：高级木工（待认证）</p>
+							</div>
+							<span class="fz32 c-red">100-300元/立方</span>
+						</div>
+					</div>
+				</li>
+			</ul>
+			<div class="y_skill_list">
+				<div class="y_add_skill ub ub-pac" to="my/skill/addSkill" title="none">
+					<div class="y_add_green y_icon"></div>
+					<p class="fz32 c-green pl20">添加技能</p>
 				</div>
 			</div>
 		</div>
@@ -77,12 +71,7 @@
 			new Vue({
 				el:'#app',
 				methods:{
-					addSkill(){
-						mui.openWindow({
-						    url: './addSkill.html', 
-						    id:'addSkill'
-						});
-					}
+					
 				}
 			})
 		</script>

@@ -10,7 +10,6 @@
 		<link rel="stylesheet" href="http://at.alicdn.com/t/font_789951_jgy9npcg4pe.css" />
 		<script type="text/javascript" src="../../../js/e_fish.js" ></script>
 		<script type="text/javascript" src="../../../js/mui.min.js" ></script>
-		<script type="text/javascript" src="../../../js/vue.js" ></script>
 	</head>
 	<style>
 		.mui-table-view-cell{
@@ -23,90 +22,84 @@
 	</style>
 	<body id="e_fish_container">
 		<div id="app">
-			<header class="mui-bar mui-bar-nav mui-bar-transparent header">
-				<a id="icon-menu" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-				<h2 class="mui-title">个人资料</h2>
-			</header>
-			<div class="fix_hd">
-				<div class="y_container bg-grey pt20">
-					<div class="bg-ff">
-						<div class="mui-table-view-cell">
-							<div class="bb ptb20 ub ub-ac pr30">
-								<p class="fz32 c33 y_title">头像</p>
-								<div class="ub-f1"></div>
-								<div class="y_head_small">
-									<img src="../../../images/y-head-small.png" alt="" />
-								</div>
-								<div class="y_arrow"></div>
+			<div class="y_container bg-grey pt20">
+				<div class="bg-ff">
+					<div class="mui-table-view-cell">
+						<div class="bb ptb20 ub ub-ac pr30">
+							<p class="fz32 c33 y_title">头像</p>
+							<div class="ub-f1"></div>
+							<div class="y_head_small">
+								<img src="../../../images/y-head-small.png" alt="" />
+							</div>
+							<div class="y_arrow"></div>
+						</div>
+					</div>
+					<div class="mui-table-view-cell">
+						<div class="bb ptb30 ub ub-ac pr30" v-if="isAttestation == 1" to="my/userInfo/attes" title="实名认证">
+							<p class="fz32 c33 y_title">实名认证</p>
+							<div class="ub-f1"></div>
+							<p class="c-red fz28">未认证</p>
+							<div class="y_arrow"></div>
+						</div>
+					</div>
+					<div class="mui-table-view-cell">
+						<div class="bb ptb30 ub ub-ac pr30" v-else-if="isAttestation == 2">
+							<p class="fz32 c33 y_title">实名认证</p>
+							<div class="ub-f1"></div>
+							<div class="y_save ub ub-pac">
+								<i class="y_save_icon"></i>
+								<p class="fz28 c-green ml10">已认证</p>
 							</div>
 						</div>
-						<div class="mui-table-view-cell">
-							<div class="bb ptb30 ub ub-ac pr30" v-if="isAttestation == 1" @tap="goAttestation">
-								<p class="fz32 c33 y_title">实名认证</p>
-								<div class="ub-f1"></div>
-								<p class="c-red fz28">未认证</p>
-								<div class="y_arrow"></div>
-							</div>
+					</div>
+					<div class="mui-table-view-cell">
+						<div class="bb ptb30 ub ub-ac pr30" v-else-if="isAttestation == 3">
+							<p class="fz32 c33 y_title">实名认证</p>
+							<div class="ub-f1 c-yellow tx-r">审核中</div>
+							<div class="y_arrow"></div>
 						</div>
-						<div class="mui-table-view-cell">
-							<div class="bb ptb30 ub ub-ac pr30" v-else-if="isAttestation == 2">
-								<p class="fz32 c33 y_title">实名认证</p>
-								<div class="ub-f1"></div>
-								<div class="y_save ub ub-pac">
-									<i class="y_save_icon"></i>
-									<p class="fz28 c-green ml10">已认证</p>
-								</div>
-							</div>
+					</div>
+					<div class="mui-table-view-cell">
+						<div class="bb ptb30 ub ub-ac pr30" v-else="isAttestation == 4">
+							<p class="fz32 c33 y_title">实名认证</p>
+							<div class="ub-f1 c-red2 tx-r">认证失败（点击查看原因）</div>
+							<div class="y_arrow"></div>
 						</div>
-						<div class="mui-table-view-cell">
-							<div class="bb ptb30 ub ub-ac pr30" v-else-if="isAttestation == 3">
-								<p class="fz32 c33 y_title">实名认证</p>
-								<div class="ub-f1 c-yellow tx-r">审核中</div>
-								<div class="y_arrow"></div>
-							</div>
+					</div>
+					<div class="mui-table-view-cell">
+						<div class="bb ptb30 ub ub-ac pr30" v-if="isAttestation != 1">
+							<p class="fz32 c33 y_title">真实姓名</p>
+							<div class="ub-f1 tx-r c99">陈某某</div>
 						</div>
-						<div class="mui-table-view-cell">
-							<div class="bb ptb30 ub ub-ac pr30" v-else="isAttestation == 4">
-								<p class="fz32 c33 y_title">实名认证</p>
-								<div class="ub-f1 c-red2 tx-r">认证失败（点击查看原因）</div>
-								<div class="y_arrow"></div>
-							</div>
+					</div>
+					<div class="mui-table-view-cell">
+						<div class="bb ptb30 ub ub-ac pr30">
+							<p class="fz32 c33 y_title">手机号</p>
+							<div class="ub-f1">13699448441</div>
+							<p class="c-green fz28" to="my/userInfo/changePhone" title="修改手机号">更换手机</p>
+							<div class="y_arrow"></div>
 						</div>
-						<div class="mui-table-view-cell">
-							<div class="bb ptb30 ub ub-ac pr30" v-if="isAttestation != 1">
-								<p class="fz32 c33 y_title">真实姓名</p>
-								<div class="ub-f1 tx-r c99">陈某某</div>
-							</div>
+					</div>
+					<div class="mui-table-view-cell">
+						<div class="bb ptb30 ub ub-ac pr30">
+							<p class="fz32 c33 y_title">手机号</p>
+							<div class="ub-f1 tx-r c99">13699448441</div>
+							<div class="y_arrow"></div>
 						</div>
-						<div class="mui-table-view-cell">
-							<div class="bb ptb30 ub ub-ac pr30">
-								<p class="fz32 c33 y_title">手机号</p>
-								<div class="ub-f1">13699448441</div>
-								<p class="c-green fz28" @tap="changePhone">更换手机</p>
-								<div class="y_arrow"></div>
-							</div>
+					</div>
+					<div class="mui-table-view-cell">
+						<div class="bb ptb30 ub ub-ac pr30" to="my/userInfo/address" title="现居地">
+							<p class="fz32 c33 y_title">现居地</p>
+							<div class="ub-f1"></div>
+							<p class="c99 fz28">未设置</p>
+							<div class="y_arrow"></div>
 						</div>
-						<div class="mui-table-view-cell">
-							<div class="bb ptb30 ub ub-ac pr30">
-								<p class="fz32 c33 y_title">手机号</p>
-								<div class="ub-f1 tx-r c99">13699448441</div>
-								<div class="y_arrow"></div>
-							</div>
-						</div>
-						<div class="mui-table-view-cell">
-							<div class="bb ptb30 ub ub-ac pr30" @tap="address">
-								<p class="fz32 c33 y_title">现居地</p>
-								<div class="ub-f1"></div>
-								<p class="c99 fz28">未设置</p>
-								<div class="y_arrow"></div>
-							</div>
-						</div>
-						<div class="mui-table-view-cell">
-							<div class="bb ptb30 ub ub-ac pr30">
-								<p class="fz32 c33 y_title">现居地</p>
-								<div class="ub-f1 ub-te c99">成都市高新区天府大道欣欣小区21栋...</div>
-								<div class="y_arrow"></div>
-							</div>
+					</div>
+					<div class="mui-table-view-cell">
+						<div class="bb ptb30 ub ub-ac pr30">
+							<p class="fz32 c33 y_title">现居地</p>
+							<div class="ub-f1 ub-te c99">成都市高新区天府大道欣欣小区21栋...</div>
+							<div class="y_arrow"></div>
 						</div>
 					</div>
 				</div>
@@ -119,24 +112,7 @@
 					isAttestation : 1
 				},
 				methods:{
-					goAttestation(){
-						mui.openWindow({
-						    url: './attes.html', 
-						    id:'attes'
-						});
-					},
-					changePhone(){
-						mui.openWindow({
-						    url: './changePhone.html', 
-						    id:'changePhone'
-						});
-					},
-					address(){
-						mui.openWindow({
-						    url: './address.html', 
-						    id:'address'
-						});
-					}
+					
 				},
 				mounted:function(){
 					

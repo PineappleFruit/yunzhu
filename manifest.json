@@ -141,7 +141,8 @@
 					"pages/find/index.html",
 					"pages/my/login/login.html",
 					"page/my/index.html",
-					"page/find/index.html"
+					"page/find/index.html",
+					"page/my/login/login.html"
 				],
 				"priority": 0
 			},
@@ -299,7 +300,8 @@
 					"page/my/collection/index.html",
 					"page/my/skill/index.html",
 					"page/my/userInfo/index.html",
-					"page/my/wallet/redPackage.html"
+					"page/my/wallet/redPackage.html",
+					"page/my/follow/index.html"
 				],
 				"priority": 0
 			},
@@ -350,7 +352,8 @@
 				"resources": [],
 				"refer": [
 					"page/my/userInfo/address.html",
-					"page/my/userInfo/attes.html"
+					"page/my/userInfo/attes.html",
+					"page/my/userInfo/changePhone.html"
 				],
 				"priority": 0
 			},
@@ -359,6 +362,47 @@
 				"refer": [
 					"page/my/integral/share.html",
 					"page/my/integral/signin.html"
+				],
+				"priority": 0
+			},
+			"page/my/skill/addSkill.html": {
+				"resources": [],
+				"refer": [
+					"page/my/skill/chooseSkill.html"
+				],
+				"priority": 0
+			},
+			"page/my/wallet/wallet.html": {
+				"resources": [],
+				"refer": [
+					"page/my/wallet/payroll.html",
+					"page/my/wallet/walletDetailed.html",
+					"page/my/wallet/manageCard.html"
+				],
+				"priority": 0
+			},
+			"page/my/setting/index.html": {
+				"resources": [],
+				"refer": [
+					"page/my/setting/modifyPwd.html",
+					"page/my/setting/feedback.html",
+					"page/my/setting/contact.html",
+					"page/my/setting/aboutUs.html",
+					"page/my/login/login.html"
+				],
+				"priority": 0
+			},
+			"page/project/index.html": {
+				"resources": [],
+				"refer": [
+					"page/project/projectDefault.html"
+				],
+				"priority": 0
+			},
+			"page/my/login/login.html": {
+				"resources": [],
+				"refer": [
+					"page/my/login/messageCode.html"
 				],
 				"priority": 0
 			}

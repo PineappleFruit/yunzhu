@@ -15,30 +15,24 @@
 	</head>
 	<body id="e_fish_container">
 		<div id="app">
-			<header class="mui-bar mui-bar-nav mui-bar-transparent header">
-				<a id="icon-menu" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-				<h2 class="mui-title">修改密码</h2>
-			</header>
-			<div class="fix_hd">
-				<form action="" method="" class="plr40">
-					<div class="y_message">
-						<div class="mui-input-row y_input_item">
-					    	<input type="password" class="mui-input-password"  placeholder="请输入原密码">
-					    </div> 
-					    <div class="mui-input-row y_input_item">
-					    	<input type="password" class="mui-input-password" placeholder="请输入新密码">
-					    </div> 
-					    <div class="mui-input-row y_input_item">
-					    	<input type="password" class="mui-input-password" placeholder="请确认新密码">
-					    </div> 
-		                <div class="y_input_item ub ub-ac">
-	                        <input type="text" placeholder="请输入验证码" class="ub-f1">
-	                        <p class="y_getcode">获取验证码</p>
-	                    </div>
-					</div>
-                    <button class="btn btn-green" type="button" @tap="modifySuccess">确定修改</button>
-				</form>
-			</div>
+			<form action="" method="" class="plr40">
+				<div class="y_message">
+					<div class="mui-input-row y_input_item">
+				    	<input type="password" class="mui-input-password"  placeholder="请输入原密码">
+				    </div> 
+				    <div class="mui-input-row y_input_item">
+				    	<input type="password" class="mui-input-password" placeholder="请输入新密码">
+				    </div> 
+				    <div class="mui-input-row y_input_item">
+				    	<input type="password" class="mui-input-password" placeholder="请确认新密码">
+				    </div> 
+	                <div class="y_input_item ub ub-ac">
+                        <input type="text" placeholder="请输入验证码" class="ub-f1">
+                        <p class="y_getcode">获取验证码</p>
+                    </div>
+				</div>
+                <button class="btn btn-green" type="button" @tap="modifySuccess">确定修改</button>
+			</form>
 		</div>
 		<script>
 			new Vue({

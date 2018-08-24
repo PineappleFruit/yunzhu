@@ -23,62 +23,51 @@
 	</style>
 	<body id="e_fish_container" class="bg-grey">
 		<div id="app">
-			<header class="mui-bar mui-bar-nav mui-bar-transparent header">
-				<a id="icon-menu" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-				<h2 class="mui-title">收藏列表</h2>
-			</header>
-			<div class="fix_hd">
-				<div class="y_informa">
-					<div class="mui-table-view-cell">
-						<div class="ub ub-pac plr30 bb ptb30" @tap="collectInfo">
-							<div class="ub-f1 pr40 ub-te2">
-								<p class="fz32 c33 fw-b pb10 ub-te">桑拿天，防暑降温有妙招</p>
-								<p class="ub-te2 fz28 c66 mb20">盛夏已入尾声，不少地方高温天气 已经持续半个月之久...</p>
-								<p class="fz24 c99">2018-04-28</p>
-							</div>
-							<div class="y_informa_pic">
-								<img src="../../../images/y-information-pic.png"/>
-							</div>
+			<div class="y_informa">
+				<div class="mui-table-view-cell">
+					<div class="ub ub-pac plr30 bb ptb30" to="my/collection/collectInfo" title="none">
+						<div class="ub-f1 pr40 ub-te2">
+							<p class="fz32 c33 fw-b pb10 ub-te">桑拿天，防暑降温有妙招</p>
+							<p class="ub-te2 fz28 c66 mb20">盛夏已入尾声，不少地方高温天气 已经持续半个月之久...</p>
+							<p class="fz24 c99">2018-04-28</p>
+						</div>
+						<div class="y_informa_pic">
+							<img src="../../../images/y-information-pic.png"/>
 						</div>
 					</div>
-					<div class="mui-table-view-cell">
-						<div class="ub ub-pac plr30 bb ptb30">
-							<div class="ub-f1 pr40 ub-te2">
-								<p class="fz32 c33 fw-b pb10 ub-te">桑拿天，防暑降温有妙招</p>
-								<p class="ub-te2 fz28 c66 mb20">盛夏已入尾声，不少地方高温天气 已经持续半个月之久...</p>
-								<p class="fz24 c99">2018-04-28</p>
-							</div>
-							<div class="y_informa_pic">
-								<img src="../../../images/y-information-pic.png"/>
-							</div>
-						</div>
-					</div>
-					<div class="mui-table-view-cell">
-						<div class="ub ub-pac plr30 bb ptb30">
-							<div class="ub-f1 pr40 ub-te2">
-								<p class="fz32 c33 fw-b pb10 ub-te">桑拿天，防暑降温有妙招</p>
-								<p class="ub-te2 fz28 c66 mb20">盛夏已入尾声，不少地方高温天气 已经持续半个月之久...</p>
-								<p class="fz24 c99">2018-04-28</p>
-							</div>
-							<div class="y_informa_pic">
-								<img src="../../../images/y-information-pic.png"/>
-							</div>
-						</div>
-					</div>
-					
 				</div>
+				<div class="mui-table-view-cell">
+					<div class="ub ub-pac plr30 bb ptb30">
+						<div class="ub-f1 pr40 ub-te2">
+							<p class="fz32 c33 fw-b pb10 ub-te">桑拿天，防暑降温有妙招</p>
+							<p class="ub-te2 fz28 c66 mb20">盛夏已入尾声，不少地方高温天气 已经持续半个月之久...</p>
+							<p class="fz24 c99">2018-04-28</p>
+						</div>
+						<div class="y_informa_pic">
+							<img src="../../../images/y-information-pic.png"/>
+						</div>
+					</div>
+				</div>
+				<div class="mui-table-view-cell">
+					<div class="ub ub-pac plr30 bb ptb30">
+						<div class="ub-f1 pr40 ub-te2">
+							<p class="fz32 c33 fw-b pb10 ub-te">桑拿天，防暑降温有妙招</p>
+							<p class="ub-te2 fz28 c66 mb20">盛夏已入尾声，不少地方高温天气 已经持续半个月之久...</p>
+							<p class="fz24 c99">2018-04-28</p>
+						</div>
+						<div class="y_informa_pic">
+							<img src="../../../images/y-information-pic.png"/>
+						</div>
+					</div>
+				</div>
+				
 			</div>
 		</div>
 		<script>
 			new Vue({
 				el:'#app',
 				methods:{
-					collectInfo(){
-						mui.openWindow({
-						    url: './collectInfo.html', 
-						    id:'collectInfo'
-						});
-					}
+					
 				}
 			})
 		</script>

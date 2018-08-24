@@ -12,7 +12,8 @@
 			"pages/my/login/login.html",
 			"page/my/index.html",
 			"page/find/index.html",
-			"page/project/index.html"
+			"page/project/index.html",
+			"page/my/login/login.html"
 		]
 	},
 	"pages/my/login/login.html": {
@@ -134,7 +135,8 @@
 			"page/my/collection/index.html",
 			"page/my/skill/index.html",
 			"page/my/userInfo/index.html",
-			"page/my/wallet/redPackage.html"
+			"page/my/wallet/redPackage.html",
+			"page/my/follow/index.html"
 		]
 	},
 	"page/my/collection/index.html": {
@@ -171,13 +173,45 @@
 	"page/my/userInfo/index.html": {
 		"refer": [
 			"page/my/userInfo/address.html",
-			"page/my/userInfo/attes.html"
+			"page/my/userInfo/attes.html",
+			"page/my/userInfo/changePhone.html"
 		]
 	},
 	"page/my/integral/index.html": {
 		"refer": [
 			"page/my/integral/share.html",
 			"page/my/integral/signin.html"
+		]
+	},
+	"page/my/skill/addSkill.html": {
+		"refer": [
+			"page/my/skill/chooseSkill.html"
+		]
+	},
+	"page/my/wallet/wallet.html": {
+		"refer": [
+			"page/my/wallet/payroll.html",
+			"page/my/wallet/walletDetailed.html",
+			"page/my/wallet/manageCard.html"
+		]
+	},
+	"page/my/setting/index.html": {
+		"refer": [
+			"page/my/setting/modifyPwd.html",
+			"page/my/setting/feedback.html",
+			"page/my/setting/contact.html",
+			"page/my/setting/aboutUs.html",
+			"page/my/login/login.html"
+		]
+	},
+	"page/project/index.html": {
+		"refer": [
+			"page/project/projectDefault.html"
+		]
+	},
+	"page/my/login/login.html": {
+		"refer": [
+			"page/my/login/messageCode.html"
 		]
 	}
 }

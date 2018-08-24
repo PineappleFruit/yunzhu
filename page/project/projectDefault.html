@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<title></title>
+		<link rel="stylesheet" href="../../css/mui.min.css" />
+		<link rel="stylesheet" href="../../css/base.css" />
+		<link rel="stylesheet" href="../../css/main.css" />
+		<script type="text/javascript" src="../../js/e_fish.js"></script>
+		<script type="text/javascript" src="../../js/mui.min.js"></script>
+	</head>
+	<style>
+		.y_right{
+			margin-top: 0.2rem;
+		}
+	</style>
+	<body id="e_fish_container">
+		<div id="app">
+			<header class="mui-bar mui-bar-nav mui-bar-transparent header">
+				<a id="icon-menu" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+				<h2 class="mui-title"></h2>
+				<div class="y_collect y_icon y_right" :class="{'active' : isCollect}" @tap="collect"></div>
+				<div class="y_share_hd y_right y_icon" @tap="share"></div>
+			</header>
+			<div class="fix_hd">
+				<div class="y_details_info bg-ff mb20 fix_btn">
+					<div class="ptb25 plr30">
+						<div class="ub">
+							<div class="ub-f1 word-break pr20">
+								<p class="fz44 c33 fw-b word-break">打桩工</p>
+								<div class="fz28 c66 y_label pt20 word-break">
+									<span>新疆-和田</span>
+									<span class="cc7">|</span>
+									<span>持证</span>
+									<span class="cc7">|</span>
+									<span>男</span>
+									<span class="cc7">|</span>
+									<span>28-40岁</span>
+								</div>
+								<ul class="y_tag_list clear fz24 pt30 mb30">
+									<li>保险</li>
+									<li>按月发放</li>
+									<li>包吃住</li>
+								</ul>
+							</div>
+							<div class="tx-r">
+								<p class="fz28 c-red fw-b">8000元/月</p>
+								<p class="fz24 c66 pt20">2018年6月11日</p>
+							</div>
+						</div>
+						<div class="ptb40 bt word-break">
+							<p class="fz28 c33">房建工程项目</p>
+							<p class="fz28 c99 pt20">新疆天坤昊泰工程项目管理有限公司</p>
+						</div>
+						<div class="ptb40 bt">
+							<p class="fz28 c33">开工时间：2018-03-14</p>
+							<div class="ub ub-ac pt20">
+								<p class="fz28 c99  ub-f1 word-break">新疆天坤昊泰工程项目管理有限公司</p>
+								<div class="y_arrow"></div>
+							</div>
+						</div>
+						<div class="ptb40 bt word-break">
+							<p class="fz32 fw-b c33">项目详情</p>
+							<p class="fz28 c66 pt20">项目工期:<span>365日历天</span></p>
+							<p class="fz28 c66 pt20">项目类型:<span>房建项目</span></p>
+							<p class="fz28 c66 pt20">项目法人:<span>石榴籽科技有限公司</span></p>
+							<p class="fz28 c66 pt20">监理公司:<span>闻道有限公司</span></p>
+							<p class="fz28 c66 pt20">项目经理:<span>程峰</span></p>
+						</div>
+						<div class="ptb40 bt word-break">
+							<p class="fz32 fw-b c33">项目描述</p>
+							<p class="fz28 c66 pt20">房建工程项目</p>
+							<p class="fz28 c66 pt20">1.工程规模：新建门诊医技楼及体检中心。</p>
+							<p class="fz28 c66 pt20">项目类型:<span>房建项目</span></p>
+							<p class="fz28 c66 pt20">项目法人:<span>石榴籽科技有限公司</span></p>
+							<p class="fz28 c66 pt20">监理公司:<span>闻道有限公司</span></p>
+							<p class="fz28 c66 pt20">项目经理:<span>程峰</span></p>
+						</div>
+					</div>
+				</div>
+				<div class="fix_box">
+					<button class="btn btn-green" type="button" @tap="robbing">抢单</button>
+				</div>
+			</div>
+		</div>
+		<script>
+			new Vue({
+				el:'#app',
+				data:{
+					isCollect:false
+				},
+				methods:{
+					collect(){
+						this.isCollect = !this.isCollect;
+						if(this.isCollect){
+							 mui.toast('已关注',{ duration:'long', type:'div' }) 
+						}
+					}, 
+					robbing(){
+//						var btnArray = ['我知道了']; 
+//						mui.confirm('可在我的抢单中查看抢单进度', '已抢单', btnArray, function(e) {
+//							if (e.index == 0) {
+//								console.log(e.index)
+//							} else {
+//								return
+//							}
+//						})
+						var btnArray = ['取消','去认证']; 
+						mui.confirm('您还未进行实名认证，不能进行抢单 是否进行认证？', '未实名认证', btnArray, function(e) {
+							if (e.index == 0) {
+								console.log(e.index)
+							} else {
+								return
+							}
+						})
+					},
+					
+				}
+			})
+			var shares = null;
+			var share_data;
+			mui.plusReady(function() {
+				plus.share.getServices(function(s) {
+					shares = {};
+					for(var i in s) {
+						var t = s[i];
+						shares[t.id] = t;
+					}
+				}, function(e) {
+					mui.toast('获取分享服务列表失败：' + e.message);
+				});
+			});
+	
+			/**
+			 * 分享操作
+			 * @param {JSON} sb 分享操作对象s.s为分享通道对象(plus.share.ShareService)
+			 * @param {Boolean} bh 是否分享链接
+			 */
+			function shareAction(sb, bh) {
+				if(!sb || !sb.s) {
+					mui.toast('无效的分享服务！');
+					return;
+				}
+				var msg = {
+					extra: {
+						scene: sb.x
+					}
+				};
+				if(bh) {
+					msg.href = share_data.rule_params.url;
+					msg.title = share_data.rule_params.title;
+					msg.content = share_data.rule_params.content;
+	//				msg.thumbs = [share_data.rule_params.thumb];
+	//				msg.pictures = [share_data.rule_params.thumb];
+	
+				} else {
+					if(pic && pic.realUrl) {
+						msg.pictures = [pic.realUrl];
+					}
+				}
+				// 发送分享
+				if(sb.s.authenticated) {
+					shareMessage(msg, sb.s);
+				} else {
+					sb.s.authorize(function() {
+						shareMessage(msg, sb.s);
+					}, function(e) {
+						mui.toast('认证授权失败：' + e.code + ' - ' + e.message);
+					});
+				}
+			}
+			/**
+			 * 发送分享消息
+			 * @param {JSON} msg
+			 * @param {plus.share.ShareService} s
+			 */
+			function shareMessage(msg, s) {
+				s.send(msg, function() {
+					mui.toast('分享到' + s.description + '成功');
+				}, function(e) {
+					App.log(e);
+					mui.toast('分享到' + s.description + '失败');
+				});
+			}
+	
+			// 分析链接
+			function share() {
+				var shareBts = [];
+				// 更新分享列表
+				var ss = shares['weixin'];
+				ss && ss.nativeClient && (shareBts.push({
+						title: '分享到微信朋友圈',
+						s: ss,
+						x: 'WXSceneTimeline'
+					}),
+					shareBts.push({
+						title: '发送给微信好友',
+						s: ss,
+						x: 'WXSceneSession'
+					}));
+				//微博
+				ss = shares['sinaweibo'];
+				ss && ss.nativeClient && shareBts.push({
+					title: '分享到新浪微博',
+					s: ss
+				});
+				//QQ
+				ss = shares['qq'];
+				ss && ss.nativeClient && shareBts.push({
+					title: '发送给QQ好友',
+					s: ss
+				});
+				// 弹出分享列表
+				shareBts.length > 0 ? plus.nativeUI.actionSheet({
+					cancel: '取消',
+					buttons: shareBts
+				}, function(e) {
+					(e.index > 0) && shareAction(shareBts[e.index - 1], true);
+				}) : plus.nativeUI.alert('当前环境无法支持分享链接操作!');
+			}
+		</script>
+	</body>
+</html>
