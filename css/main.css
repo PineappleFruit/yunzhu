@@ -721,7 +721,7 @@ input:-ms-input-placeholder{  /* Internet Explorer 10-11 */
 	position: absolute;
 	width: 0.65rem;
     height: 0.60rem;
-    background-image: url(../images/y-love-check.png);
+    background-image: url(../images/y-love.png);
 	background-size: 0.35rem 0.30rem;
 	background-position: center center;
     z-index: 99;
@@ -733,6 +733,9 @@ input:-ms-input-placeholder{  /* Internet Explorer 10-11 */
 	-o-transform:translateY(-50%); 	/* Opera */
 	transform: translateY(-50%);
 	margin-top: 0.2rem;
+}
+.y_collection.active{
+	background-image: url(../images/y-love-check.png);
 }
 .y_info_pic{
 	width: 6.9rem;
@@ -879,7 +882,7 @@ input:-ms-input-placeholder{  /* Internet Explorer 10-11 */
 	position: relative;
 	padding: 0.45rem 0.3rem;
 }
-.y_find_item:nth-child(odd)::after{
+.y_find_item:nth-child(odd)::before{
 	content: '';
 	right: 0;
 	width: 0.01rem;
@@ -944,7 +947,7 @@ input:-ms-input-placeholder{  /* Internet Explorer 10-11 */
 	width: 100%;
 	min-height: 1.28rem;
 }
-.y_addnum div{
+.y_addnum button{
 	width: 0.6rem;
 	height: 0.6rem;
 	background: #f7f7f7;
@@ -978,6 +981,7 @@ i.y_rotete{
 	line-height: 1rem;
 	width: 100%;
 	padding-right: 0.2rem;
+	height: 100%;
 }
 .y_local{
 	width: 0.34rem;
@@ -1038,4 +1042,24 @@ i.y_rotete{
 	height: 0.63rem;
 	background-image: url(../images/y-jianshe-small.png);
 	margin-right: 0.2rem;
+}
+.y_edit_icon{
+	width: 0.36rem;
+	height: 0.35rem;
+	background-image: url(../images/y-edit.png);
+}
+.y_edit_checkbox{
+	width:0.34rem;
+	height: 0.34rem;
+	border: 1px solid #787878;
+	border-radius: 10rem;
+	background: transparent;
+}
+.y_edit_checkbox:checked{
+	background-color: #53a656;
+	background-image: url(../images/y-checked-white.png);
+	background-position: center;
+	background-size: 0.21rem 0.16rem;
+	background-repeat: no-repeat;
+	border-color: #53a656;
 }

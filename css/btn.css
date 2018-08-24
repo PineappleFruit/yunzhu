@@ -50,7 +50,7 @@
 	height: 1.46rem;
 	padding: 0.3rem 0.3rem;
 	box-shadow: 0 0 0.18rem rgba(0,0,0,0.04);
-	z-index: 99999;
+	z-index: 998;
 }
 .y_green_btn{
 	color: #53a656;

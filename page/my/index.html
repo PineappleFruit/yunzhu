@@ -103,7 +103,7 @@
 				</div>
 				<div class="bg-ff mb20">
 					<div class="mui-table-view-cell">
-						<div class="y_my_item ub ub-ac ptb30">
+						<div class="y_my_item ub ub-ac ptb30" @tap="setting">
 							<div class="y_my_icon">
 								<div class="y_icon_shezhi y_icon_public"></div>
 							</div>
@@ -159,6 +159,12 @@
 					mui.openWindow({
 					    url: './collection/index.html', 
 					    id:'collection'
+					});
+				},
+				setting(){
+					mui.openWindow({
+					    url: './setting/index.html', 
+					    id:'setting'
 					});
 				}
 			}

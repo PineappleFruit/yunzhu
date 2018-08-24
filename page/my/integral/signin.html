@@ -7,7 +7,7 @@
 		<link rel="stylesheet" href="../../../css/mui.min.css" />
 		<link rel="stylesheet" href="../../../css/base.css" />
 		<link rel="stylesheet" href="../../../css/main.css" />
-		<script type="text/javascript" src="../../../js/e_fish.js" ></script>
+		<!--<script type="text/javascript" src="../../../js/e_fish.js" ></script>-->
 		<script type="text/javascript" src="../../../js/mui.min.js" ></script>
 		<script type="text/javascript" src="../../../js/vue.js" ></script>
 	</head>
@@ -165,6 +165,33 @@
 			        max_score:0
 			    }
 			},
+			methods: {	
+					getsign: function(){
+						App.http('v1/user.base/checkSignRuleLogin', {},function(data, status) {
+				           this.day = data.data.day;
+				           this.sign =data.data.sign_status;
+				           this.sign_rule=data.data.sign_rule;
+				           for (var i=0;i<this.sign_rule.length;i++) {
+				           	if(this.sign_rule[i].min_day>this.max_day){
+				           		this.max_day=this.sign_rule[i].min_day;
+				           		this.max_score=this.sign_rule[i].score;
+				           	}
+				           }
+						}.bind(this));
+					},
+					signin:function(){
+						App.http('v1/user.base/signRule', {},function(data, status) {
+							this.day = data.data.day;
+							this.sign =data.data.sign_status;
+				            mui.toast(data.msg);
+				            App.send('user/integral/index', 'update');
+				            
+						}.bind(this));
+					}
+				},
+				mounted:function() {
+//				    this.getsign();
+				}
 		})
 	</script>
 </html>
