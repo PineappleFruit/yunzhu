@@ -9,7 +9,6 @@
 		<link rel="stylesheet" href="../../../css/main.css" />
 		<script type="text/javascript" src="../../../js/e_fish.js" ></script>
 		<script type="text/javascript" src="../../../js/mui.min.js" ></script>
-		<script type="text/javascript" src="../../../js/vue.js" ></script>
 	</head>
 	<body id="e_fish_container">
 		<div id="app">
@@ -20,15 +19,16 @@
 					</div>
 					<div class="tx-c fz32 c66">
 						<p class="pb20">您当前手机账号为 </p>
-						<p><span class="c-green">1563****587</span>更换后可用新手机号登陆</p>
+						<p><span class="c-green" v-text="hideNum(item.phone)"></span>更换后可用新手机号登陆</p>
 					</div>
 					<div class="y_change">
 						<div class="mui-input-row y_input_item">
-					    	<input type="text" class="mui-input-clear" placeholder="请输入手机号">
+					    	<input type="text" class="mui-input-clear" placeholder="请输入手机号" v-model="newPhone"> 
 					    </div> 
                         <div class="y_input_item ub  ub-ac">
-                            <input type="text" placeholder="请输入验证码" class="ub-f1">
-                            <span class="y_getcode">获取验证码</span>
+                            <input type="text" placeholder="请输入验证码" class="ub-f1" v-model="code">
+                            <span class="y_getcode" @tap="getCode" v-if="!isSend">获取验证码</span>
+	                        <span class="y_getcode" v-else>剩余{{timer}}秒</span>
                         </div>
 					</div>
 					<button class="btn btn-green" type="button" @tap="sure">确认</button>
@@ -38,13 +38,86 @@
 		<script type="text/javascript">
 			new Vue({
 				el:'#app',
+				data: function() {
+					return {
+						item: {},
+						newPhone : '',
+						code :'',
+						isSend : false,
+						timer : 60
+					}
+				},
 				methods:{
 					sure(){
-						mui.openWindow({
-						    url: './success.html', 
-						    id:'success'
-						});
+//						mui.openWindow({
+//						    url: './success.html', 
+//						    id:'success'
+//						});
+						App.http('v1/user.base/changePhone', {
+							phone : this.newPhone,
+							proving : this.code
+						}, function(data, status) {
+//							this.item = data.data;
+//							App.setItem('user', data.data);
+							if(data.status != 1) {
+								mui.toast(data.msg);
+								return false;
+							}
+//							App.send('my/userInfo/index', 'update');
+							mui.toast('修改密码成功');
+							mui.openWindow({
+							    url: './success.html', 
+							    id:'success'
+							});
+						}.bind(this));
+					},
+					getuser: function() {
+						App.http('v1/user.base/getInfo', {}, function(data, status) {
+							this.item = data.data;
+							App.setItem('user', data.data);
+						}.bind(this));
+					},
+					getCode(){
+						var that = this;
+						App.http('v1/publics.sms/sendRegSms', {
+							phone:this.newPhone
+						},function(data, status) {
+							console.log(data)
+				            mui.toast(data.msg, {duration: 'short', type: 'button'});
+				            if(data.status==1){
+				            	that.gettimer();
+				            }
+				            
+						});	
+					},
+					gettimer:function(){
+				        var that = this;
+				        this.isSend = true;
+				        var time=setInterval(function(){
+				          	that.timer--;
+				          	if(that.timer==0){
+					            that.isSend=false;
+					            that.timer=60;
+					            clearInterval(time);
+				          	}
+				        },1000)
+				    },
+				    hideNum:function(info){
+						if(info){
+							return info.replace(/^(.{3})(?:\d+)(.{4})$/,"$1****$2")
+						}
+						
 					}
+				},
+				mounted:function(){
+					//先取缓存数据
+					this.item = App.getItem('user');
+					//取到线上数据后重新赋值
+					this.getuser();
+					//状态更改监听
+					App.request('update', function() {
+						this.getuser();
+					}.bind(this));
 				}
 			})
 		</script>

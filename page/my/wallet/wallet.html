@@ -26,15 +26,15 @@
 				<div class="ub ub-pac header_wallet_hd">
 					<a id="icon-menu" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left cff"></a>
 					<h2 class="ub-f1 tx-c fz36">我的钱包</h2>
-					<div class="fz32 y_wallet_right" @tap="walletDetailed">明细</div>
+					<div class="fz32 y_wallet_right" to="my/wallet/walletDetailed" title="钱包明细">明细</div>
 				</div>
 				<p class="header_wallet_tip">账户余额（元）</p>
-				<p class="tx-c header_wallet_money">504.26</p>
+				<p class="tx-c header_wallet_money" v-text="item.balance"></p>
 			</div>
 			<div class="y_container">
 				<div class="y_wallet">
-					<div class="mui-table-view-cell">
-						<div class="bb ptb35 ub ub-ac pr30" @tap="payroll">
+					<div class="mui-table-view-cell" to="my/wallet/payroll" title="none">
+						<div class="bb ptb35 ub ub-ac pr30">
 							<div class="y_payroll y_wallet_icon"></div>
 							<div class="ub-f1 plr30">
 								<p class="fz32 c33">工资条</p>
@@ -43,8 +43,8 @@
 							<div class="y_arrow"></div>
 						</div>
 					</div>
-					<div class="mui-table-view-cell">
-						<div class="bb ptb35 ub ub-ac pr30" @tap="foward">
+					<div class="mui-table-view-cell" to="my/wallet/foward" title="申请提现">
+						<div class="bb ptb35 ub ub-ac pr30">
 							<div class="y_forward y_wallet_icon"></div>
 							<div class="ub-f1 plr30">
 								<p class="fz32 c33">申请提现</p>
@@ -54,7 +54,7 @@
 						</div>
 					</div>
 					<div class="mui-table-view-cell">
-						<div class="bb ptb35 ub ub-ac pr30" @tap="manageCard">
+						<div class="bb ptb35 ub ub-ac pr30">
 							<div class="y_bank y_wallet_icon"></div>
 							<div class="ub-f1 plr30">
 								<p class="fz32 c33">管理银行卡</p>
@@ -69,32 +69,56 @@
 		<script>
 			new Vue({
 				el:"#app",
-				methods:{
-					walletDetailed(){
-						mui.openWindow({
-						    url: './walletDetailed.html', 
-						    id:'walletDetailed'
-						});
-					},
-					payroll(){
-						mui.openWindow({
-						    url: './payroll.html', 
-						    id:'payroll'
-						});
-					},
-					foward(){
-						mui.openWindow({
-						    url: './foward.html', 
-						    id:'foward'
-						});
-					},
-					manageCard(){
-						mui.openWindow({
-						    url: './manageCard.html', 
-						    id:'manageCard'
-						});
+				data :function() {
+				    return {
+				    	item:{},
+
+				    }
+				},
+				methods: {	
+					/**
+					 * 获取余额
+					 */
+					getlist:function(){
+						App.http('v1/user.base/balance', {},function(data, status) {
+				            this.item = data.data;
+				            App.setItem('balance',data.data.balance);
+						}.bind(this));	
 					}
+				},
+				mounted:function() {
+				    this.getlist();
+				    //状态更改监听
+					App.request('update', function() {
+						this.getlist();
+					}.bind(this));
 				}
+//				methods:{
+//					walletDetailed(){
+//						mui.openWindow({
+//						    url: './walletDetailed.html', 
+//						    id:'walletDetailed'
+//						});
+//					},
+//					payroll(){
+//						mui.openWindow({
+//						    url: './payroll.html', 
+//						    id:'payroll'
+//						});
+//					},
+//					foward(){
+//						mui.openWindow({
+//						    url: './foward.html', 
+//						    id:'foward'
+//						});
+//					},
+//					manageCard(){
+//						mui.openWindow({
+//						    url: './manageCard.html', 
+//						    id:'manageCard'
+//						});
+//					}
+//				}
 			})
 		</script>
 	</body>

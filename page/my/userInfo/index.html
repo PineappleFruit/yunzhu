@@ -24,81 +24,82 @@
 		<div id="app">
 			<div class="y_container bg-grey pt20">
 				<div class="bg-ff">
-					<div class="mui-table-view-cell">
+					<div class="mui-table-view-cell" @tap="avatar">
 						<div class="bb ptb20 ub ub-ac pr30">
 							<p class="fz32 c33 y_title">头像</p>
 							<div class="ub-f1"></div>
 							<div class="y_head_small">
-								<img src="../../../images/y-head-small.png" alt="" />
+								<img  alt="" :src="item.photo ? item.photo : '../../../images/y-head-small.png'"/>
 							</div>
 							<div class="y_arrow"></div>
 						</div>
 					</div>
-					<div class="mui-table-view-cell">
-						<div class="bb ptb30 ub ub-ac pr30" v-if="isAttestation == 1" to="my/userInfo/attes" title="实名认证">
+					<div class="mui-table-view-cell" v-if="item.status == 0" to="my/userInfo/attes" title="实名认证">
+						<div class="bb ptb30 ub ub-ac pr30"   >
 							<p class="fz32 c33 y_title">实名认证</p>
 							<div class="ub-f1"></div>
 							<p class="c-red fz28">未认证</p>
 							<div class="y_arrow"></div>
 						</div>
 					</div>
-					<div class="mui-table-view-cell">
-						<div class="bb ptb30 ub ub-ac pr30" v-else-if="isAttestation == 2">
+					<div class="mui-table-view-cell" v-else-if="item.status == 2" to="my/userInfo/attesSuccess" title="实名认证">
+						<div class="bb ptb30 ub ub-ac pr30" >
 							<p class="fz32 c33 y_title">实名认证</p>
 							<div class="ub-f1"></div>
 							<div class="y_save ub ub-pac">
 								<i class="y_save_icon"></i>
 								<p class="fz28 c-green ml10">已认证</p>
 							</div>
+							<div class="y_arrow"></div>
 						</div>
 					</div>
-					<div class="mui-table-view-cell">
-						<div class="bb ptb30 ub ub-ac pr30" v-else-if="isAttestation == 3">
+					<div class="mui-table-view-cell" v-else-if="item.status == 1" to="my/userInfo/attes" title="实名认证">
+						<div class="bb ptb30 ub ub-ac pr30" >
 							<p class="fz32 c33 y_title">实名认证</p>
 							<div class="ub-f1 c-yellow tx-r">审核中</div>
 							<div class="y_arrow"></div>
 						</div>
 					</div>
-					<div class="mui-table-view-cell">
-						<div class="bb ptb30 ub ub-ac pr30" v-else="isAttestation == 4">
+					<div class="mui-table-view-cell" v-else-if="item.status == 3" to="my/userInfo/attes" title="实名认证">
+						<div class="bb ptb30 ub ub-ac pr30" >
 							<p class="fz32 c33 y_title">实名认证</p>
 							<div class="ub-f1 c-red2 tx-r">认证失败（点击查看原因）</div>
 							<div class="y_arrow"></div>
 						</div>
 					</div>
 					<div class="mui-table-view-cell">
-						<div class="bb ptb30 ub ub-ac pr30" v-if="isAttestation != 1">
+						<div class="bb ptb30 ub ub-ac pr30">
 							<p class="fz32 c33 y_title">真实姓名</p>
-							<div class="ub-f1 tx-r c99">陈某某</div>
+							<div class="ub-f1 tx-r c99" v-text="item.name"></div>
 						</div>
 					</div>
-					<div class="mui-table-view-cell">
+					<div class="mui-table-view-cell" to="my/userInfo/changePhone" title="修改手机号">
 						<div class="bb ptb30 ub ub-ac pr30">
 							<p class="fz32 c33 y_title">手机号</p>
-							<div class="ub-f1">13699448441</div>
+							<div class="ub-f1" v-text="item.phone"></div>
 							<p class="c-green fz28" to="my/userInfo/changePhone" title="修改手机号">更换手机</p>
 							<div class="y_arrow"></div>
 						</div>
 					</div>
-					<div class="mui-table-view-cell">
+					<!--<div class="mui-table-view-cell">
 						<div class="bb ptb30 ub ub-ac pr30">
 							<p class="fz32 c33 y_title">手机号</p>
 							<div class="ub-f1 tx-r c99">13699448441</div>
 							<div class="y_arrow"></div>
 						</div>
-					</div>
-					<div class="mui-table-view-cell">
-						<div class="bb ptb30 ub ub-ac pr30" to="my/userInfo/address" title="现居地">
+					</div>-->
+					<div class="mui-table-view-cell" v-if="!item.address" to="my/userInfo/address" title="现居地">
+						<div class="bb ptb30 ub ub-ac pr30">
 							<p class="fz32 c33 y_title">现居地</p>
 							<div class="ub-f1"></div>
 							<p class="c99 fz28">未设置</p>
 							<div class="y_arrow"></div>
 						</div>
 					</div>
-					<div class="mui-table-view-cell">
+					<div class="mui-table-view-cell" v-else to="my/userInfo/address" title="现居地">
 						<div class="bb ptb30 ub ub-ac pr30">
 							<p class="fz32 c33 y_title">现居地</p>
-							<div class="ub-f1 ub-te c99">成都市高新区天府大道欣欣小区21栋...</div>
+							<div class="ub-f1 ub-te c99 tx-r">{{item.province_name}}{{item.city_name}}{{item.county_name}}</div>
 							<div class="y_arrow"></div>
 						</div>
 					</div>
@@ -108,14 +109,41 @@
 		<script>
 			new Vue({
 				el:"#app",
-				data:{
-					isAttestation : 1
+				data: function() {
+					return {
+						item: {}
+					}
 				},
 				methods:{
+					getuser: function() {
+						App.http('v1/user.base/getInfo', {}, function(data, status) {
+							this.item = data.data;
+							App.setItem('user', data.data);
+						}.bind(this));
+					},
+					avatar: function() {
 					
+					App.images('v1/user.base/avatar', function(data, status) {
+//						console.log( data.data.avatar);
+						if(data.status == 1) {
+//							console.log( data.data.avatar);
+							this.item.photo = data.data.avatar;
+							
+							App.send('page/user/index.html', 'update');
+						}
+
+					}.bind(this));
+				},
 				},
 				mounted:function(){
-					
+					//先取缓存数据
+					this.item = App.getItem('user');
+					//取到线上数据后重新赋值
+					this.getuser();
+					//状态更改监听
+					App.request('update', function() {
+						this.getuser();
+					}.bind(this));
 				}
 			})
 		</script>

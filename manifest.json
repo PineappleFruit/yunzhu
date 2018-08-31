@@ -353,7 +353,8 @@
 				"refer": [
 					"page/my/userInfo/address.html",
 					"page/my/userInfo/attes.html",
-					"page/my/userInfo/changePhone.html"
+					"page/my/userInfo/changePhone.html",
+					"page/my/userInfo/attesSuccess.html"
 				],
 				"priority": 0
 			},
@@ -377,7 +378,8 @@
 				"refer": [
 					"page/my/wallet/payroll.html",
 					"page/my/wallet/walletDetailed.html",
-					"page/my/wallet/manageCard.html"
+					"page/my/wallet/manageCard.html",
+					"page/my/wallet/foward.html"
 				],
 				"priority": 0
 			},
@@ -403,6 +405,27 @@
 				"resources": [],
 				"refer": [
 					"page/my/login/messageCode.html"
+				],
+				"priority": 0
+			},
+			"page/my/wallet/payroll.html": {
+				"resources": [],
+				"refer": [
+					"page/my/wallet/payrollDetailed.html"
+				],
+				"priority": 0
+			},
+			"page/my/wallet/foward.html": {
+				"resources": [],
+				"refer": [
+					"page/my/wallet/chooseCard.html"
+				],
+				"priority": 0
+			},
+			"page/my/wallet/chooseCard.html": {
+				"resources": [],
+				"refer": [
+					"page/my/wallet/foward.html"
 				],
 				"priority": 0
 			}

@@ -9,7 +9,6 @@
 		<link rel="stylesheet" href="../../../css/main.css" />
 		<script type="text/javascript" src="../../../js/e_fish.js" ></script>
 		<script type="text/javascript" src="../../../js/mui.min.js" ></script>
-		<script type="text/javascript" src="../../../js/vue.js" ></script>
 	</head>
 	<body id="e_fish_container">
 		<div id="app">
@@ -23,9 +22,15 @@
 						<div class="y_yes_phone"></div>
 						<p class="fz36 c33 tx-c pt40">手机号修改成功</p>
 					</div>
-					<button class="btn btn-green">返回</button>
+					<button class="btn btn-green" to="my/userInfo/index" title="个人资料">返回</button>
 				</div>
 			</div>
 		</div>
+		<script>
+			new Vue({
+				el:'#app',
+				
+			})
+		</script>
 	</body>
 </html>

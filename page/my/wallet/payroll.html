@@ -12,6 +12,9 @@
 		<script type="text/javascript" src="../../../js/vue.js" ></script>
 	</head>
 	<style>
+		.mui-content{
+			background-color: #fff;
+		}
 		.mui-table-view-cell{
 			padding: 0;
 		}
@@ -31,72 +34,28 @@
 					<div class="fz32 y_wallet_right"></div>
 				</div>
 				<p class="header_wallet_tip">未发总额（元）</p>
-				<p class="tx-c header_wallet_money">504.26</p>
+				<p class="tx-c header_wallet_money">{{amount}}</p>
 			</div>
 			<div class="y_container bg-grey pt20">
 				<!--下拉刷新容器-->
 				<div id="pullrefresh3" class="mui-content mui-scroll-wrapper y_payroll_box">
 					<div class="mui-scroll">
 						<!--数据列表-->
-						<ul class="mui-table-view mui-table-view-chevron">
-							<li class="mui-table-view-cell">
+						<div v-if="list.length == 0" style="margin: 80px;text-align: center;font-size: 16px;color: #ccc;">啊哦，暂时没有数据 ⊙﹏⊙ </div>
+						<ul class="mui-table-view mui-table-view-chevron" v-else>
+							<li class="mui-table-view-cell" v-for="(item,index) in list" to="my/wallet/payrollDetailed" title="工资实发明细" v-bind:param="item | formatParam">
 								<div class="plr30 bb y_payroll_item">
-									<p class="fz32 c33 pb20 word-break fw-b">慕墙安装部分4月工资</p>
-									<p class="fz28 c66 word-break pb30">项目名称：双流县2017年农村学前双语幼师学院</p>
+									<p class="fz32 c33 pb20 word-break fw-b">{{item.title}}</p>
+									<p class="fz28 c66 word-break pb30">{{item.project_name}}</p>
 									<div class="ub ub-ac fz28 c33">
 										<p class="ub-f1">应发工资：</p>
-										<span>5000.00元</span>
+										<span>{{item.yingfa}}元</span>
 									</div>
 									<div class="ub ub-ac fz28 c33 pb30">
-										<p class="ub-f1">实发工资：</p>
-										<span class="c-red">4000.00元</span>
+										<p class="ub-f1">实发工资：</p> 
+										<span class="c-red">{{item.wages}}元</span>
 									</div>
-									<p class="fz28 c66">2018/06/11  20:15:40</p>
-								</div>
-							</li>
-							<li class="mui-table-view-cell">
-								<div class="plr30 bb y_payroll_item">
-									<p class="fz32 c33 pb20 word-break fw-b">慕墙安装部分4月工资</p>
-									<p class="fz28 c66 word-break pb30">项目名称：双流县2017年农村学前双语幼师学院</p>
-									<div class="ub ub-ac fz28 c33">
-										<p class="ub-f1">应发工资：</p>
-										<span>5000.00元</span>
-									</div>
-									<div class="ub ub-ac fz28 c33 pb30">
-										<p class="ub-f1">实发工资：</p>
-										<span class="c-red">4000.00元</span>
-									</div>
-									<p class="fz28 c66">2018/06/11  20:15:40</p>
-								</div>
-							</li>
-							<li class="mui-table-view-cell">
-								<div class="plr30 bb y_payroll_item">
-									<p class="fz32 c33 pb20 word-break fw-b">慕墙安装部分4月工资</p>
-									<p class="fz28 c66 word-break pb30">项目名称：双流县2017年农村学前双语幼师学院</p>
-									<div class="ub ub-ac fz28 c33">
-										<p class="ub-f1">应发工资：</p>
-										<span>5000.00元</span>
-									</div>
-									<div class="ub ub-ac fz28 c33 pb30">
-										<p class="ub-f1">实发工资：</p>
-										<span class="c-red">4000.00元</span>
-									</div>
-									<p class="fz28 c66">2018/06/11  20:15:40</p>
-								</div>
-							</li>
-							<li class="mui-table-view-cell">
-								<div class="plr30 bb y_payroll_item">
-									<p class="fz32 c33 pb20 word-break fw-b">慕墙安装部分4月工资</p>
-									<p class="fz28 c66 word-break pb30">项目名称：双流县2017年农村学前双语幼师学院</p>
-									<div class="ub ub-ac fz28 c33">
-										<p class="ub-f1">应发工资：</p>
-										<span>5000.00元</span>
-									</div>
-									<div class="ub ub-ac fz28 c33 pb30">
-										<p class="ub-f1">实发工资：</p>
-										<span class="c-red">4000.00元</span>
-									</div>
-									<p class="fz28 c66">2018/06/11  20:15:40</p>
+									<p class="fz28 c66">{{timestampToTime(item.addtime)}}</p>
 								</div>
 							</li>
 						</ul>
@@ -107,26 +66,126 @@
 		<script>
 			new Vue({
 				el:"#app",
+				data:function(){
+					return{
+						amount:'',
+						list: [],
+						page: 1,
+						//上拉状态
+						plusscrollbottom: false
+					}
+				},
+				methods:{
+					/**
+					 * 获取未发总额
+					 */
+					getMoney:function(){
+						App.http('v1/user.payroll/unPayCount', {},function(data, status) {
+				            this.amount = data.data;
+						}.bind(this),'get');	
+					},
+					getlist: function(type) {
+						
+						App.http('v1/user.payroll/getList', {
+							page: this.page
+						}, function(data, status) {
+//							console.log(JSON.stringify(data.data))
+							this.page = data.data.current_page;
+							/**
+							 * 默认关闭下拉提示
+							 */
+							mui('#pullrefresh3').pullRefresh().endPulldown();
+							/**
+							 * 返回数据为空的时候
+							 */
+							if(data.data.data.length == 0) {
+
+								/**
+								 * 取消上拉加载更多提示
+								 */
+								mui('#pullrefresh3').pullRefresh().endPullupToRefresh(true);
+								return false;
+							}
+							/**
+							 *  总条数等于当前显示条数
+							 */
+							if(data.data.total == this.list.length) {
+								/**
+								 * 取消上拉加载更多提示
+								 */
+								console.log('none')
+								mui('#pullrefresh3').pullRefresh().disablePullupToRefresh();
+							}
+							/**
+							 * 取消上拉加载中提示
+							 */
+							mui('#pullrefresh3').pullRefresh().endPullupToRefresh(false);
+							/**
+							 * 如果是上拉，则 push 数据
+							 */
+							if(type == 'add') {
+								for(var i = 0; i < data.data.data.length; i++) {
+									this.list.push(data.data.data[i]);
+								}
+						
+								return;
+							}
+							this.list = data.data.data;
+						}.bind(this));
+					},
+					timestampToTime:function(timestamp) {
+		                var date = new Date(timestamp * 1000);
+		                Y = date.getFullYear() + '-';
+		                M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+		                D = date.getDate() + ' ';
+		                h = date.getHours() + ':';
+		                m = date.getMinutes() + ':';
+		                s = date.getSeconds();
+		                return Y+M+D+h+m+s;
+		           },
+				},
+				filters:{
+					formatParam: function(item) {
+						return '{sn:"' + item.sn + '"}';
+					},
+				},
 				mounted:function(){
+					this.getMoney();
+				    //状态更改监听
+					App.request('update', function() {
+						this.getMoney();
+					}.bind(this));
 					mui.init({
 						pullRefresh: {
-							container: '#pullrefresh3',
-							down: {
-								style:'circle',
+							container: "#pullrefresh3", //下拉刷新容器标识，querySelector能定位的css选择器均可，比如：id、.class等
+							up: {
+								height: 50, //可选.默认50.触发上拉加载拖动距离
+								auto: false, //可选,默认false.自动上拉加载一次
+								contentrefresh: "正在加载...", //可选，正在加载状态时，上拉加载控件上显示的标题内容
+								contentnomore: '', //可选，请求完毕若没有更多数据时显示的提醒内容；
 								callback: function() {
-									mui('#pullrefresh3').pullRefresh().refresh(true);
-									mui('#pullrefresh3').pullRefresh().endPulldown();
+									this.page++;
+									this.getlist('add');
 								}.bind(this)
 							},
-							up: {
-								auto:true,
-								contentrefresh: '正在加载...',
+							down: {
+								style: 'circle', //必选，下拉刷新样式，目前支持原生5+ ‘circle’ 样式
+								color: '#2BD009', //可选，默认“#2BD009” 下拉刷新控件颜色
+								height: '50px', //可选,默认50px.下拉刷新控件的高度,
+								range: '100px', //可选 默认100px,控件可下拉拖拽的范围
+								offset: '0px', //可选 默认0px,下拉刷新控件的起始位置
+								auto: false, //可选,默认false.首次加载自动上拉刷新一次
 								callback: function() {
-									
+									mui('#pullrefresh3').pullRefresh().refresh(true);
+									this.page = 1;
+									this.getlist();
 								}.bind(this)
 							}
 						}
 					});
+					mui.plusReady(function(){
+							this.getlist();
+					}.bind(this))
 				}
 			})
 		</script>

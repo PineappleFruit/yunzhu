@@ -174,7 +174,8 @@
 		"refer": [
 			"page/my/userInfo/address.html",
 			"page/my/userInfo/attes.html",
-			"page/my/userInfo/changePhone.html"
+			"page/my/userInfo/changePhone.html",
+			"page/my/userInfo/attesSuccess.html"
 		]
 	},
 	"page/my/integral/index.html": {
@@ -192,7 +193,8 @@
 		"refer": [
 			"page/my/wallet/payroll.html",
 			"page/my/wallet/walletDetailed.html",
-			"page/my/wallet/manageCard.html"
+			"page/my/wallet/manageCard.html",
+			"page/my/wallet/foward.html"
 		]
 	},
 	"page/my/setting/index.html": {
@@ -212,6 +214,21 @@
 	"page/my/login/login.html": {
 		"refer": [
 			"page/my/login/messageCode.html"
+		]
+	},
+	"page/my/wallet/payroll.html": {
+		"refer": [
+			"page/my/wallet/payrollDetailed.html"
+		]
+	},
+	"page/my/wallet/foward.html": {
+		"refer": [
+			"page/my/wallet/chooseCard.html"
+		]
+	},
+	"page/my/wallet/chooseCard.html": {
+		"refer": [
+			"page/my/wallet/foward.html"
 		]
 	}
 }

@@ -13,33 +13,73 @@
 	</head>
 	<body id="e_fish_container">
 		<div id="app">
-			<header class="mui-bar mui-bar-nav mui-bar-transparent header">
-				<a id="icon-menu" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-				<h2 class="mui-title">实名认证</h2>
-			</header>
-			<div class="fix_hd">
-				<div class="y_container plr30">
-					<div class="y_success">
-						<div class="ub ub-pac">
-							<p class="fz44 c33">恭喜您实名认证已通过</p>
-							<div class="y_yse"></div>
-						</div>
-						<p class="tx-c fz32 c33 pt40">认证资料已通过，可以开始抢单啦</p>
-						<div class="y_success_info">
-							<div class="ub ub-ac y_success_item pb10">
-								<span>姓名：</span>
-								<p>陈小然</p>
-							</div>
-							<div class="ub ub-ac y_success_item">
-								<span>身份证号码：</span>
-								<p>510************073</p>
-							</div>
-						</div>
-						<p class="fz28 c99 tx-c">温馨提示：添加技能工种认证，可以提升自身形象获得 更多工作机会哦</p>
-						<button class="btn btn-green fix-bd">去抢单</button>
+			<div class="y_container plr30">
+				<div class="y_success">
+					<div class="ub ub-pac">
+						<p class="fz44 c33">恭喜您实名认证已通过</p>
+						<div class="y_yse"></div>
 					</div>
+					<p class="tx-c fz32 c33 pt40">认证资料已通过，可以开始抢单啦</p>
+					<div class="y_success_info">
+						<div class="ub ub-ac y_success_item pb10">
+							<span>姓名：</span>
+							<p v-text="item.name"></p>
+						</div>
+						<div class="ub ub-ac y_success_item">
+							<span>身份证号码：</span>
+							<p v-text="hideCard(item.card)"></p>
+						</div>
+					</div>
+					<p class="fz28 c99 tx-c">温馨提示：添加技能工种认证，可以提升自身形象获得 更多工作机会哦</p>
+					<button class="btn btn-green fix-bd">去抢单</button>
 				</div>
 			</div>
 		</div>
+		<script>
+			new Vue({
+				el:'#app',
+				data: function() {
+					return {
+						item: {}
+					}
+				},
+				methods:{
+					getuser: function() {
+						App.http('v1/user.base/getInfo', {}, function(data, status) {
+							this.item = data.data;
+							App.setItem('user', data.data);
+						}.bind(this));
+					},
+					avatar: function() {
+					
+						App.images('v1/user.base/avatar', function(data, status) {
+	//						console.log( data.data.avatar);
+							if(data.status == 1) {
+	//							console.log( data.data.avatar);
+								this.item.photo = data.data.avatar;
+								
+								App.send('page/user/index.html', 'update');
+							}
+	
+						}.bind(this));
+					},
+					hideCard:function(info){
+						if(info){
+							return info.replace(/^(.{6})(?:\d+)(.{4})$/,"$1*******$2")
+						}
+					}
+				},
+				mounted:function(){
+					//先取缓存数据
+					this.item = App.getItem('user');
+					//取到线上数据后重新赋值
+					this.getuser();
+					//状态更改监听
+					App.request('update', function() {
+						this.getuser();
+					}.bind(this));
+				}
+			})
+		</script>
 	</body>
 </html>

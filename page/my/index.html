@@ -32,19 +32,19 @@
 				<div class="mui-table-view-cell plr40 mb20 bg-ff" to="my/userInfo/index" title="个人资料">
 					<div class=" ub ptb30 ub-ac">
 						<div class="y_my_head">
-							<img src="../../images/y-my-head.png" alt="" />
+							<img alt="" :src="item.photo ? item.photo : '../../images/y-my-head.png'" />
 						</div>
 						<div class="y_my_info ub-f1 ub-te">
 							<div class="ub ub-ac">
-								<p class="fz44 c32 ub-te">李慧敏</p>
-								<span class="y_level">学徒Lv1</span>
+								<p class="fz44 c32 ub-te" v-text="item.name"></p>
+								<span class="y_level" >{{geade.name}}Lv{{geade.grade}}</span>
 							</div>
-							<p class="fz32 c99 ub-te">13699448844</p>
+							<p class="fz32 c99 ub-te" v-text="item.phone"></p>
 						</div>
-						<p class="fz32 c-red">未认证</p>
+						<p class="fz32 c-red" v-if="item.status != 2">未认证</p>
 						<div class="y_arrow"></div>
 					</div>
-				</div>
+				</div> 
 				<div class="bg-ff mb20">
 					<div class="mui-table-view-cell" to="my/wallet/wallet" title="none">
 						<div class="y_my_item ub ub-ac ptb30">
@@ -117,10 +117,17 @@
 	<script>
 		new Vue({
 			el:'#app',
+			data: function() {
+				return {
+					item: {},
+					geade : {}
+				}
+			},
 			methods: {
 				getuser: function() {
 					App.http('v1/user.base/getInfo', {}, function(data, status) {
 						this.item = data.data;
+						this.geade = data.data.geade
 						App.setItem('user', data.data);
 					}.bind(this));
 				},
@@ -128,7 +135,6 @@
 			},
 			mounted: function() {
 				this.getuser();
-
 				//状态更改监听
 				App.request('update', function() {
 					this.getuser();

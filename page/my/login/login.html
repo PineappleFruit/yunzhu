@@ -131,7 +131,7 @@
 						return;
 					}
 					App.http('v1/publics.user/login', {
-						tel:this.username,
+						account:this.username,
 			            pwd:this.userpwd,
 			            deviceid:this.deviceid
 					},function(data) {

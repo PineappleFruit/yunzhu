@@ -9,6 +9,7 @@
 		<link rel="stylesheet" href="../../../css/main.css" />
 		<script type="text/javascript" src="../../../js/e_fish.js" ></script>
 		<script type="text/javascript" src="../../../js/mui.min.js" ></script>
+		<script type="text/javascript" src="../../../js/vue.js" ></script>
 	</head>
 	<style>
 		.mui-content{
@@ -35,8 +36,15 @@
 					<!--数据列表-->
 					<div v-if="list.length == 0" style="margin: 80px;text-align: center;font-size: 16px;color: #ccc;">啊哦，暂时没有数据 ⊙﹏⊙ </div>
 					<ul class="mui-table-view mui-table-view-chevron" v-else>
-						<li class="mui-table-view-cell" v-for="(item,index) in list">
-							<div class="bb ptb25 ub ub-ac plr30">
+						<li class="bb ptb25 plr30" v-for="(item,index) in list">
+							<div class="ub ub-ac">
+								<p class="ub-f1 fz28 c66">{{timestampToTime(item.addtime)}}</p>
+								<span class="c-red">+{{item.wages}}元</span>
+							</div>
+							<p class="fz28 c33 word-break">{{item.remarks}}</p>
+						</li>
+						<!--<li class="mui-table-view-cell" v-for="(item,index) in list">
+							<div class="bb ptb25 plr30">
 								<div class="ub-f1">
 									<div class="ub ub-ac">
 										<p class="fz28 c33" v-if="item.type==1">工资到账</p>
@@ -53,7 +61,7 @@
 									<p class="fz28 c33 fw-b" v-else-if="item.type == 2">-{{item.money}}</p>
 								</div>
 							</div>
-						</li>
+						</li>-->
 					</ul>
 				</div>
 			</div>
@@ -63,6 +71,7 @@
 				el:"#app",
 				data: function() {
 					return {
+						sn : '',
 						list: [],
 						page: 1,
 						//上拉状态
@@ -72,11 +81,12 @@
 				},
 				methods: {
 					getlist: function(type) {
-						App.http('v1/user.base/accountList', {
-							page: this.page
+						App.http('v1/user.payroll/detail/url', {
+							page: this.page,
+							sn : this.sn
 						}, function(data, status) {
 							console.log(JSON.stringify(data.data))
-							this.page = data.data.page;
+							this.page = data.data.current_page;
 							/**
 							 * 默认关闭下拉提示
 							 */
@@ -84,7 +94,7 @@
 							/**
 							 * 返回数据为空的时候
 							 */
-							if(data.data.list.length == 0) {
+							if(data.data.data.length == 0) {
 
 								/**
 								 * 取消上拉加载更多提示
@@ -93,12 +103,15 @@
 								return false;
 							}
 							/**
-							 *  总页数等于当前页码的时候
+							 *  总条数等于当前显示条数
 							 */
-							if(data.data.total_page == this.page) {
+							console.log(data.data.total)
+							console.log(this.list.length)
+							if(data.data.total == this.list.length) {
 								/**
 								 * 取消上拉加载更多提示
 								 */
+								console.log('none')
 								mui('#pullrefresh2').pullRefresh().disablePullupToRefresh();
 							}
 							/**
@@ -109,18 +122,27 @@
 							 * 如果是上拉，则 push 数据
 							 */
 							if(type == 'add') {
-								for(var i = 0; i < data.data.list.length; i++) {
-									this.list.push(data.data.list[i]);
+								for(var i = 0; i < data.data.data.length; i++) {
+									this.list.push(data.data.data[i]);
 								}
 						
 								return;
 							}
-							this.list = data.data.list;
-						}.bind(this));
-					}
+							this.list = data.data.data;
+						}.bind(this),'get');
+					},
+					timestampToTime:function(timestamp) {
+		                var date = new Date(timestamp * 1000);
+		                Y = date.getFullYear() + '-';
+		                M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+		                D = date.getDate() + ' ';
+		                h = date.getHours() + ':';
+		                m = date.getMinutes() + ':';
+		                s = date.getSeconds();
+		                return Y+M+D+h+m+s;
+		            },
 				},
 				mounted: function() {
-					
 					mui.init({
 						pullRefresh: {
 							container: "#pullrefresh2", //下拉刷新容器标识，querySelector能定位的css选择器均可，比如：id、.class等
@@ -150,7 +172,9 @@
 						}
 					});
 					mui.plusReady(function(){
-							this.getlist();
+						var self = plus.webview.currentWebview();
+						this.sn = self.sn;
+						this.getlist();
 					}.bind(this))
 				}
 			})

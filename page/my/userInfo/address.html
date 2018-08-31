@@ -18,25 +18,167 @@
 		.mui-table-view-cell:after{
 			background-color: transparent;
 		}
+		.modal {
+			right: 0;
+			top: 50%;
+			background: #fff;
+			text-align: center;
+			height: 100%;
+			overflow: auto;
+			width: 100%;
+			padding: 10px;
+		}
+		.y_choose_address .mui-table-view-cell{
+			padding: 0.3rem;
+		}
 	</style>
 	<body id="e_fish_container">
 		<div id="app">
 			<div class="y_address">
-				<div class="mui-table-view-cell">
+				<div class="mui-table-view-cell" @tap="isShow=true;get(0);">
 					<div class="bb ptb30 ub ub-ac plr30">
 						<p class="fz32 c33 y_title">省市区</p>
-						<div class="ub-f1 tx-r fz28 c99">选择</div>
+						<div class="ub-f1 tx-r fz28 c99">{{province}}{{city}}{{area}}</div>
 						<div class="y_arrow"></div>
 					</div>
 				</div>
 				
 				<div class="bb ub ub-ac plr30">
-					<p class="fz32 c33 y_title">详细地址：</p>
+					<p class="fz32 c33 y_title">详细地址：</p> 
 					<div class="mui-input-row y_edit">
-				    	<input type="text" class="mui-input-clear" placeholder="请填写详细地址">
+				    	<input type="text" class="mui-input-clear" placeholder="请填写详细地址" v-model='param.det_add'>
 				    </div> 
 				</div>
+				<div class="plr30 mt20"> 
+					<button type="button" class="btn btn-green" @tap="save">保存</button>
+				</div>
+			</div>
+			<div v-show="isShow" class="modal mui-popup mui-popup-in y_choose_address">
+				<div style="margin: 10px 0 20px 0;">请选择省市区</div>
+				<ul class="mui-table-view" v-for="(item,index) in list" @tap="select(item)">
+					<li class="mui-table-view-cell">
+						<a class="mui-navigate-right" style="text-align: left;">{{item.name}}</a>
+					</li>
+				</ul>
 			</div>
 		</div>
+		<script>
+			new Vue({
+				el:'#app',
+				data: function() {
+					return {
+						isShow: false,
+						type: 'province',
+						param: {
+							det_add: '',
+							live_province: 0,
+							live_city: 0,
+							live_area: 0,
+							//奇葩接口数据
+							name: '',
+							card: '',
+							province: '',
+							city: '',
+							area: ''
+	
+						},
+						list: [],
+						province: '',
+						city: '',
+						area: '',
+	
+					}
+				},
+				methods: {
+					setAdd:function (){
+						console.log(123213);
+					},
+					get: function(code, type) {
+						var url = '';
+						switch(type) {
+							case 'province':
+								url = 'v1/user.base/getProvinceList';
+								break;
+							case 'city':
+								url = 'v1/user.base/getCityList';
+								break;
+							case 'area':
+								url = 'v1/user.base/getAreaList';
+								break;
+							default:
+								url = 'v1/user.base/getProvinceList';
+								break;
+						}
+						App.http(url, {
+								code: code
+							}, function(data, status) {
+								this.list = data.data.list;
+	//
+	//							if(data.data.list.length == 0) {
+	//								this.isShow = false;
+	//								this.type = 'province';
+	//								this.id = 0;
+	//							}
+							}.bind(this));
+	
+					},
+					save: function() {
+						App.http('v1/user.base/updateAddress', this.param, function(data, status) {
+							mui.toast(data.msg);
+							App.send('my/userInfo/index', 'update');
+							App.send('find/shop/index', 'update');
+							mui.back();
+	
+						}.bind(this));
+					},
+					select: function(item) {
+						if(this.type == 'province') {
+							this.type = 'city';
+							this.param.live_province = item.id;
+							this.province = item.name;
+							this.get(item.code, 'city');
+						} else if(this.type == 'city') {
+							this.type = 'area';
+							this.param.live_city = item.id;
+							this.city = item.name;
+							this.get(item.code, 'area');
+						} else if(this.type == 'area') {
+							this.param.live_area = item.id;
+							this.area = item.name;
+							this.isShow = false;
+							this.type = 'province';
+						}
+					},
+	
+				},
+				mounted: function() {
+			
+						var userinfo = App.getItem('user');
+						//				App.log(App.getItem('user'));
+						this.province = userinfo.province_name;
+						this.city = userinfo.city_name;
+						this.area = userinfo.area_name;
+			
+						this.param.det_add = userinfo.det_add;
+						this.param.live_province = userinfo.province;
+						this.param.live_city = userinfo.city;
+						this.param.live_area = userinfo.area;
+		
+						this.param.name = userinfo.name;
+						this.param.card = userinfo.card;
+		
+						if(userinfo.address_id) {
+							this.param.province = userinfo.address_id[0];
+							this.param.city = userinfo.address_id[1];
+							if(userinfo.address_id.length > 2) {
+								this.param.area = userinfo.address_id[2];
+							}
+						}
+			
+					
+				
+				}
+			})
+		</script>
 	</body>
 </html>

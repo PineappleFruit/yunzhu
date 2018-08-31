@@ -30,104 +30,100 @@
 			<header class="mui-bar mui-bar-nav mui-bar-transparent header">
 				<a id="icon-menu" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 				<h2 class="mui-title">选择银行卡</h2>
-				<a  class="mui-icon mui-icon-plusempty mui-icon-right-nav mui-pull-right" @tap="addCard"></a>
+				<a  class="mui-icon mui-icon-plusempty mui-icon-right-nav mui-pull-right"></a>
 			</header>
 			<div class="fix_hd">
 				<div class="y_choose mt20">
-					<div class="mui-table-view-cell bg-ff">
-						<div class="y_back_item bb ub ub-ac ptb20 active">
-							<div class="y_back_chian y_icon"></div>
-							<div class="ub-f1 pl30">
-								<p class="fz32 c33">中国银行</p>
-								<p class="fz32 c66">尾号9380 储蓄卡</p>
+					<div class="mui-table-view-cell bg-ff" v-for="(item,index) in list" @tap="select(item)">
+						<div class="y_back_item bb ub ub-ac ptb20" :class="{'active' : card_id ==item.card_id}">
+							<div class="y_back_choose">
+								<img :src="item.phone_icon_s" alt="" />
 							</div>
-							<div class="y_gou mr40"></div>
+							<div class="ub-f1 pl30">
+								<p class="fz32 c33">{{item.name}}</p>
+								<p class="fz32 c66">尾号{{item.bank_no|getLastNum}}</p>
+							</div>
+							<div class="y_gou mr40" ></div>
 						</div>
 					</div>
-					<div class="mui-table-view-cell bg-ff">
-						<div class="y_back_item bb ub ub-ac ptb20">
-							<div class="y_back_nongye y_icon"></div>
-							<div class="ub-f1 pl30">
-								<p class="fz32 c33">中国农业银行</p>
-								<p class="fz32 c66">尾号9380 储蓄卡</p>
-							</div>
-							<div class="y_gou mr40"></div>
-						</div>
-					</div>
-					<div class="mui-table-view-cell bg-ff">
-						<div class="y_back_item bb ub ub-ac ptb20">
-							<div class="y_back_jiaotong y_icon"></div>
-							<div class="ub-f1 pl30">
-								<p class="fz32 c33">交通银行</p>
-								<p class="fz32 c66">尾号9380 储蓄卡</p>
-							</div>
-							<div class="y_gou mr40"></div>
-						</div>
-					</div>
-					<div class="mui-table-view-cell bg-ff">
-						<div class="y_back_item bb ub ub-ac ptb20">
-							<div class="y_back_gongshang y_icon"></div>
-							<div class="ub-f1 pl30">
-								<p class="fz32 c33">中国工商银行</p>
-								<p class="fz32 c66">尾号9380 储蓄卡</p>
-							</div>
-							<div class="y_gou mr40"></div>
-						</div>
-					</div>
-					<div class="mui-table-view-cell bg-ff">
-						<div class="y_back_item bb ub ub-ac ptb20">
-							<div class="y_back_mingsheng y_icon"></div>
-							<div class="ub-f1 pl30">
-								<p class="fz32 c33">中国民生银行</p>
-								<p class="fz32 c66">尾号9380 储蓄卡</p>
-							</div>
-							<div class="y_gou mr40"></div>
-						</div>
-					</div>
-					<div class="mui-table-view-cell bg-ff">
-						<div class="y_back_item bb ub ub-ac ptb20">
-							<div class="y_back_zhaoshang y_icon"></div>
-							<div class="ub-f1 pl30">
-								<p class="fz32 c33">招商银行</p>
-								<p class="fz32 c66">尾号9380 储蓄卡</p>
-							</div>
-							<div class="y_gou mr40"></div>
-						</div>
-					</div>
-					<div class="mui-table-view-cell bg-ff">
-						<div class="y_back_item bb ub ub-ac ptb20">
-							<div class="y_back_youzheng y_icon"></div>
-							<div class="ub-f1 pl30">
-								<p class="fz32 c33">中国邮政</p>
-								<p class="fz32 c66">尾号9380 储蓄卡</p>
-							</div>
-							<div class="y_gou mr40"></div>
-						</div>
-					</div>
-					<div class="mui-table-view-cell bg-ff">
-						<div class="y_back_item bb ub ub-ac ptb20">
-							<div class="y_back_jianshe y_icon"></div>
-							<div class="ub-f1 pl30">
-								<p class="fz32 c33">中国建设银行</p>
-								<p class="fz32 c66">尾号9380 储蓄卡</p>
-							</div>
-							<div class="y_gou mr40"></div>
-						</div>
-					</div>
-					
 				</div>
 			</div>
 		</div>
 		<script>
 			new Vue({
 				el:'#app',
-				methods:{
-					addCard(){
-						mui.openWindow({
-						    url: './addCard.html', 
-						    id:'addCard'
-						});
+				data:function(){
+					return{
+						card_id:'',
+						list:[{
+				    		"card_id": 49,
+			                "bank_id": 2,
+			                "bank_no": "62220223100022321362774",
+			                "tel": "18980182979",
+			                "user_id": 444,
+			                "addtime": 1529048403,
+			                "status": 1,
+			                "name": "工商银行",
+			                "icon": "http://test-api.cnccgt.com/public/build/images/my_salary/gs.png",
+			                "icon_s": "http://test-api.cnccgt.com/public/build/images/my_salary/gs_s.png",
+			                "phone_icon": "http://test-api.cnccgt.com/public/build/images/my_salary/gongshang.png",
+			                "phone_icon_s": "http://test-api.cnccgt.com/public/build/images/my_salary/gongslogo.png"
+				    	},{
+				    		"card_id": 48,
+			                "bank_id": 2,
+			                "bank_no": "62220223100022321362774",
+			                "tel": "18980182979",
+			                "user_id": 444,
+			                "addtime": 1529048403,
+			                "status": 1,
+			                "name": "工商银行",
+			                "icon": "http://test-api.cnccgt.com/public/build/images/my_salary/gs.png",
+			                "icon_s": "http://test-api.cnccgt.com/public/build/images/my_salary/gs_s.png",
+			                "phone_icon": "http://test-api.cnccgt.com/public/build/images/my_salary/gongshang.png",
+			                "phone_icon_s": "http://test-api.cnccgt.com/public/build/images/my_salary/gongslogo.png"
+				    	},],
+						card_id : '',
+						bank_no : '',
+						
 					}
+				},
+				methods:{
+					getlist:function(){
+						this.balance= App.getItem('balance');
+						App.http('v1/user.base/bankCardList', {},function(data, status) {
+//				            this.list = data.data.list;
+						}.bind(this));	
+							
+					},
+					select:function(item){
+						this.card_id = item.card_id;
+				        this.bank_no = item.bank_no;
+				        this.selected = item;
+				        console.log(this.card_id)
+				        App.send('page/my/wallet/foward.html', 'update',this.card_id);
+					},
+				},
+				filters: {
+			        getLastNum: function (value) {
+			        	if(value){
+			        		return value=='' ? '' : value.slice(-4);
+			        	}
+			        },
+			        formatParam: function(item) {
+						return '{card_id:"' + item.card_id + '"}';
+					},
+			    },
+				mounted:function(){
+					mui.plusReady(function(){
+						var self = plus.webview.currentWebview();
+						this.card_id = self.card_id
+						this.getlist();
+					}.bind(this))
+//					this.getlist();
+				    //状态更改监听
+					App.request('update', function() {
+						this.getlist();
+					}.bind(this));
 				}
 			})
 		</script>
