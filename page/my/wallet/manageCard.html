@@ -11,7 +11,6 @@
 		<link rel="stylesheet" href="../../../css/main.css" />
 		<script type="text/javascript" src="../../../js/e_fish.js" ></script>
 		<script type="text/javascript" src="../../../js/mui.min.js" ></script>
-		<script type="text/javascript" src="../../../js/vue.js" ></script>
 	</head>
 	<style>
 		.mui-slider-handle{
@@ -46,63 +45,18 @@
 			<header class="mui-bar mui-bar-nav mui-bar-transparent header">
 				<a id="icon-menu" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 				<h2 class="mui-title">银行卡管理</h2>
-				<a  class="mui-icon mui-icon-plusempty mui-icon-right-nav mui-pull-right" @tap="addCard"></a>
+				<a  class="mui-icon mui-icon-plusempty mui-icon-right-nav mui-pull-right" to="my/wallet/addCard" title="添加银行卡"></a>
 			</header>
 			<div class="fix_hd">
-				<ul id="OA_task_1" class="mui-table-view">
-					<li class="mui-table-view-cell">
-						<div class="mui-slider-right mui-disabled">
+				<div v-if="list.length == 0" style="margin: 80px;text-align: center;font-size: 16px;color: #ccc;">啊哦，还没有绑定银行卡 ⊙﹏⊙ </div>
+				<ul id="OA_task_1" class="mui-table-view" v-else>
+					<li class="mui-table-view-cell" v-for="(item,index) in list">
+						<div class="mui-slider-right mui-disabled" @tap="delItem(index,item.card_id)">
 							<a class="mui-btn mui-btn-red">删除</a>
 						</div>
 						<div class="mui-slider-handle">
-							<img src="../../../images/y-managerCard.png" alt="" />
-							<p class="y_card_num">**** **** **** 9477</p>
-						</div>
-					</li>
-					<li class="mui-table-view-cell">
-						<div class="mui-slider-right mui-disabled">
-							<a class="mui-btn mui-btn-red">删除</a>
-						</div>
-						<div class="mui-slider-handle">
-							<img src="../../../images/y-managerCard.png" alt="" />
-							<p class="y_card_num">**** **** **** 9477</p>
-						</div>
-					</li>
-					<li class="mui-table-view-cell">
-						<div class="mui-slider-right mui-disabled">
-							<a class="mui-btn mui-btn-red">删除</a>
-						</div>
-						<div class="mui-slider-handle">
-							<img src="../../../images/y-managerCard.png" alt="" />
-							<p class="y_card_num">**** **** **** 9477</p>
-						</div>
-					</li>
-					
-					<li class="mui-table-view-cell">
-						<div class="mui-slider-right mui-disabled">
-							<a class="mui-btn mui-btn-red">删除</a>
-						</div>
-						<div class="mui-slider-handle">
-							<img src="../../../images/y-managerCard.png" alt="" />
-							<p class="y_card_num">**** **** **** 9477</p>
-						</div>
-					</li>
-					<li class="mui-table-view-cell">
-						<div class="mui-slider-right mui-disabled">
-							<a class="mui-btn mui-btn-red">删除</a>
-						</div>
-						<div class="mui-slider-handle">
-							<img src="../../../images/y-managerCard.png" alt="" />
-							<p class="y_card_num">**** **** **** 9477</p>
-						</div>
-					</li>
-					<li class="mui-table-view-cell">
-						<div class="mui-slider-right mui-disabled">
-							<a class="mui-btn mui-btn-red">删除</a>
-						</div>
-						<div class="mui-slider-handle">
-							<img src="../../../images/y-managerCard.png" alt="" />
-							<p class="y_card_num">**** **** **** 9477</p>
+							<img :src="item.phone_icon" alt="" />
+							<p class="y_card_num">**** **** **** {{item.bank_no|getLastNum}}</p>
 						</div>
 					</li>
 				</ul>
@@ -111,13 +65,47 @@
 		<script>
 			new Vue({
 				el:'#app',
+				data :function() {
+				    return {
+				    	list:[],
+
+				    }
+				},
 				methods:{
-					addCard(){
-						mui.openWindow({
-						    url: './addCard.html', 
-						    id:'addCard'
-						});
+					getlist:function(){
+						App.http('v1/user.base/bankCardList', {},function(data, status) {
+				            this.list = data.data.list;
+				            App.log(this.list);
+						}.bind(this));	
+					},
+					delItem:function(index,id){
+						var that =this;
+						mui.confirm('确认解绑此银行卡吗？', '', ['取消', '确定'], function(e) {
+							if (e.index == 1) {
+								App.http('v1/user.base/bankCardDelete', {
+									card_id: id
+								}, function(data, status) {
+									this.getlist();
+								}.bind(this));
+							} 
+						}.bind(this));
 					}
+				},
+				filters: {
+			        getLastNum: function (value) {
+			          if(value==''){
+			            return value;
+			          }else{
+			            return value.slice(-4)
+			          }
+			        }
+			    },
+				mounted:function() {
+				    this.getlist();
+				    //状态更改监听
+					App.request('update', function() {
+						this.getlist();
+					}.bind(this));
 				}
 			})
 		</script>

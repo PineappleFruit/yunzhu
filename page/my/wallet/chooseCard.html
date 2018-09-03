@@ -30,7 +30,7 @@
 			<header class="mui-bar mui-bar-nav mui-bar-transparent header">
 				<a id="icon-menu" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 				<h2 class="mui-title">选择银行卡</h2>
-				<a  class="mui-icon mui-icon-plusempty mui-icon-right-nav mui-pull-right"></a>
+				<a  class="mui-icon mui-icon-plusempty mui-icon-right-nav mui-pull-right" to="my/wallet/addCard" title="添加银行卡"></a>
 			</header>
 			<div class="fix_hd">
 				<div class="y_choose mt20">
@@ -55,33 +55,7 @@
 				data:function(){
 					return{
 						card_id:'',
-						list:[{
-				    		"card_id": 49,
-			                "bank_id": 2,
-			                "bank_no": "62220223100022321362774",
-			                "tel": "18980182979",
-			                "user_id": 444,
-			                "addtime": 1529048403,
-			                "status": 1,
-			                "name": "工商银行",
-			                "icon": "http://test-api.cnccgt.com/public/build/images/my_salary/gs.png",
-			                "icon_s": "http://test-api.cnccgt.com/public/build/images/my_salary/gs_s.png",
-			                "phone_icon": "http://test-api.cnccgt.com/public/build/images/my_salary/gongshang.png",
-			                "phone_icon_s": "http://test-api.cnccgt.com/public/build/images/my_salary/gongslogo.png"
-				    	},{
-				    		"card_id": 48,
-			                "bank_id": 2,
-			                "bank_no": "62220223100022321362774",
-			                "tel": "18980182979",
-			                "user_id": 444,
-			                "addtime": 1529048403,
-			                "status": 1,
-			                "name": "工商银行",
-			                "icon": "http://test-api.cnccgt.com/public/build/images/my_salary/gs.png",
-			                "icon_s": "http://test-api.cnccgt.com/public/build/images/my_salary/gs_s.png",
-			                "phone_icon": "http://test-api.cnccgt.com/public/build/images/my_salary/gongshang.png",
-			                "phone_icon_s": "http://test-api.cnccgt.com/public/build/images/my_salary/gongslogo.png"
-				    	},],
+						list:[],
 						card_id : '',
 						bank_no : '',
 						
@@ -91,7 +65,7 @@
 					getlist:function(){
 						this.balance= App.getItem('balance');
 						App.http('v1/user.base/bankCardList', {},function(data, status) {
-//				            this.list = data.data.list;
+				            this.list = data.data.list;
 						}.bind(this));	
 							
 					},
@@ -99,8 +73,9 @@
 						this.card_id = item.card_id;
 				        this.bank_no = item.bank_no;
 				        this.selected = item;
-				        console.log(this.card_id)
-				        App.send('page/my/wallet/foward.html', 'update',this.card_id);
+				        App.setItem('selected', this.selected);
+				        App.send('my/wallet/foward', 'update');
+				        mui.back();
 					},
 				},
 				filters: {

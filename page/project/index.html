@@ -53,16 +53,16 @@
 					<div class="mui-indicator"></div>
 				</div>
 			</div> 
-			<div class="y_type ub ub-ac bb ">
-				<div class="y_type_item ub-f1 ub ub-ver ub-pac mui-table-view-cell">
+			<div class="y_type ub ub-ac bb" >
+				<div class="y_type_item ub-f1 ub ub-ver ub-pac mui-table-view-cell" to="project/paidan" title="none">
 					<div class="y_dispatch y_icon"></div>
 					<p class="pt20 fz28 c33">技能派单</p>
-				</div>
-				<div class="y_type_item ub-f1 ub ub-ver ub-pac mui-table-view-cell">
+				</div> 
+				<div class="y_type_item ub-f1 ub ub-ver ub-pac mui-table-view-cell" to="project/rush" title="我的抢单">
 					<div class="y_robbing y_icon"></div>
 					<p class="pt20 fz28 c33">我的抢单</p>
 				</div>
-				<div class="y_type_item ub-f1 ub ub-ver ub-pac mui-table-view-cell">
+				<div class="y_type_item ub-f1 ub ub-ver ub-pac mui-table-view-cell" to="project/my" title="我的项目">
 					<div class="y_project y_icon"></div>
 					<p class="pt20 fz28 c33">我的项目</p>
 				</div>
@@ -73,97 +73,53 @@
 			</div>
 			<!--下拉刷新容器-->
 			<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+				<div v-if="list.length == 0" style="margin: 80px 10px;text-align: center;font-size: 16px;color: #ccc;">
+					<!--
+					<div v-if="userinfo.status==0">
+						未实名认证，暂无派单 ⊙﹏⊙ <br/>
+						<button style="border-color: #e5e5e5 ;color: #999;margin-top: 10px;" to="user/perfile/idcard" title="身份证信息">马上去认证</button>
+					</div>
+					<div v-else-if="userinfo.status==1">
+						实名认证，审核中... ⊙﹏⊙ <br/>
+					</div>
+					<div v-else-if="userinfo.status==3">
+						实名认证失败，请重新提交 ⊙﹏⊙ <br/>
+						<button style="border-color: #e5e5e5 ;color: #999;margin-top: 10px;" to="user/perfile/idcard" title="身份证信息">重新提交认证</button>
+					</div>-->
+					<div>
+						暂无派单 ⊙﹏⊙
+					</div>
+				</div>
 				<div class="mui-scroll">
 					<ul class="mui-table-view mui-table-view-chevron">
-						<li class="mui-table-view-cell" to="project/projectDefault" title='none'>
+						<li class="mui-table-view-cell" to="project/projectDefault" title='none' v-for="(item,index) in list" v-bind:param="item | formatParam">
 							<div class="bb plr30 ptb25">
 								<div class="ub">
 									<div class="ub-f1">
-										<p class="fz32 c33 fw-b">打桩工</p>
+										<p class="fz32 c33 fw-b">{{item.skill_name}}</p>
 										<div class="fz24 c66 y_label pt20">
-											<span>新疆-和田</span>
+											<span>{{item.address}}</span>
 											<span class="cc7">|</span>
-											<span>持证</span>
+											<span>{{item.aptitude | formatCertificates}}</span>
 											<span class="cc7">|</span>
-											<span>男</span>
+											<span>{{item.sex | formatSex}}</span>
 											<span class="cc7">|</span>
-											<span>28-40岁</span>
+											<span>{{item.age | formatAge}}</span>
 										</div>
 										<ul class="y_tag_list clear pt30 mb30">
-											<li>保险</li>
-											<li>按月发放</li>
-											<li>包吃住</li>
+											<li v-for="tag in spilceNum(item.workfare)">{{tag}}</li>
 										</ul>
 									</div>
-									<div class="tx-r">
-										<p class="fz28 c-red fw-b">8000元/月</p>
-										<p class="fz24 c66 pt20">2018年6月11日</p>
+									<div class="tx-r"> 
+										<p class="fz28 c-red fw-b" v-if="item.skill_type==6">面议</p>
+										<p v-if="item.skill_type!=6" class="fz28 c-red fw-b">{{item.wages}}元/{{item.skill_type | formatUnit}}</p>
+										<p  class="fz24 c66 pt20">{{item.addtime}}</p>
 									</div>
 								</div>
-								<p class="fz28 c33">房建工程项目</p>
-								<p class="fz28 c99">新疆天坤昊泰工程项目管理有限公司</p>
+								<p class="fz28 c33">{{item.project_name}}</p>
+								<p class="fz28 c99">{{item.company_name}}</p>
 							</div>
-							<div class="y_full y_icon y_classify"></div>
-						</li>
-						<li class="mui-table-view-cell">
-							<div class="bb plr30 ptb25">
-								<div class="ub">
-									<div class="ub-f1">
-										<p class="fz32 c33 fw-b">打桩工</p>
-										<div class="fz24 c66 y_label pt20">
-											<span>新疆-和田</span>
-											<span class="cc7">|</span>
-											<span>持证</span>
-											<span class="cc7">|</span>
-											<span>男</span>
-											<span class="cc7">|</span>
-											<span>28-40岁</span>
-										</div>
-										<ul class="y_tag_list clear pt30 mb30">
-											<li>保险</li>
-											<li>按月发放</li>
-											<li>包吃住</li>
-										</ul>
-									</div>
-									<div class="tx-r">
-										<p class="fz28 c-red fw-b">8000元/月</p>
-										<p class="fz24 c66 pt20">2018年6月11日</p>
-									</div>
-								</div>
-								<p class="fz28 c33">房建工程项目</p>
-								<p class="fz28 c99">新疆天坤昊泰工程项目管理有限公司</p>
-							</div>
-							<div class="y_full y_icon y_classify"></div>
-						</li>
-						<li class="mui-table-view-cell">
-							<div class="bb plr30 ptb25">
-								<div class="ub">
-									<div class="ub-f1">
-										<p class="fz32 c33 fw-b">打桩工</p>
-										<div class="fz24 c66 y_label pt20">
-											<span>新疆-和田</span>
-											<span class="cc7">|</span>
-											<span>持证</span>
-											<span class="cc7">|</span>
-											<span>男</span>
-											<span class="cc7">|</span>
-											<span>28-40岁</span>
-										</div>
-										<ul class="y_tag_list clear pt30 mb30">
-											<li>保险</li>
-											<li>按月发放</li>
-											<li>包吃住</li>
-										</ul>
-									</div>
-									<div class="tx-r">
-										<p class="fz28 c-red fw-b">8000元/月</p>
-										<p class="fz24 c66 pt20">2018年6月11日</p>
-									</div>
-								</div>
-								<p class="fz28 c33">房建工程项目</p>
-								<p class="fz28 c99">新疆天坤昊泰工程项目管理有限公司</p>
-							</div>
-							<div class="y_full y_icon y_classify"></div>
+							<div class=" y_icon y_classify" :class="{'y_full' : item.dis_status == 12}"></div>
 						</li>
 					</ul>
 				</div>
@@ -172,61 +128,187 @@
 		<script>
 			new Vue({
 				el:"#app",
+				data: function() {
+					return {
+						page: 1,
+						list: [],
+						users: [],
+						wp: '',
+						user: {},
+						userinfo: {},
+						workfare:[]
+					}
+				},
+				filters: {
+					formatStatus: function(item) {
+						if(item.dis_status == 1) {
+							return ' - 已抢单';
+						} else if(item.dis_status == 2) {
+							return ' - 抢单成功';
+						} else if(item.dis_status == 3) {
+							return ' - 抢单失败';
+						} else if(item.dis_status == 11) {
+							return ' - 已失效';
+						} else if(item.dis_status == 12) {
+							return ' - 已满员';
+						}
+					},
+					formatSex: function(sex) {
+						if(sex == 1) {
+							return '男';
+						} else if(sex == 2) {
+							return '女';
+						} else {
+							return '性别不限';
+						}
+					},
+					formatAge: function(age) {
+						return age == 0 ? '年龄不限' : age;
+					},
+					formatUnit: function(type) {
+						if(type == 1) {
+							return '天';
+						} else if(type == 2) {
+							return '件';
+						} else if(type == 3) {
+							return '月';
+						} else if(type == 4) {
+							return '平方';
+						} else if(type == 5) {
+							return '立方';
+						} else if(type == 6) {
+							return '面议';
+						}
+					},
+					formatParam: function(item) {
+						return '{skill_id:' + item.project_skill_id + ',dis_id:' + item.dis_id + '}';
+					},
+					formatCertificates: function(aptitude ) {
+						return aptitude == 2 ? '持证' : '';
+					},
+	
+				},
+				methods:{
+					/**
+					 * 获取派单列表
+					 */
+					getlist: function(type) {
+						App.http('v1/distribute.distribute/getList', {
+							page: this.page
+						}, function(data, status) {
+//							console.log(JSON.stringify(data.data.list)) 
+							this.page = data.data.page;
+							/**
+							 * 默认关闭下拉提示
+							 */
+						
+							
+								mui('#pullrefresh').pullRefresh().endPulldown();
+							
+	
+							/**
+							 * 返回数据为空的时候
+							 */
+							if(data.data.list.length == 0) {
+	
+								/**
+								 * 取消上拉加载更多提示
+								 */
+								mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
+								return false;
+							}
+							/**
+							 *  总页数等于当前页码的时候
+							 */
+							if(data.data.total_page == this.page) {
+								/**
+								 * 取消上拉加载更多提示
+								 */
+								mui('#pullrefresh').pullRefresh().disablePullupToRefresh();
+							}
+							/**
+							 * 取消上拉加载中提示
+							 */
+							
+								mui('#pullrefresh').pullRefresh().endPullupToRefresh(false);
+							
+							/**
+							 * 如果是上拉，则 push 数据
+							 */
+							if(type == 'add') {
+								for(var i = 0; i < data.data.list.length; i++) {
+									this.list.push(data.data.list[i]);
+								}
+								return;
+							}
+							this.list = data.data.list;
+						}.bind(this));
+					},
+					spilceNum:function(item){
+						if(item){
+							let str = item.split(",")
+							return str
+						}
+						
+					}
+				},
 				mounted:function(){
-					mui.init({
-						pullRefresh: {
-							container: '#pullrefresh',
-							down: {
-								style:'circle',
-								callback: function() {
-									alert('刷新完成')
-									mui('#pullrefresh').pullRefresh().endPulldown();
-								}.bind(this)
-							},
-							up: {
-								auto:true,
-								contentrefresh: '正在加载...',
-								callback: function() {}.bind(this)
+					this.userinfo = App.getItem('user');	
+	
+					//				    App.log(this.list)
+					var ids = App.getItem('bulrIds');
+					this.users = ids == null ? [] : ids;
+					this.wp = this.users.join(" ");
+					//状态更改监听
+					App.request('update', function() {
+						this.userinfo = App.getItem('user');
+						mui('#pullrefresh').pullRefresh().pulldownLoading();
+					}.bind(this));
+					
+					//抢单成功后，更新工种状态
+					App.request('updateItem', function(project_skill_id) {
+						for(var i = 0; i < this.list.length; i++) {
+							if(this.list[i].project_skill_id==project_skill_id){
+								this.list[i].dis_status=1;
 							}
 						}
-					});
-				}
-			})
-		</script>
-	</body>
-	<!--<script type="text/javascript">
-		new Vue({
-			el: '#app',
-			mounted: function() {
-				mui(".mui-scroll-wrapper").scroll();
-				this.$nextTick(function() {
+					}.bind(this));
+	
 					mui.init({
 						pullRefresh: {
-							container: "#refreshContainer2", //下拉刷新容器标识，querySelector能定位的css选择器均可，比如：id、.class等
+							container: "#pullrefresh", //下拉刷新容器标识，querySelector能定位的css选择器均可，比如：id、.class等
 							up: {
 								height: 50, //可选.默认50.触发上拉加载拖动距离
 								auto: false, //可选,默认false.自动上拉加载一次
 								contentrefresh: "正在加载...", //可选，正在加载状态时，上拉加载控件上显示的标题内容
 								contentnomore: '', //可选，请求完毕若没有更多数据时显示的提醒内容；
-								callback: function() {}.bind(this)
+								callback: function() {
+									this.page++;
+									this.getlist('add');
+								}.bind(this)
 							},
 							down: {
 								style: 'circle', //必选，下拉刷新样式，目前支持原生5+ ‘circle’ 样式
 								color: '#2BD009', //可选，默认“#2BD009” 下拉刷新控件颜色
 								height: '50px', //可选,默认50px.下拉刷新控件的高度,
-								range: '0', //可选 默认100px,控件可下拉拖拽的范围
+								range: '100px', //可选 默认100px,控件可下拉拖拽的范围
 								offset: '0px', //可选 默认0px,下拉刷新控件的起始位置
 								auto: false, //可选,默认false.首次加载自动上拉刷新一次
 								callback: function() {
-									mui('#refreshContainer2').pullRefresh().refresh(true);
-									mui('#refreshContainer2').pullRefresh().endPulldown();
+									mui('#pullrefresh').pullRefresh().refresh(true);
+									this.page = 1;
+									this.getlist();
 								}.bind(this)
 							}
 						}
 					});
-				})
-			}
-		})
-	</script>-->
+					
+					mui.plusReady(function(){
+						this.getlist();
+					}.bind(this))
+				}
+			})
+		</script>
+	</body>
 
 </html>

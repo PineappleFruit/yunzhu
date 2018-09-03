@@ -397,7 +397,10 @@
 			"page/project/index.html": {
 				"resources": [],
 				"refer": [
-					"page/project/projectDefault.html"
+					"page/project/projectDefault.html",
+					"page/project/paidan.html",
+					"page/project/rush.html",
+					"page/project/my.html"
 				],
 				"priority": 0
 			},
@@ -425,7 +428,46 @@
 			"page/my/wallet/chooseCard.html": {
 				"resources": [],
 				"refer": [
-					"page/my/wallet/foward.html"
+					"page/my/wallet/foward.html",
+					"page/my/wallet/addCard.html"
+				],
+				"priority": 0
+			},
+			"page/my/wallet/manageCard.html": {
+				"resources": [],
+				"refer": [
+					"page/my/wallet/addCard.html"
+				],
+				"priority": 0
+			},
+			"page/project/projectDefault.html": {
+				"resources": [],
+				"refer": [
+					"page/project/map.html"
+				],
+				"priority": 0
+			},
+			"page/project/paidan.html": {
+				"resources": [],
+				"refer": [
+					"page/project/projectDefault.html",
+					"page/my/wallet/addCard.html",
+					"page/my/skill/index.html"
+				],
+				"priority": 0
+			},
+			"page/project/rush.html": {
+				"resources": [],
+				"refer": [
+					"page/project/rushDefault.html"
+				],
+				"priority": 0
+			},
+			"page/project/my.html": {
+				"resources": [],
+				"refer": [
+					"page/project/rushDefault.html",
+					"page/project/myDefault.html"
 				],
 				"priority": 0
 			}

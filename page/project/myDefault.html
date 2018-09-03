@@ -27,6 +27,15 @@
 				<div class="y_share_hd y_right y_icon" @tap="share"></div>
 			</header>
 			<div class="fix_hd">
+				<div class="ub ub-ac plr30 mb20 bg-ff ptb40">
+					<div class="ub-f1 fz28 c66">
+						<p class="fz32 c33 fw-b pb30">报道信息</p>
+						<p>联系人：{{item.director}}</p>
+						<p>联系电话：{{item.phone}}</p>
+						<p>项目地址：{{item.address}} {{item.det_add}}</p>
+					</div>
+					<div class="y_icon y_phone" @tap="call"></div>
+				</div>
 				<div class="y_details_info bg-ff mb20 fix_btn">
 					<div class="ptb25 plr30">
 						<div class="ub">
@@ -47,7 +56,7 @@
 							</div>
 							<div class="tx-r">
 								<p class="fz28 c-red fw-b" v-if="item.skill_type==6">面议</p>
-								<p v-if="item.skill_type!=6" class="fz28 c-red fw-b">{{item.wages}}元/{{item.skill_type | formatUnit}}</p>
+								<p v-if="item.skill_type!=6" class="fz28 c33 fw-b">{{item.wages}}元/{{item.skill_type | formatUnit}}</p>
 								<p  class="fz24 c66 pt20">{{item.addtime}}</p>
 							</div>
 						</div>
@@ -76,9 +85,6 @@
 							<p class="fz28 c66 pt20">{{item.description}}</p>
 						</div>
 					</div>
-				</div>
-				<div class="fix_box">
-					<button class="btn btn-green" type="button" @tap="confirm" v-if="!item.dis_status">抢单</button>
 				</div>
 			</div>
 		</div>
@@ -113,40 +119,6 @@
 						}.bind(this));
 					},
 					/**
-					 * 提交抢单
-					 */
-					confirm: function() {
-						var that = this;
-						if(this.status != 2){
-							mui.confirm("你还未进行实名认证，不能进行抢单，是否进行实名认证？", "未实名认证", ["取消", "去认证"], function(e) {
-								if(e.index == 1) {
-									var page={
-											"url":"my/userInfo/attes",
-											"title":"实名认证",
-											"ani":"slide-out-top"
-										};
-									App.open(page);
-								}
-							});
-						}
-						mui.confirm("您确认抢单吗？", "", ["再考虑一下", "立即抢单"], function(e) {
-							if(e.index == 1) {
-								App.http('v1/distribute.distribute/rob', {
-									dis_id: that.item.dis_id,
-									project_skill_id: that.item.project_skill_id
-								}, function(data, status) {
-									if(data.status != 1) {
-										mui.toast(data.msg);
-										return;
-									}
-									that.item.dis_status = 1;
-									mui.toast("抢单成功啦");
-									App.send('page/project/index.html', 'updateItem', that.item.project_skill_id);
-								});
-							}
-						});
-					},
-					/**
 					 * 收藏
 					 * @param {Object} type
 					 */
@@ -167,13 +139,24 @@
 							return str
 						}
 					},
-//					获取用户信息
+					/*
+					*获取用户信息
+					*/
 					getuser: function() {
 						App.http('v1/user.base/getInfo', {}, function(data, status) {
 							this.status = data.data.status
 							App.setItem('user', data.data);
 						}.bind(this));
 					},
+					/*
+					*拨打电话 
+					*/
+					call:function(e){
+						if(this.item.phone){
+							plus.device.dial(this.item.phone, true);
+						}
+			            
+			        }
 				},
 				filters: {
 					formatSex: function(sex) {

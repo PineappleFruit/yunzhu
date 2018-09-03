@@ -56,7 +56,12 @@
 							<p class="fz28 c99 pt20">{{item.company_name}}</p>
 						</div>
 						<div class="ptb40 bt">
-							<p class="fz28 c33" v-if="item.skill_stime!=0">开工时间：{{item.skill_stime}}</p>
+							<p class="fz28 c33">状态：
+								<span class="c-yellow" v-if="dis_status == 1">【审核中】</span>
+								<span class="c-red2" v-else-if="dis_status == 11">【抢单失败】</span>
+								<span class="c-green" v-else-if="dis_status == 2">【抢单成功】</span>
+								<span class="c-red2" v-else-if="dis_status == 22">【已失效】</span>
+							</p>
 							<div class="ub ub-ac pt20" to="project/map" title="项目地址" v-bind:param="item | formatParam">
 								<p class="fz28 c99  ub-f1 word-break">项目地址：{{item.address}} {{item.det_add}}</p>
 								<div class="y_arrow"></div>
@@ -78,7 +83,7 @@
 					</div>
 				</div>
 				<div class="fix_box">
-					<button class="btn btn-green" type="button" @tap="confirm" v-if="!item.dis_status">抢单</button>
+					<button class="btn btn-green" type="button" @tap="unconfirm">取消抢单</button>
 				</div>
 			</div>
 		</div>
@@ -91,7 +96,8 @@
 						skill_id: null,
 						dis_id: null,
 						workfare : '',
-						status:''
+						status:'',
+						dis_status : ''
 					}
 				},
 				methods:{
@@ -104,6 +110,7 @@
 						}, function(data, status) {
 							this.item = data.data.info;
 							this.workfare = data.data.info.workfare
+							console.log(JSON.stringify(data.data.info))
 						}.bind(this));
 						/**
 						 * 获取分享规则
@@ -115,34 +122,23 @@
 					/**
 					 * 提交抢单
 					 */
-					confirm: function() {
+					unconfirm: function() {
 						var that = this;
-						if(this.status != 2){
-							mui.confirm("你还未进行实名认证，不能进行抢单，是否进行实名认证？", "未实名认证", ["取消", "去认证"], function(e) {
-								if(e.index == 1) {
-									var page={
-											"url":"my/userInfo/attes",
-											"title":"实名认证",
-											"ani":"slide-out-top"
-										};
-									App.open(page);
-								}
-							});
-						}
-						mui.confirm("您确认抢单吗？", "", ["再考虑一下", "立即抢单"], function(e) {
+						
+						mui.confirm("您确认取消抢单吗？", "", ["再考虑一下", "立即取消"], function(e) {
 							if(e.index == 1) {
-								App.http('v1/distribute.distribute/rob', {
-									dis_id: that.item.dis_id,
-									project_skill_id: that.item.project_skill_id
-								}, function(data, status) {
-									if(data.status != 1) {
+								if(e.index == 1) {
+									App.http('v1/distribute.distribute/delDistribute', {
+										dis_id: that.dis_id
+									}, function(data, status) {
 										mui.toast(data.msg);
-										return;
-									}
-									that.item.dis_status = 1;
-									mui.toast("抢单成功啦");
-									App.send('page/project/index.html', 'updateItem', that.item.project_skill_id);
-								});
+										if(data.status == 1) {
+//											window.location.reload();
+											App.send('project/rush', 'update');
+											mui.back()
+										}
+									});
+								}
 							}
 						});
 					},
@@ -214,6 +210,7 @@
 						var self = plus.webview.currentWebview();
 						this.skill_id = self.skill_id;
 						this.dis_id = self.dis_id;
+						this.dis_status = self.dis_status;
 						this.getinfo();
 						this.getuser();
 					}.bind(this));

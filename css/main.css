@@ -1009,6 +1009,15 @@ i.y_rotete{
 .mui-bar{
 	height: auto;
 }
+.y_bank_small{
+	width: 0.6rem;
+	height: 0.6rem;
+	overflow:hidden;
+}
+.y_bank_small img{
+	width: 100%;
+	height: 100%;
+}
 .y_chian_small{
 	width: 0.6rem;
 	height: 0.6rem;
@@ -1051,6 +1060,7 @@ i.y_rotete{
 	background-image: url(../images/y-youzheng-small.png);
 	margin-right: 0.2rem;
 }
+
 .y_jianshe_small{
 	width: 0.6rem;
 	height: 0.63rem;

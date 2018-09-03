@@ -56,19 +56,6 @@
 					<button class="btn btn-green  mt20" @tap="withdraw" :disabled="item.card_id == 0 || item.bank_no=='' || item.money ==0 || balance <=0 || parseInt(item.money) > balance">申请提现</button>
 				</div>
 			</div>
-			<!--<div id="cardlist" class="mui-popover mui-popover-action mui-popover-bottom">
-			
-				<ul class="mui-table-view mui-table-view-chevron mui-table-view-radio ">
-					<li v-for="(item,index) in list" class="mui-table-view-cell" v-bind:class="{'mui-selected' : selected ==item}"   @click="select(item)">
-						<img class="mui-media-object mui-pull-left head-img" :src="item.phone_icon_s">
-						<div class="mui-media-body mui-navigate-right" >
-							<div style="font-size:18px;color: #333;">{{item.name}}</div>
-							<div style="font-size: 14px;color: #666;margin-top: 5px;">尾号{{item.bank_no|getLastNum}}储蓄卡</div>
-						</div>
-					</li>
-					
-				</ul>-->
-			</div>
 		</div>
 		<script>
 			new Vue({
@@ -76,52 +63,30 @@
 				data :function() {
 				    return {
 				    	balance:0,
-				    	list:[{
-				    		"card_id": 49,
-			                "bank_id": 2,
-			                "bank_no": "62220223100022321362774",
-			                "tel": "18980182979",
-			                "user_id": 444,
-			                "addtime": 1529048403,
-			                "status": 1,
-			                "name": "工商银行",
-			                "icon": "http://test-api.cnccgt.com/public/build/images/my_salary/gs.png",
-			                "icon_s": "http://test-api.cnccgt.com/public/build/images/my_salary/gs_s.png",
-			                "phone_icon": "http://test-api.cnccgt.com/public/build/images/my_salary/gongshang.png",
-			                "phone_icon_s": "http://test-api.cnccgt.com/public/build/images/my_salary/gongslogo.png"
-				    	},{
-				    		"card_id": 49,
-			                "bank_id": 2,
-			                "bank_no": "62220223100022321362774",
-			                "tel": "18980182979",
-			                "user_id": 444,
-			                "addtime": 1529048403,
-			                "status": 1,
-			                "name": "工商银行",
-			                "icon": "http://test-api.cnccgt.com/public/build/images/my_salary/gs.png",
-			                "icon_s": "http://test-api.cnccgt.com/public/build/images/my_salary/gs_s.png",
-			                "phone_icon": "http://test-api.cnccgt.com/public/build/images/my_salary/gongshang.png",
-			                "phone_icon_s": "http://test-api.cnccgt.com/public/build/images/my_salary/gongslogo.png"
-				    	},],
+				    	list:[],
 				    	selected:{},
 				    	item:{
 				    		card_id:0,
 				    		bank_no:'',
 				    		money:0
 				    	},
-				    	
+				    	card_id :''
 				    }
 				},
 				methods:{
 					getlist:function(){
 						this.balance= App.getItem('balance');
+						this.selected = App.getItem('selected')
+						console.log(JSON.stringify(this.selected))
 						App.http('v1/user.base/bankCardList', {},function(data, status) {
-//				            this.list = data.data.list;
-				            this.selected = this.list[0];
+				            this.list = data.data.list;
+//				            this.selected = this.list[0];
 				            if(this.selected){
 					            this.item.card_id = this.selected.card_id;
 					            this.item.bank_no = this.selected.bank_no;
 //					            this.item.money = this.balance;
+				            }else if(this.list[0]){
+				            	this.selected = this.list[0];
 				            }else{
 				            	mui.plusReady(function() {
 					            	mui.confirm('您需要绑定银行卡才能提现？', '', ['取消', '确定绑定'], function(e) {
@@ -160,6 +125,7 @@
 					allMoney:function(item){
 						this.item.money = this.balance;	
 					},
+					
 				},
 				filters: {
 			        getLastNum: function (value) {
@@ -170,19 +136,16 @@
 			        formatParam: function(item) {
 						return '{card_id:"' + item.card_id + '"}';
 					},
+					formatCard:function(item){
+						return item.card_id == this.card_id
+					}
 			    },
 				mounted:function(){
 					this.getlist();
 				    //状态更改监听
 					App.request('update', function() {
 						this.getlist();
-						console.log(this.data.card_id)
 					}.bind(this));
-//					mui.plusReady(function() {
-//						var self = plus.webview.currentWebview();
-//              		var card_id = self.card_id;
-//              		console.log(card_id)
-//					});
 				}
 			})
 		</script>

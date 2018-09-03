@@ -27,134 +27,328 @@
 			.mui-popover.mui-popover-action .mui-table-view{
 				border-radius: 0.3rem;
 			}
+			.model{
+			    background: #fff;
+			    text-align: center;
+			    height: 100%;
+			    overflow: auto;
+			    width: 100%;
+			    padding: 10px;
+			}
 		</style>
 	</head>
 
 	<body id="e_fish_container">
 		<div id="app">
-			<header class="mui-bar mui-bar-nav mui-bar-transparent header">
-				<a id="icon-menu" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-				<h2 class="mui-title">添加银行卡</h2>
-			</header>
-			<div class="fix_hd">
+			<div  v-show="!isShow">
 				<p class="c-red word-break fz24 plr30 ptb30">请确定绑定银行卡为您本人的银行卡账户信息，否则将无法进行 金额提现交易。</p>
-				<form action="" method="">
-					<div class="bg-ff plr30">
-						<div class=" bb ptb25 ub ub-ac">
-							<p class="y_title_180">真实姓名</p>
-							<div class="ub-f1">张利龙</div>
+				<div class="bg-ff plr30">
+					<div class=" bb ub ub-ac">
+						<p class="y_title_180">真实姓名</p>
+						<div class="ub-f1 y_back_input mui-input-row">
+							<input type="text" name="" class="mui-input-clear" id="" readonly="readonly" v-model="user.name"/>
 						</div>
+					</div>
+					<div class="bg-ff bb ub ub-ac">
+						<p class="y_title_180">身份证号</p>
+						<div class="ub-f1 y_back_input mui-input-row">
+							<input type="number" name="" class="mui-input-clear" id="" readonly="readonly" v-model="user.card"/>
+						</div>
+					</div>
+					<a href="#picture">
 						<div class="bg-ff bb ptb25 ub ub-ac">
-							<p class="y_title_180">身份证号</p>
-							<div class="ub-f1">510122199001140072</div>
+							<p class="y_title_180">开户银行</p>
+							<div class="ub-f1 ca7" >{{bankname}}</div>
+							<div class="y_arrow"></div>
 						</div>
-						<a href="#picture">
-							<div class="bg-ff bb ptb25 ub ub-ac">
-								<p class="y_title_180">开户银行</p>
-								<div class="ub-f1 ca7">请选择</div>
-								<div class="y_arrow"></div>
-							</div>
-						</a>
-						
-						<div class="bg-ff bb ub ub-ac">
-							<p class="y_title_180">银行卡号</p>
-							<div class="ub-f1 y_back_input">
-								<input type="text" name="" id="" value="" placeholder="请输入银行卡号"/>
-							</div>
-						</div>
-						<div class="bg-ff bb ub ub-ac">
-							<p class="y_title_180">手机号码</p>
-							<div class="ub-f1 y_back_input">
-								<input type="text" name="" id="" value="" placeholder="请输入银行预留手机号"/>
-							</div>
+					</a>
+					
+					<div class="bg-ff bb ub ub-ac">
+						<p class="y_title_180">银行卡号</p>
+						<div class="ub-f1 y_back_input mui-input-row">
+							<input type="number" name="" class="mui-input-clear" id="" value="" placeholder="请输入银行卡号" v-model="param.number"/>
 						</div>
 					</div>
-					<div class="plr30">
-						<div class="ub ub-ac">
-							<input type="checkbox" name="" id="" value="" class="y_checkbox"/>
-							<p class="fz32 ca7 ptb20 pl20">我已阅读并同意<span class="c-green">《银行卡使用协议》</span></p>
+					<div class="bg-ff bb ub ub-ac">
+						<p class="y_title_180">手机号码</p>
+						<div class="ub-f1 y_back_input mui-input-row">
+							<input type="number" name="" class="mui-input-clear" id="" value="" placeholder="请输入银行预留手机号" v-model="param.tel"/>
 						</div>
-						<button class="btn btn-green mt20">确定</button>
 					</div>
-				</form>
-				
-				
+				</div>
+				<div class="plr30">
+					<div class="ub ub-ac">
+						<input type="checkbox" name="" id="" class="y_checkbox" disabled  v-model="picked" value="1"/>
+						<p class="fz32 ca7 ptb20 pl20">我已阅读并同意<span class="c-green" @tap="isShow = true">《银行卡使用协议》</span></p>
+					</div>
+					<button class="btn btn-green mt20" type="button" @tap="save">确定</button>
+				</div>
 			</div>
+			<div id="picture" class="mui-popover mui-popover-action mui-popover-bottom">
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell" v-for="(item,index) in bank"  @tap="select(item)">
+						<div class="ub ub-ac">
+							<div class="y_action_left clear">
+								<div class="y_bank_small">
+									<img :src="item.phone_icon_s" alt="" />
+								</div>
+							</div>
+							<p class="fz40 c66">{{item.name}}</p>
+						</div>
+					</li>
+				</ul>
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell">
+						<a href="#picture" class="fz40"><b>取消</b></a>
+					</li>
+				</ul>
+			</div>
+			<div v-show="isShow">
+		        <div class="model ">
+					<div class="mui-popup-title">用户银行卡与云筑天下平台绑定、提现服务协议书</div>
+					<div class="mui-popup-text" style="text-align: left;">
+						<p>欢迎使用云筑天下平台！本协议由云筑天下网站的运营者及相关第三方根据本服务协议的条款及不时发布的规则与拟/已在云筑天下平台以劳务工人身份注册并发布就业信息、寻找就业机会的法律实体（下称“用户”）就用户的银行卡与云筑天下平台绑定、用户工资提现事项共同缔结，具有合同效力。</p>
+						<p>
+							<b>一、重要须知</b>
+						</p>
+						<p>
+							1.1.在接受本协议之前，请您务必审慎阅读、充分理解本协议中相关条款的内容，特别是粗体标注的内容。
+						</p>
+						<p>
+							1.2.您已在云筑天下建筑劳务互联网平台(以下简称“云筑天下平台”或“平台”)进行了用户注册，拟/已通过云筑天下平台发布就业信息，寻找务工机会。
+						</p>
+						<p>
+							1.3.云筑天下平台作为建筑劳务信息发布平台，可联合平台托管行及相关方为用工单位与用户之间提供工资、薪酬发放等代收代付事宜或具备该功能，用户可通过平台进行工资、薪酬领取及账户资金理财(如有)等的相关事宜。
+						</p>
+						<p>
+							1.4.在签署本协议并申请开通相关业务功能前，请确认您是具有完全民事权利能力和民事行为能力、能够独立承担民事责任的自然人；若您代他人签署本协议并申请相关业务功能，请您确认您及您的委托人均是具有完全民事权利能力和民事行为能力、能够独立承担民事责任的自然人。如不具备前述条件，您应该立即停止申请使用本服务。
+						</p>
+						<p>
+							1.5.鉴于网络服务的特殊性（包括但不限于服务器的稳定性问题、恶意的网络攻击等行为或云筑天下无法控制的情形），平台与银行卡号的绑定、提现等流程中可能会发生不特定的安全风险，云筑天下无需为此承担任何责任。
+						</p>
+						<p>
+							<b>
+						             1.6.本协议通过在线点击确认的方式签署，若您在线点击确认，则视为您对本协议全部约定内容已经知晓并认可，同意就银行账户与平台绑定、资金自动转入及转出（如有）、平台账户余额提现等服务操作的相关事项按照本协议约定执行。如果您不同意协议的任一内容，请不要进行后续操作。
+						           </b>
+						</p>
+						<p>
+							1.7.鉴于您已在平台进行用户注册，您的个人信息以您在平台填写的相关信息及提供的资料为准。
+						</p>
+						<p>
+							<b>二、释义</b>
+						</p>
+						<p>
+							2.1.账户绑定，指用户指定的银行卡账户（以下或简称银行卡）和用户在平台的注册账户关联并绑定。绑定后发卡行、平台、和/或平台第三方/合作方才能帮助用户实现本协议所属的银行卡绑定等功能。
+						</p>
+						<p>
+							2.2.提现 功能，包括平台注册账户提现，以及在平台购买第三方产品（如有）。其中平台注册账户提现是指平台根据发卡行代用户发送的指令从绑定的平台注册账户划转款项至用户的银行卡。在平台购买第三方产品（如有）提现是指根据发卡行代用户发送的指令，执行指令并将相关款项划转至用户的平台账户，再由平台将前述款项划转至用户的银行卡。
+						</p>
+						<p>
+							<b>三、服务的开通</b>
+						</p>
+						<p>
+							用户同意绑定、提现功能将在以下条件成就时开通：
+						</p>
+						<p>
+							3.1.用户已经成为平台或相应客户端的注册用户，并通过实名认证；
+						</p>
+						<p>
+							3.2.用户通过平台网络或客户端点击确认或以其他方式（含线下签署）选择接受本协议
+						</p>
+						<p>
+							3.3.用户在平台或客户端成功绑定银行卡；
+						</p>
+						<p>
+							3.4.其他。
+						</p>
+						<p>
+							<b>四、合同双方权利义务</b>
+						</p>
+						<p>
+							4.1. 平台及平台运营者的权利义务
+						</p>
+						<p>
+							4.1.1.平台应确保已在平台注册的用户（即银行卡绑定申请人）自愿选择在平台进行银行卡绑定服务业务。
+						</p>
+						<p>
+							4.1.2.平台免费办理用户银行卡绑定服务业务，办理时有权对银行卡持有人（即劳务工人）的身份信息（身份证原件及复印件）、授权委托书等资料进行验审，确定真实合法有效后方可办理。资料验审通过后，平台应在3个工作日内完成银行卡绑定工作，具体审验流程以平台制度及托管银行（含开户银行）工作流程为准
+						</p>
+						<p>
+							4.1.3.平台可为用户提供银行卡绑定业务所需各项资料的纸质或电子文档格式，并辅助用户填写、复印或制作，但用户需对提供的资料负责。
+						</p>
+						<p>
+							4.1.4.平台有责任对用户的身份信息、委托书等纸质或电子资料妥善保管。
+						</p>
+						<p>
+							4.1.5.平台负责平台的建设、运行和管理，确保平台的安全性。在平台运行期间，有权利留存用户在平台填写的相应信息，并将用户的个人信息（包括但不限于：姓名、身份证号、手机号、邮箱、联系地址、账号、用户在金融机构的账户、交易信息、资产状况等）提供给发卡行和平台合作的第三方。
+						</p>
+						<p>
+							4.1.6.用户在使用绑定、提现等平台功能过程中，提供的必要信息，若国家法律法规或政策有特殊规定的，平台有权依据规定进行调整，并不单独进行通知。
+						</p>
+						<p>
+							4.2.用户权利义务
+						</p>
+						<p>
+							4.2.1.用户保证其系自愿选择在平台进行银行卡绑定、提现、通过平台购买第三方理财（如有）服务业务，并有责任向平台提供真实合法有效的身份信息，按照平台要求及时准备好相关信息资料，用户承诺其所要绑定的银行卡真实、合法、有效。
+						</p>
+						<p>
+							4.2.2.用户接受平台银行卡绑定、提现服务业务后需自行妥善保管银行卡，若发生丢失且发生卡内资金损失等后果，均由其自行承担，与平台无关。发生丢失后要及时做挂失处理并通过项目经理及时通知平台，若因用户通知不及时导致资金损失由用户自行承担。
+						</p>
+						<p>
+							4.2.3.用户银行卡若被损坏不能使用，要及时到银行进行重新办卡处理。若新卡号码与原卡不一致，需在2个工作日内通知平台，并重新做绑定处理，重新绑定完毕前，用户不得进行提现操作。若因用户通知不及时导致资金损失由用户自行承担。
+						</p>
+						<p>
+							4.2.4.用户可通过平台在绑定多张银行卡，具体以用户在平台填写的数据为准。
+						</p>
+						<p>
+							4.2.5.用户有义务妥善保管自身证件号码、银行卡卡号及银行卡相关密码。为保障用户个人的用卡安全，请妥善保管手机。如手机等软件被他人使用，而造成银行卡交易提醒信息、账单摘要信息、额度信息、可用积分（如有）信息泄漏，平台及平台不承担责任。
+						</p>
+						<p>
+							平台工作人员要求用户提供书面证明材料才能进行下一步挂失操作的，用户可能被要求提供书面材料或承诺书。
+						</p>
+						<p>
+							4.2.6.通常情况下，用户在平台使用过程中若产生纳税或代扣代缴税款的义务，原则上应当自行承担。平台及平台不承担代扣代缴义务。若根据国家税收法律规定，平台或平台有代扣代缴义务，则平台或平台有权代扣代缴，用户不持任何异议。
+						</p>
+						<p>
+							4.2.7.用户在平台的银行卡使用过程中，一切操作均应当符合国家法律法规、规章政策和法令的规定，应当符合本协议条款和平台相关规则的规定。
+						</p>
+						<p>
+							4.2.8.用户需自行设置平台银行卡相关功能及触发条件，防止他人利用用户的设置触发条件中存在的漏洞滥用规则。
+						</p>
+						<p>
+							4.2.9.若平台检测到用户账户及银行卡异常，为确保安全性，有权单方暂定银行卡交易，直至确保安全为止。
+						</p>
+						<p>
+							4.2.10.用户在使用绑定、提现等平台功能过程中，须自行承担如下来自平台不可掌控的风险内容，包括但不限于：由于不可抗拒因素可能引起的个人信息丢失、泄露等风险；用户在使用扫一扫或点击消息内容访问第三方网站时，因第三方网站及相关内容所可能导致的风险，由用户自行承担；用户发布的内容被他人转发、分享，因此等传播可能带来的风险和责任；由于无线网络信息不稳定、无线网络等带宽小等原因，所引起的账号登录失败、功能暂不能使用、消息收发延迟等风险。
+						</p>
+						<p>
+							4.2.11.用户明确承认并同意，平台有权对某些特殊的服务或功能收取费用或更改服务价格。若生效法律法规要求事先通知用户的，平台将会事先在合理的时间通知用户。新的收费价格生效后，用户需接受变更后的价格以便继续使用该等服务。如不同意变更费用，用户有权在费用变更前终止使用本服务。用户可能需要接受其他第三方协议或收费以使用第三方的服务。用户应当依法支付法律规定的任何税费。
+						</p>
+						<p>
+							4.2.12.平台的某些内容、组成部分或功能可能来自第三方的资料和链接。用户理解并接受，平台对于使用或依赖第三方资料和链接的服务而对用户造成或宣称造成的直接或间接损失不承担任何责任。
+						</p>
+						<p>
+							4.2.13.用户通过使用包括但不限于绑定、提现等平台服务功能形成的信息、内容和材料，如图形、文字、图像、声音、软件和数据文件等。用户须单独对任何用户或以用户账户的名义进行上传、下载、发布、通过电子发送、传输、存储的用户内容承担完全责任。
+						</p>
+						<p>
+							4.2.14.在法律允许的范围内，用户明确同意，用户不可撤销地授予平台所有有关用户提交的任何反馈意见（包括提交的建议或提高平台的产品和服务而提供的反馈）的合法权利。另外，在法律允许的范围内，用户明确放弃就用户提交的反馈内容向平台为主张权利或损害赔偿的权利。
+						</p>
+						<p>
+							4.2.15.依法律、诉讼、司法机关或政府机关的要求或其他合理必要的情况下，平台可能会访问、使用、保存、和/或披露用户的账户信息和内容。
+						</p>
+						<p>
+							<b>五、侵权、违约责任及赔偿 </b>
+						</p>
+						<p>
+							5.1.用户违反本协议约定或违反承诺，平台有权单方解除协议，因未履行协议所造成的责任与后果均由用户承担。
+						</p>
+						<p>
+							5.2.平台发现或收到他人举报或投诉用户违反本协议及用户注册协议约定的，平台有权不经通知随时对相关内容进行删除、屏蔽；如果平台有合理理由认为用户通过注册账号与平台进行的交易存在争议或账号存在异常，平台有权取消交易并将已付款项原路退还，平台有权对存在前述任一情形的违规账号除以包括但不限于警告、限制或禁止使用部分或全部功能、账号封禁直至注销的处罚，并公告处理结果。
+						</p>
+						<p>
+							5.3.用户理解并同意：平台有权依法合理判断对违反有关法律法规或本协议规定的行为进行处罚，对违法违规的任何用户采取适当的法律行动，并依据法规法规保存有关信息向有关部分报告等，用户应独自承担由此而产生的一切法律责任。
+						</p>
+						<p>
+							5.4.用户理解并同意：因用户违反本协议或相关服务条款的规定，导致或产生第三方主张的任何索赔、要求或损失，用户应当独立承担责任；平台因此遭受损失的，用户也应当一并赔偿。
+						</p>
+						<p>
+							5.5.在以下情形下，用户有义务应对、保证平台及董事、高级职员、雇员、代理商、合作伙伴、供应商和许可免受任何第三方的索赔或诉讼请求，包括合理的律师费：在使用平台服务过程中，以用户账户的名义提交、发布、传送或以其他方式造成用户内容可用而导致的；以用户账号的名义使用平台服务合参加的活动而导致的；用户违反本协议及注册协议的任何行为而导致的；用户侵犯任何第三方的权利的行为，例如侵害任何第三方的知识产权，或发布对他人的诽谤性内容，或发布违反任何保密协议的内容而导致的；未经授权擅自修改或更改任何服务功能而导致的。上述义务在用户终止使用平台服务或本协议终止的情况下仍然生效。
+						</p>
+						<p>
+							<b>六、保密条款 </b>
+						</p>
+						<p>
+							本协议未尽事宜及在履行过程中发生争议，由双方共同协商解决，如协商不成，则任何一方有权向平台所在地即成都仲裁委员会申请仲裁，对仲裁裁决不服的，按照法律法规相关规定执行。
+						</p>
+						<p>
+							<b>八、协议的生效及其他 </b>
+						</p>
+						<p>
+							<b>8.1.本协议通过在线点击确认的方式签署，自用户完成在线点击确认后立即生效。</b>
+						</p>
+						<p>
+							8.2.本协议作为用户在平台的WEB端（如有）、APP等的注册协议的有效组成部分。
+						</p>
+						<p>
+							8.3.平台或平台有权通过网页界面、软件界面、公告、电子邮件、手机短信或微信等形式通知用户并对本协议内容作出变更。修改文本一旦公布则立即生效，且对生效前的用户同样适用。如用户在变更后继续使用本平台，则视为用户同意平台及平台对本协议的变更或修订，否则应立即停止使用本服务。
+						</p>
+						<p>
+							8.4.不可抗力
+						</p>
+						<p>
+							因发生不可抗力事件导致平台绑定、提现等服务无法正常提供，平台应及时通知其他协议当事人及相关方并积极采取措施予以解决，但是不承担赔偿责任。不可抗力包括但不限于战争、火灾、地震、水灾、罢工、网络故障、系统故障等不能合理预见、不可避免和不能克服的自然灾害、社会异常事件及技术风险等
+						</p>
+						<p>
+							8.5.免责
+						</p>
+						<p>
+							平台和合作伙伴不提供任何明示或暗示的陈述或保证，特别是对以下情形不作任何保证：
+						</p>
+						<p>
+							8.5.1.平台信息发布、绑定、提现等服务将满足用户的特定需求；平台信息发布、绑定、提现等服务将在不间断，及时，安全或没有缺陷的情况下提供；用户使用平台功能过程中获取的任何信息是准确或可靠的；作为平台服务功能一部分的任何软件的任何缺陷或错误都将得到更正。平台无法控制用户的网络运营商，因此对于其网络覆盖范围、可用性或提供的服务质量无法提供任何保证。用户需自行承担通过平台下载、获得、访问的所有内容和其他材料的风险，以及使用平台服务或第三方服务而导致的设备和数据损害、内容丢失的风险。使用平台过程中，应当遵守所有相关的有效法律，用户可能拥有其他合法的权利，这些权利不因本协议而受影响。如果当地生效的法律发阿贵认定排除某些法定条款为无效的，但平台违反此类法律的责任将会被限制到法律允许的最小程度。
+						</p>
+						<p>
+							8.5.2.某些司法辖区禁止排除特定保证或限制，或者排除特定损害的赔偿责任。因此，某些免责声明和责任限制可能不适用于部分用户。用户理解并同意，平台及其附属公司、子公司、管理人员、董事、员工、代理商、合作伙伴和授权方，在下述情况下，对用户的任何直接、简介、附带、衍生性或惩罚性的损害，不承担任何责任，包括但不限于数据损失、利润损失、商誉损失、以及其他无形损失：使用或无法使用平台服务；对平台服务的变更、任何临时或永久性的对全部或部分服务的停止；未经授权的访问或更改用户的传输或数据；删除、毁坏或未能存储和/或发送或接受用户通过平台服务的传输或数据；服务中任何第三方的声明或行为；任何其他与平台服务有关的事宜。
+						</p>
+					</div>
+		            <div class="regLoginbtn" >
+						<button class="btn btn-green mt20" @click="isShow = false;picked = 1">阅读完毕并同意</button>
+					</div>
+		        </div>
+		    </div>
 		</div>
-		<div id="picture" class="mui-popover mui-popover-action mui-popover-bottom">
-			<ul class="mui-table-view">
-				<li class="mui-table-view-cell">
-					<div class="ub ub-ac">
-						<div class="y_action_left clear">
-							<div class="y_icon y_chian_small"></div>
-						</div>
-						<p class="fz40 c66">中国银行</p>
-					</div>
-				</li>
-				<li class="mui-table-view-cell">
-					<div class="ub ub-ac">
-						<div class="y_action_left clear">
-							<div class="y_icon y_nongye_small"></div>
-						</div>
-						<p class="fz40 c66">中国农业银行</p>
-					</div>
-				</li>
-				<li class="mui-table-view-cell">
-					<div class="ub ub-ac">
-						<div class="y_action_left clear">
-							<div class="y_icon y_jiaotong_small"></div>
-						</div>
-						<p class="fz40 c66">交通银行</p>
-					</div>
-				</li>
-				<li class="mui-table-view-cell">
-					<div class="ub ub-ac">
-						<div class="y_action_left clear">
-							<div class="y_icon y_gongshang_small"></div>
-						</div>
-						<p class="fz40 c66">中国工商银行</p>
-					</div>
-				</li>
-				<li class="mui-table-view-cell">
-					<div class="ub ub-ac">
-						<div class="y_action_left clear">
-							<div class="y_icon y_mingsheng_small"></div>
-						</div>
-						<p class="fz40 c66">中国民生银行</p>
-					</div>
-				</li>
-				<li class="mui-table-view-cell">
-					<div class="ub ub-ac">
-						<div class="y_action_left clear">
-							<div class="y_icon y_zhaoshang_small"></div>
-						</div>
-						<p class="fz40 c66">招商银行</p>
-					</div>
-				</li>
-				<li class="mui-table-view-cell">
-					<div class="ub ub-ac">
-						<div class="y_action_left clear">
-							<div class="y_icon y_youzheng_small"></div>
-						</div>
-						<p class="fz40 c66">中国邮政</p>
-					</div>
-				</li>
-				<li class="mui-table-view-cell">
-					<div class="ub ub-ac">
-						<div class="y_action_left clear">
-							<div class="y_icon y_jianshe_small"></div>
-						</div>
-						<p class="fz40 c66">中国建设银行</p>
-					</div>
-				</li>
-			</ul>
-			<ul class="mui-table-view">
-				<li class="mui-table-view-cell">
-					<a href="#picture" class="fz40"><b>取消</b></a>
-				</li>
-			</ul>
-		</div>
+		
+	    <script>
+	    	new Vue({
+	    		el:'#app',
+	    		data :function() {
+				    return {
+				    	isShow:false,
+				    	bankShow:false,
+				    	bankname:'',
+				    	picked:0,
+				    	user:{},
+				    	param:{
+				    		tel: '',
+				            number: '',
+				            bank_id:'',
+				    	},
+				    	bank:[],
+						card_id :''
+				    }
+				},
+				methods:{
+					save:function(){
+						App.http('v1/user.base/bankCardAdd', this.param,function(data, status) {
+							mui.toast(data.msg);
+							if(data.status!=1){
+								return false;
+							}
+				            App.send('my/wallet/foward', 'update');
+				            App.send('my/wallet/manageCard', 'update');
+				            App.send('my/wallet/chooseCard', 'update');
+				            mui.back();
+						}.bind(this));	
+					},
+					getbank:function(){
+						
+						App.http('v1/user.base/bankList', {},function(data, status) {
+				            this.bank=data.data.list;
+						}.bind(this));	
+					},
+					select:function(item){
 
+						this.param.bank_id = item.bank_id;
+						this.bankname = item.name;
+				        mui('#picture').popover('toggle');
+					},
+				},
+				mounted:function(){
+					this.user = App.getItem('user');
+				    this.getbank();
+				}
+	    	})
+	    </script>
 	</body>
 
 </html>

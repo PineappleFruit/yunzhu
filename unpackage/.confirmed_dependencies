@@ -208,7 +208,10 @@
 	},
 	"page/project/index.html": {
 		"refer": [
-			"page/project/projectDefault.html"
+			"page/project/projectDefault.html",
+			"page/project/paidan.html",
+			"page/project/rush.html",
+			"page/project/my.html"
 		]
 	},
 	"page/my/login/login.html": {
@@ -228,7 +231,36 @@
 	},
 	"page/my/wallet/chooseCard.html": {
 		"refer": [
-			"page/my/wallet/foward.html"
+			"page/my/wallet/foward.html",
+			"page/my/wallet/addCard.html"
+		]
+	},
+	"page/my/wallet/manageCard.html": {
+		"refer": [
+			"page/my/wallet/addCard.html"
+		]
+	},
+	"page/project/projectDefault.html": {
+		"refer": [
+			"page/project/map.html"
+		]
+	},
+	"page/project/paidan.html": {
+		"refer": [
+			"page/project/projectDefault.html",
+			"page/my/wallet/addCard.html",
+			"page/my/skill/index.html"
+		]
+	},
+	"page/project/rush.html": {
+		"refer": [
+			"page/project/rushDefault.html"
+		]
+	},
+	"page/project/my.html": {
+		"refer": [
+			"page/project/rushDefault.html",
+			"page/project/myDefault.html"
 		]
 	}
 }
