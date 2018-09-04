@@ -29,18 +29,17 @@
 		.mui-off-canvas-left, .mui-off-canvas-right{
 			background: #fff;
 		}
+		#offCanvasSideScroll .mui-table-view-cell{
+			padding: 0.3rem;
+		}
 	</style>
 	<body id="e_fish_container">
 		<div id="app" class="mui-off-canvas-wrap mui-draggable mui-slide-in">
-			<!--菜单部分-->
 			<aside id="offCanvasSide" class="mui-off-canvas-right">
 				<div id="offCanvasSideScroll" class="mui-scroll-wrapper">
 					<div class="mui-scroll">
-						<ul class="fz28 c66 plr30">
-							<li class="word-break ptb40">附着升降脚手架安装拆卸工</li>
-							<li class="word-break ptb40">电器设备安装工（电气安装调 试工</li>
-							<li class="word-break ptb40">安装钳工</li>
-							<li class="word-break ptb40">变电安装工</li>
+						<ul class="fz28 c66">
+							<li class="word-break mui-table-view-cell" v-for="tag in skilllist" @tap="setSkill(tag)">{{tag.text}}</li>
 						</ul>
 					</div>
 				</div>
@@ -48,23 +47,9 @@
 			<div class="mui-inner-wrap">
 				<div id="offCanvasContentScroll" class="mui-content mui-scroll-wrapper">
 					<div class="mui-scroll">
-						<div class="mui-table-view-cell bg-ff">
-							<div class="bb ptb35 ub ub-ac plr30" @tap="offcanvasShow">
-								<p class="fz32 c33 y_title">国家注册类</p>
-								<div class="ub-f1"></div>
-								<div class="y_arrow"></div>
-							</div>
-						</div>
-						<div class="mui-table-view-cell bg-ff">
-							<div class="bb ptb35 ub ub-ac plr30" @tap="offcanvasShow">
-								<p class="fz32 c33 y_title">管理类</p>
-								<div class="ub-f1"></div>
-								<div class="y_arrow"></div>
-							</div>
-						</div>
-						<div class="mui-table-view-cell bg-ff" >
-							<div class="bb ptb35 ub ub-ac plr30" @tap="offcanvasShow">
-								<p class="fz32 c33 y_title">技能类</p>
+						<div class="mui-table-view-cell bg-ff" v-for="item in typelist" @tap="offcanvasShow(item)">
+							<div class="bb ptb35 ub ub-ac plr30" >
+								<p class="fz32 c33 y_title">{{item.text}}</p>
 								<div class="ub-f1"></div>
 								<div class="y_arrow"></div>
 							</div>
@@ -78,10 +63,64 @@
 		<script>
 			new Vue({
 				el:'#app',
-				methods:{
-					offcanvasShow(){
-						mui('.mui-off-canvas-wrap').offCanvas('show');
+				data:function(){
+					return {
+						typelist: [], 
+						skilllist: [],
+						item:{}
 					}
+				},
+				methods:{
+					offcanvasShow(item){
+						this.item = item
+						//获取技能名称
+						App.http('v1/publics.skill/getList', {
+							type: item.value
+						}, function(data, status) {
+							var list = [];
+							for(var i = 0; i < data.data.list.length; i++) {
+								list.push({
+									value: data.data.list[i].skill_id,
+									text: data.data.list[i].name
+								});
+							}
+							this.skilllist = list;
+							mui('.mui-off-canvas-wrap').offCanvas('show');
+							console.log(JSON.stringify(this.skilllist))
+						}.bind(this));
+					},
+					/*
+					 *获取技能类型
+					*/
+					gettype: function() {
+						App.http('v1/publics.skill/getList', {}, function(data, status) {
+							var list = [];
+							for(var i = 0; i < data.data.list.length; i++) {
+								list.push({
+									value: data.data.list[i].skill_id,
+									text: data.data.list[i].name
+								});
+							}
+							this.typelist = list;
+						}.bind(this));
+					},
+					setSkill:function(tag){
+						App.setItem('skill_type', this.item);
+						App.setItem('skill_name', tag);
+				        App.send('my/skill/addSkill', 'update');
+				        var page={
+								"url":"my/skill/addSkill",
+								"title":"none",
+								"ani":"slide-out-top"
+							};
+						App.open(page);
+						mui('.mui-off-canvas-wrap').offCanvas('close');
+					}
+				},
+				mounted:function(){
+					mui.plusReady(function() {
+						this.gettype();
+					}.bind(this));
 				}
 			})
 		</script>

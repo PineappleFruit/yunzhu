@@ -79,7 +79,7 @@
 								<div class="y_icon_jineng y_icon_public"></div>
 							</div>
 							<p class="ub-f1 fz32 c33">技能工种</p>
-							<p class="c-red fz32">未添加</p>
+							<p class="c-red fz32" v-if="!item.skill_name">未添加</p>
 						</div>
 					</div>
 					<div class="mui-table-view-cell" to="my/follow/index" title="none">
@@ -129,6 +129,7 @@
 						this.item = data.data;
 						this.geade = data.data.geade
 						App.setItem('user', data.data);
+						console.log(JSON.stringify(data.data))
 					}.bind(this));
 				},
 
