@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+    	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link rel="stylesheet" href="../../../css/mui.min.css" />
+		<link rel="stylesheet" href="../../../css/base.css" />
+		<link rel="stylesheet" href="../../../css/main.css" />
+		<!--<script type="text/javascript" src="../../../js/e_fish.js" ></script>-->
+		<script type="text/javascript" src="../../../js/mui.min.js" ></script>
+	</head>
+	<style>
+			.header {
+				position: fixed;
+				z-index: 200;
+				top: 0;
+				width: 100%;
+			}
+			
+			.navBack {
+				padding: 27px 15px 7px 15px;
+				background: linear-gradient(to right, #24a84c, #1ea959);
+				display: flex;
+				justify-content: space-between;
+				font-weight: 500;
+				position: fixed;
+				top: 0;
+				width: 100%;
+				color: #fff;
+				z-index: 100;
+			}
+			
+			.navBack a {
+				color: #fff;
+			}
+			
+			.title {
+				padding-right: 20px;
+			}
+			
+			.navigation img {
+				width: 15px;
+				vertical-align: middle;
+			}
+			/*  收货信息 */
+			
+			.integState {
+				background: #23a84f;
+				height: 100px;
+				padding: 20px 65px 0 45px;
+			}
+			
+			.integState span {
+				float: left;
+				padding-top: 10px;
+				color: #fff;
+			}
+			
+			.integState img {
+				width: 18%;
+				float: right;
+			}
+			
+			.receiptInfo {
+				padding: 15px;
+				font-size: 14px;
+				color: #666;
+				margin-bottom: 5px;
+			}
+			
+			img {
+				width: 15px;
+				margin-right: 10px;
+				vertical-align: text-bottom;
+			}
+			
+			.consignee {}
+			
+			.consignee span {
+				float: right;
+			}
+			
+			.receiptLocation {
+				margin-top: 15px;
+			}
+			
+			.bgNull {
+				background: #f8f8f8;
+				height: 5px;
+			}
+			
+			.orderInfo {
+				padding: 15px;
+			}
+			
+			.orderInfo img {
+				width: 92px;
+				height: 92px;
+				float: left;
+				margin-right: 12px;
+			}
+			
+			.orderInfo .orderDetails {
+				height: 92px;
+			}
+			
+			.orderTitle {
+				font-size: 14px;
+				color: #333;
+			}
+			
+			.orderUnit {
+				font-size: 12px;
+				color: #999;
+				margin-top: 5px;
+			}
+			
+			.integration {
+				font-size: 14px;
+				color: #ff5500;
+				margin-top: 5px;
+				font-weight: 600;
+			}
+			
+			.orderCount {
+				font-size: 12px;
+				color: #999;
+				float: right;
+			}
+			
+			.orderCost {
+				text-decoration: line-through;
+				margin-left: 10px;
+				color: #999;
+				font-size: 13px;
+				font-weight: normal;
+			}
+			
+			.orderInfo .clear {
+				clear: both;
+			}
+			
+			.express {
+				padding: 15px;
+			}
+			
+			.expressTitle {
+				font-size: 15px;
+				color: #333;
+			}
+			
+			.expressNumber {
+				font-size: 14px;
+				color: #666;
+				margin-top: 12px;
+			}
+			
+			.copy {
+				width: 50px;
+				height: 20px;
+				border-radius: 10px;
+				font-size: 12px;
+				text-align: center;
+				float: right;
+				color: #fff;
+				background: #23a84f;
+				margin-top: 15px;
+			}
+			
+			.orderNumber {
+				font-size: 13px;
+				color: #666;
+				padding: 15px;
+			}
+			
+			.orderTime {
+				margin-top: 5px;
+			}
+		</style>
+	<body>
+		<div class="mui-content" id="app">
+			<!-- 商品状态 -->
+			<div class="integState">
+				<span>{{item.status|orderStatus}}</span>
+				<img src="../../../images/waiting.png" alt="">
+			</div>
+			<!-- 收货信息 -->
+			<div class="receiptInfo">
+				<div class="consignee">
+					<img src="../../../images/consignee.png" alt=""> 收货人：{{item.user_name}}
+					<span>{{item.user_tel}}</span>
+				</div>
+				<div class="receiptLocation">
+					<img src="../../../images/locationDark.png" alt=""> 收货地址：
+					<span>{{item.province}}{{item.city}}{{item.county}}{{item.det_add}}</span>
+				</div>
+			</div>
+			<!-- 空白 -->
+			<div class="bgNull"></div>
+			<!-- 商品信息 -->
+			<div class="orderInfo">
+				<img :src="item.original" alt="">
+				<div class="orderDetails">
+					<div class="orderTitle">{{item.goods_brand}}{{item.goods_name}}</div>
+					<div class="orderUnit">{{item.goods_size}}</div>
+					<div class="integration">
+						{{item.integral}}积分
+						<span class="orderCost">￥{{item.goods_price}}</span>
+						<span class="orderCount">x{{item.number}}</span>
+					</div>
+				</div>
+				<div class="clear"></div>
+			</div>
+			<!-- 空白 -->
+			<div class="bgNull"></div>
+			<!-- 快递信息 -->
+			<div class="express" v-if="item.status == 2">
+				<!--<button type="button"  v-clipboard:copy="numbertext"  v-clipboard:success="onCopy">复制</button>-->
+				<div class="copy" @click="copy(item.logistics_number)">复制</div>
+				<div class="expressTitle">{{item.logistics_company}}</div>
+				<div class="expressNumber">快递单号：{{item.logistics_number}}</div>
+			</div>
+
+			<!-- 空白 -->
+			<div class="bgNull"></div>
+
+			<!-- 订单信息 -->
+			<div class="orderNumber">
+				<div>订单号：{{item.order_number}}</div>
+				<div class="orderTime">订单时间：{{item.addtime|formatDate('yyyy-MM-dd HH:mm:ss')}}</div>
+			</div>
+
+		</div>
+		<script>
+			new Vue({
+				el: '#app',
+				data: function() {
+					return {
+						item: [],
+					}
+				},
+				methods: {
+					getitem: function(id) {
+
+						App.http('v1/goods.order/orderInfo', {
+							goods_order_id: id
+						}, function(data, status) {
+							App.log(data);
+							if(data.status != 1) {
+								mui.toast(data.msg);
+								return false;
+							}
+							this.item = data.data;
+						}.bind(this));
+					},
+
+					copy: function(msg) {
+						if(plus.os.name == 'iOS') {
+							var UIPasteboard = plus.ios.importClass("UIPasteboard");
+							var generalPasteboard = UIPasteboard.generalPasteboard();
+							// 设置/获取文本内容:
+							generalPasteboard.setValueforPasteboardType(msg, "public.utf8-plain-text");
+							//var value = generalPasteboard.valueForPasteboardType("public.utf8-plain-text");
+							mui.toast('复制成功');
+							return;
+						}
+						var Context = plus.android.importClass("android.content.Context");
+						var main = plus.android.runtimeMainActivity();
+						var clip = main.getSystemService(Context.CLIPBOARD_SERVICE);
+						plus.android.invoke(clip, "setText", msg);
+						mui.toast('复制成功');
+					}
+
+				},
+				filters: {
+					orderStatus(status){
+						var msg='';
+						switch(status){
+							case 1:
+							msg='商品待发货';
+							break;
+							case 2:
+							msg='商品已发货';
+							break;
+							case 3:
+							msg='已收货';
+							break;
+							
+						}
+						return msg;
+					},
+					formatDate(datetime, fmt) {
+						let date;
+						switch(typeof datetime) {
+							case 'string':
+								if(datetime == '') {
+									return '';
+								}
+								date = new Date(datetime)
+								break;
+							case 'object':
+								date = datetime
+								break;
+							case 'number':
+								if(datetime == 0) {
+									return '';
+								}
+								date = new Date(parseInt(datetime + '000'));
+								break;
+							case 'undefined':
+								return '';
+								break;
+						}
+						if(!date) {
+							return '';
+						}
+						if(/(y+)/.test(fmt)) {
+							fmt = fmt.replace(RegExp.$1, (date.getFullYear() + '').substr(4 -
+								RegExp.$1.length));
+						}
+						let o = {
+							'M+': date.getMonth() + 1,
+							'd+': date.getDate(),
+							'H+': date.getHours(),
+							'h+': date.getHours(),
+							'm+': date.getMinutes(),
+							's+': date.getSeconds()
+						};
+						for(let k in o) {
+							if(new RegExp(`(${k})`).test(fmt)) {
+								let str = o[k] + '';
+								fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? str :
+									('00' + str).substr(str.length));
+							}
+						}
+						return fmt;
+					}
+				},
+				mounted: function() {
+					mui.plusReady(function() {
+						var self = plus.webview.currentWebview();
+						this.getitem(self.goods_order_id);
+					}.bind(this));
+
+				}
+			});
+		</script>
+	</body>
+</html>

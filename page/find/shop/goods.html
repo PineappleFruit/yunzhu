@@ -15,43 +15,116 @@
 	<body id="e_fish_container">
 		<div id="app">
 			<div class="y_container bg-grey fix_btn">
-				<div class="y_new">
-					<img src="../../../images/y-new.png"/>
+				<div id="slider" class="mui-slider">
+					<div class="mui-slider-group mui-slider-loop">
+						<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
+						<div class="mui-slider-item mui-slider-item-duplicate">
+							<img :src="imgs.original">
+						</div>
+						<!-- 第一张 -->
+						<div class="mui-slider-item">
+							<img :src="imgs.original">
+						</div>
+						
+						<!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
+						<div class="mui-slider-item mui-slider-item-duplicate">
+							<img :src="imgs.original">
+						</div>
+					</div>
 				</div>
 				<div class="mb20 bg-ff plr30">
-					<div class="ptb35 fz36 c33 fw-b word-break">other大容量PC塑料防摔水杯</div>
+					<div class="ptb35 fz36 c33 fw-b word-break">{{item.goods_brand}}{{item.goods_name}}</div>
 					<div class="ub ub-ac  pb35 bb">
 						<div class="fz28 c66 pr10 ub-te ub-f1">
-							<p class="ptb10 ub-te">规格：1000ml</p>
-							<p><span class="c-red ub-te">2500</span>积分</p>
+							<p class="ptb10 ub-te">规格：{{item.goods_size}}</p>
+							<p><span class="c-red ub-te">{{item.goods_integral}}</span>积分</p>
 						</div>
 						<div class="fz28 c66 ub-te ub-f1">
-							<p class="ptb10 ub-te">库存：100件</p>
-							<p class="c99 y_line ub-te">市场价：￥30.00元</p>
+							<p class="ptb10 ub-te">库存：{{item.goods_stock}}件</p>
+							<p class="c99 y_line ub-te">市场价：￥{{item.goods_price}}元</p>
 						</div>
 					</div>
 					<div class="y_addnum ub ub-ac ptb20">
 						<span class="fz28 c99 pr40">选择数量</span>
-						<button class="ub ub-pac">-</button>
-						<span class="c33 fz32 plr30">1</span>
-						<button class="ub ub-pac">+</button>
+						<button class="ub ub-pac" type="button" @click="reduce" :disabled="num == 1">-</button>
+						<span class="c33 fz32 plr30">{{num}}</span>
+						<button class="ub ub-pac" type="button" @click="add">+</button>
 					</div>
 				</div>
 				<div class="mb20 bg-ff plr30 word-break">
 					<div class="ptb35 fz36 c33 fw-b word-break">商品详情</div>
 					<div class="ub ub-ac">
-						<p>除中国香港、澳门、台湾、青海、西藏、新疆等地区需 支付运费意外，其他地方包邮。</p>
-						<p>除中国香港、澳门、台湾、青海、西藏、新疆等地区需 支付运费意外，其他地方包邮。</p>
-						<p>除中国香港、澳门、台湾、青海、西藏、新疆等地区需 支付运费意外，其他地方包邮。</p>
-						<p>除中国香港、澳门、台湾、青海、西藏、新疆等地区需 支付运费意外，其他地方包邮。</p>
-						<p>除中国香港、澳门、台湾、青海、西藏、新疆等地区需 支付运费意外，其他地方包邮。</p>
+						<p>{{item.goods_descride}}</p>
 					</div>
 				</div>
 			</div>
 			<div class="fix_box">
-				<!--<button class="btn btn-white">积分不足以兑换</button>-->
-				<button class="btn btn-green" to="find/shop/shop" title="兑换">立即兑换</button>
+				<button class="btn btn-white" v-if='item.goods_stock==0'>抢光了</button>
+				<button class="btn btn-white" v-if="!Money">积分不足以兑换</button>
+				<button class="btn btn-green" v-else to="find/shop/shop" v-bind:param="item | formatParam" title="兑换" v-else>立即兑换</button>
 			</div>
 		</div>
+		<script>
+		 var vm =	new Vue({
+				el:'#app',
+				data: function () {
+				    return {
+				    	goods_id:0,
+				        item:[],
+				        imgs:{},
+				        num:1,
+				        integral : 0
+				    }
+				},
+				computed:{
+					Money(){
+						let money = this.item.goods_integral * this.num
+//						console.log(money > this.item.goods_integral)
+						if(money > this.integral){
+							return false
+						}else{
+							return true
+						}
+					}
+				},
+				methods:{
+					getitem: function(){
+						App.http('v1/goods.base/details', {goods_id:this.goods_id},function(data, status) {
+				           this.item = data.data;
+				           this.imgs = data.data.goods_img_list[0];
+						}.bind(this));	
+						
+						App.http('v1/user.base/getInfo', {},function(data, status) {
+				            this.integral = data.data.integral;
+
+						}.bind(this));
+					},
+					reduce:function(){
+						this.num--
+					},
+					add:function(){
+						this.num++
+					}
+				},
+				filters:{
+			        formatParam:function(item){
+			        	return '{goods_id:'+item.goods_id+',num:'+vm.num+'}';
+			        }
+			      
+			    },
+				mounted:function() {
+					mui.plusReady(function() {	
+						var self = plus.webview.currentWebview();
+						this.goods_id = self.goods_id;
+					    this.getitem();
+					    //状态更改监听
+						App.request('update', function() {
+							this.getitem();
+						}.bind(this));
+						
+				    }.bind(this)); 
+				}
+			})
+		</script>
 	</body>
 </html>

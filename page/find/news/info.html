@@ -7,40 +7,222 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<title></title>
 		<link rel="stylesheet" href="../../../css/mui.min.css" />
+		<link rel="stylesheet" href="list-to-detail.css" />
 		<link rel="stylesheet" href="../../../css/base.css" />
 		<link rel="stylesheet" href="../../../css/main.css" />
-		<script type="text/javascript" src="../../../js/e_fish.js" ></script>
+		
+		<!--<script type="text/javascript" src="../../../js/e_fish.js" ></script>-->
 		<script type="text/javascript" src="../../../js/mui.min.js" ></script>
 	</head>
 	<style>
 		.y_share_hd{
 			margin-top: 0.2rem;
 		}
+		.header {
+			position: fixed;
+			z-index: 200;
+			top: 0;
+			width: 100%;
+		}
+		.nav span{
+			font-size: 16px;
+		}
+		.nav {
+			padding: 28px 15px 8px 15px;
+			background: #24a84c;
+            height: 58px;
+			font-weight: 500;
+			width: 100%;
+			color: #fff;
+			z-index: 100;
+			text-align: center;
+		}
+		
+		.toopl{
+			float: left;
+		}
+		.tools{
+           float: right;
+           display: inline-block;
+		}
+		.tools img {
+			width: 15px;
+			vertical-align: middle;
+		}
+		
+		.mui-content {
+			margin-top: 58px;
+		}
 	</style>
 	<body id="e_fish_container">
 		<div id="app">
-			<header class="mui-bar mui-bar-nav mui-bar-transparent header">
+			<!--<header class="mui-bar mui-bar-nav mui-bar-transparent header">
 				<a id="icon-menu" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 				<h2 class="mui-title"></h2>
-				<div class="y_collection y_icon"></div>
-				<div class="y_share_hd y_right y_icon"></div>
-			</header>
-			<div class="fix_hd">
-				<div class="y_informa_info plr30 pt30">
-					<p class="fz48 c33 fw-b word-break">高温下“爱心冰柜”送“清凉”，网 民点赞城市正能量。</p>
-					<div class="ub ub-ac fz28 c99 ptb25">
-						<p class="ub-f1">来源：新华社</p>
-						<span>2018-06-24</span>
-					</div>
-					<div class="y_info_pic">
-						<img src="../../../images/y-information-info.png" alt="" />
-					</div>
-					<div class="word-break fz28 c66 y_informa_txt">
-						<p>近日，在杭州市西湖区文三路上，出现了为快递员小哥、 外卖小哥、环卫工人、交警等户外工作者免费提供冷饮。</p>
-						<p>监视视频显示，两个拿着篮球的男孩，从冰柜里拿出两瓶 水，打开后才发现告示牌。</p>
-					</div>
+				<div class="y_collection y_icon active" v-if="item.is_cancel==1" @click="cancel"></div>
+				<div class="y_collection y_icon "  v-else @click="favorite"></div>
+				<div class="y_share_hd y_right y_icon" onclick="share()"></div>
+			</header>-->
+			<div class="header">
+				<!-- 头部 -->
+				<div class="nav">
+					<span class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left toopl"></span>
+					<span>资讯详情</span>
+					<sapn class="tools">
+						<img v-if="item.is_cancel==1" src="../../../images/y-love-check.png" @click="cancel" style="margin-right: 10px;width: 17px;">
+						<img v-else src="../../../images/y-love.png" @click="favorite" style="margin-right: 20px;width: 17px;">
+						<img src="../../../images/y_share.png" onclick="share()" style="margin-top: 2px;">
+					</sapn>
 				</div>
 			</div>
+			<div class="fix_hd">
+				<div class="mui-content">
+					<div class="kr-article-content">
+						<!--文章详细内容-->
+						<div id="kr-article-article" class="kr-article-article" v-html="item.content"></div>
+					</div>	
+				</div>
+				
+			</div>
 		</div>
+		<script>
+			var share_data={};
+			var apps=new Vue({
+				el: '#app',
+				data: function () {
+				    return {
+				    	article_id:0,
+				        item:{},
+				    }
+				},
+				methods: {	
+					getinfo: function(){
+						App.http('v1/article.base/info', {article_id:this.article_id},function(data, status) {
+				           this.item = data.data;
+						}.bind(this));	
+					},
+					cancel:function(){
+						var that = this;
+						App.http('v1/user.base/articleCollection', {
+							article_id: that.item.article_id
+						}, function(data, status) {
+							that.item.is_cancel=0;
+							App.send('user/favorite/index', 'update');
+							mui.toast("取消收藏成功");
+						});
+					},
+					favorite:function(){
+						var that = this;
+						App.http('v1/user.base/articleCollection', {
+							article_id: that.item.article_id
+						}, function(data, status) {
+							that.item.is_cancel=1;
+							mui.toast("收藏成功");
+						});
+					}
+				},
+				filters:{
+			        formatParam:function(item){
+			        	return '{id:'+item.article_id+'}';
+			        }
+			      
+			   },
+				mounted:function() {
+				    mui.plusReady(function() {	
+						var self = plus.webview.currentWebview();
+						this.article_id = self.article_id;
+						this.getinfo();
+						/**
+						 * 获取分享规则
+						 */
+						App.http('v1/share.base/news', {news_id:this.article_id }, function(data, status) {
+							share_data = data.data;
+						}.bind(this));
+						
+					}.bind(this)); 
+				}
+			});
+
+			var shares=null;			
+			mui.plusReady(function() {
+				plus.share.getServices(function(s){
+					shares={};
+					for(var i in s){
+						var t=s[i];
+						shares[t.id]=t;
+					}
+				}, function(e){
+					mui.toast('获取分享服务列表失败：'+e.message);
+				});
+			});
+			
+			/**
+			   * 分享操作
+			   * @param {JSON} sb 分享操作对象s.s为分享通道对象(plus.share.ShareService)
+			   * @param {Boolean} bh 是否分享链接
+			   */
+			function shareAction(sb,bh) {
+				if(!sb||!sb.s){
+					mui.toast('无效的分享服务！');
+					return;
+				}
+				var msg={
+					
+					extra:{scene:sb.x}
+				};
+				if(bh){
+					msg.href = share_data.rule_params.url;
+					msg.title = share_data.rule_params.title;
+					msg.content = share_data.rule_params.content;
+//					msg.thumbs = [share_data.rule_params.thumb];
+//					msg.pictures = [share_data.rule_params.thumb];
+				}else{
+					if(pic&&pic.realUrl){
+						msg.pictures=[pic.realUrl];
+					}
+				}
+				// 发送分享
+				if(sb.s.authenticated){
+					shareMessage(msg, sb.s);
+				}else{
+					sb.s.authorize(function(){
+						shareMessage(msg,sb.s);
+					}, function(e){
+						mui.toast('认证授权失败：'+e.code+' - '+e.message);
+					});
+				}
+			}
+			/**
+			   * 发送分享消息
+			   * @param {JSON} msg
+			   * @param {plus.share.ShareService} s
+			   */
+			function shareMessage(msg, s){
+				s.send(msg, function(){
+					mui.toast('分享到'+s.description+'成功');
+				}, function(e){
+					mui.toast('分享到'+s.description+'失败');
+				});
+			}
+			
+			// 分析链接
+			function share(){
+				var shareBts=[];
+				// 更新分享列表
+				var ss=shares['weixin'];
+				ss&&ss.nativeClient&&(shareBts.push({title:'分享到微信朋友圈',s:ss,x:'WXSceneTimeline'}),
+				shareBts.push({title:'发送给微信好友',s:ss,x:'WXSceneSession'}));
+				//微博
+				ss=shares['sinaweibo'];
+				ss&&ss.nativeClient&&shareBts.push({title:'分享到新浪微博',s:ss});
+				//QQ
+				ss=shares['qq'];
+				ss&&ss.nativeClient&&shareBts.push({title:'发送给QQ好友',s:ss});
+				// 弹出分享列表
+				shareBts.length>0?plus.nativeUI.actionSheet({cancel:'取消',buttons:shareBts},function(e){
+					(e.index>0)&&shareAction(shareBts[e.index-1],true);
+				}):plus.nativeUI.alert('当前环境无法支持分享链接操作!');
+			}
+		</script>
 	</body>
 </html>

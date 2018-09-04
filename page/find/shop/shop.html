@@ -20,17 +20,17 @@
 	<body id="e_fish_container">
 		<div id="app">
 			<div class="y_container fix_btn">
-				<div class="ub ub-ac plr30 bb ptb25 mui-table-view-cell" to="find/shop/addAddress" title="新增收货地址">
+				<div v-if="address.length <=0" class="ub ub-ac plr30 bb ptb25 mui-table-view-cell" to="find/shop/addAddress" title="新增收货地址">
 					<p class="fz32 c99 pr10">新增收货地址</p>
 					<i class="mui-icon mui-icon-arrowright c99"></i>
 				</div>
-				<a href="#address">
+				<a href="#address" v-else>
 					<div class="ub ub-ac plr30 bb ptb25 mui-table-view-cell">
 						<p class="fz32 c99 pr10">选择收货地址</p>
 						<i class="mui-icon mui-icon-arrowright c99"></i>
 					</div>
 				</a>
-				<div class="ub ub-ac plr30 bb ptb25 mui-table-view-cell" to="find/shop/editAddress" title="none">
+				<div class="ub ub-ac plr30 bb ptb25 mui-table-view-cell" to="find/shop/editAddress" title="none" v-if="select.mobile">
 					<div class="ub-f1">
 						<p class="fz36 c33 fw-b">成都市高新区金融大厦A座2101</p>
 						<p class="fz28 c33">张利龙<span class="plr30">13699448412</span></p>
@@ -40,26 +40,16 @@
 				<div class="y_gift_list">
 					<div class="y_gift_item bb plr30 ptb40 ub ub-ac">
 						<div class="y_gift_pic">
-							<img src="" alt="" />
+							<img :src="imgs.url" alt="" />
 						</div>
 						<div class="ub-f1 pl30">
-							<p class="fz32 c33 fw-b">派克笔</p>
-							<p class="fz26 c66 ptb10">x 2</p>
-							<p class="fz28 c66">2500积分</p>
-						</div>
-					</div>
-					<div class="y_gift_item bb plr30 ptb40 ub ub-ac">
-						<div class="y_gift_pic">
-							<img src="" alt="" />
-						</div>
-						<div class="ub-f1 pl30">
-							<p class="fz32 c33 fw-b">派克笔</p>
-							<p class="fz26 c66 ptb10">x 2</p>
-							<p class="fz28 c66">2500积分</p>
+							<p class="fz32 c33 fw-b">{{item.goods_brand}}{{item.goods_name}}</p>
+							<p class="fz26 c66 ptb10">x {{param.number}}</p>
+							<p class="fz28 c66">{{item.goods_integral}}积分</p>
 						</div>
 					</div>
 				</div>
-				<p class="fz32 c33 plr30 ptb30">合计：<span class="c-red">-5000积分</span></p>
+				<p class="fz32 c33 plr30 ptb30">合计：<span class="c-red">-{{param.number * item.goods_integral}}积分</span></p>
 			</div>
 			<div class="fix_box">
 				<!--<button class="btn btn-white" type="button">立即兑换</button>-->
@@ -77,10 +67,10 @@
 						<div class="ub ub-ac">
 							<input type="checkbox" name="" id="" value="" class="y_edit_checkbox"/>
 							<div class="ub-f1 pl20">
-								<p class="fz28 c33 tx-l word-break">成都市高新区金融大厦A座2101</p>
+								<p class="fz28 c33 tx-l word-break"></p>
 								<div class="ub ub-ac fz28 c66">
-									<span>张利龙</span>
-									<span>13699448412</span>
+									<span></span>
+									<span></span>
 								</div>
 							</div>
 							<div class="y_icon y_edit_icon" to="find/shop/editAddress" title="none"></div>
@@ -95,5 +85,69 @@
 				</ul>	
 			</div>
 		</div>
+		<script>
+			new Vue({
+				el:'#app',
+				data:function(){
+					return {
+						param: {
+							goods_id: 0,
+							number: 1,
+						},
+						address: [],
+						item: {
+							goods_integral: 0
+						},
+						imgs: '',
+						select:{} 
+					}
+				},
+				methods:{
+					getitem: function() {
+						App.http('v1/goods.base/details', {
+							goods_id: this.param.goods_id
+						}, function(data, status) {
+							this.item = data.data;
+							console.log(JSON.stringify(this.item))
+							if(data.data.goods_img_list.length > 0){
+								this.imgs = data.data.goods_img_list[0];
+							}
+							
+						}.bind(this));
+
+						App.http('v1/user.address/getAll', {}, function(data, status) {
+							this.address = data.data;
+//							this.select = data.data[0]
+							console.log(JSON.stringify(this.address))
+						}.bind(this),'get');
+
+					},
+					getAddress:function(){
+						
+					}
+				},
+				mounted:function(){
+					mui.plusReady(function() {
+						var self = plus.webview.currentWebview();
+						this.param.goods_id = self.goods_id;
+						this.param.number = self.num;
+						this.getitem();
+//						this.getAddress()
+
+					}.bind(this));
+
+					//状态更改监听
+					App.request('update', function() {
+						this.getitem();
+//						this.getAddress()
+					}.bind(this));
+					//修改地址监听
+					App.request('updateAddress', function(item) {
+						this.select = item;
+						console.log(JSON.stringify(this.select))
+					}.bind(this));
+				}
+			})
+		</script>
 	</body>
 </html>

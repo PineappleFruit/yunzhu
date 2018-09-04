@@ -24,39 +24,15 @@
 	<body id="e_fish_container" class="bg-grey">
 		<div id="app">
 			<div class="y_informa">
-				<div class="mui-table-view-cell">
-					<div class="ub ub-pac plr30 bb ptb30" to="my/collection/collectInfo" title="none">
+				<div class="mui-table-view-cell" v-for="(item , index) in list" to="find/news/info" title="none" v-bind:param="item | formatParam">
+					<div class="ub ub-pac plr30 bb ptb30" >
 						<div class="ub-f1 pr40 ub-te2">
-							<p class="fz32 c33 fw-b pb10 ub-te">桑拿天，防暑降温有妙招</p>
-							<p class="ub-te2 fz28 c66 mb20">盛夏已入尾声，不少地方高温天气 已经持续半个月之久...</p>
-							<p class="fz24 c99">2018-04-28</p>
+							<p class="fz32 c33 fw-b pb10 ub-te">{{item.title}}</p>
+							<p class="ub-te2 fz28 c66 mb20">{{item.description}}</p>
+							<p class="fz24 c99">{{item.addtime}}</p> 
 						</div>
 						<div class="y_informa_pic">
-							<img src="../../../images/y-information-pic.png"/>
-						</div>
-					</div>
-				</div>
-				<div class="mui-table-view-cell">
-					<div class="ub ub-pac plr30 bb ptb30">
-						<div class="ub-f1 pr40 ub-te2">
-							<p class="fz32 c33 fw-b pb10 ub-te">桑拿天，防暑降温有妙招</p>
-							<p class="ub-te2 fz28 c66 mb20">盛夏已入尾声，不少地方高温天气 已经持续半个月之久...</p>
-							<p class="fz24 c99">2018-04-28</p>
-						</div>
-						<div class="y_informa_pic">
-							<img src="../../../images/y-information-pic.png"/>
-						</div>
-					</div>
-				</div>
-				<div class="mui-table-view-cell">
-					<div class="ub ub-pac plr30 bb ptb30">
-						<div class="ub-f1 pr40 ub-te2">
-							<p class="fz32 c33 fw-b pb10 ub-te">桑拿天，防暑降温有妙招</p>
-							<p class="ub-te2 fz28 c66 mb20">盛夏已入尾声，不少地方高温天气 已经持续半个月之久...</p>
-							<p class="fz24 c99">2018-04-28</p>
-						</div>
-						<div class="y_informa_pic">
-							<img src="../../../images/y-information-pic.png"/>
+							<img :src="item.image"/>
 						</div>
 					</div>
 				</div>
@@ -66,8 +42,33 @@
 		<script>
 			new Vue({
 				el:'#app',
+				data: function () {
+				    return {
+				        list:[]
+				    }
+				},
 				methods:{
-					
+					getlist: function(){
+						App.http('v1/user.base/articleCollectList', {},function(data, status) {
+							if(data.status!=1){
+								mui.toast(data.msg);
+								return false;
+							}
+							this.list=data.data.list;
+						}.bind(this));	
+					}
+				},
+				filters:{
+			        formatParam:function(item){
+			        	return '{article_id:'+item.article_id+'}';
+			        }
+			    },
+				mounted:function() {
+				    this.getlist();
+				    //状态更改监听
+					App.request('update', function() {
+						this.getlist();
+					}.bind(this));
 				}
 			})
 		</script>

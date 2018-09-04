@@ -9,74 +9,76 @@
 		<link rel="stylesheet" href="../../../css/main.css" />
 		<script type="text/javascript" src="../../../js/e_fish.js" ></script>
 		<script type="text/javascript" src="../../../js/mui.min.js" ></script>
-		<script type="text/javascript" src="../../../js/vue.js" ></script>
 	</head>
+	<style>
+		.mui-table-view-cell{
+			padding: 0.4rem 0.3rem;
+		}
+		.mui-table-view-cell:after{
+			background-color: transparent;
+		}
+	</style>
 	<body id="e_fish_container">
 		<div id="app">
-			<header class="mui-bar mui-bar-nav mui-bar-transparent header">
-				<a id="icon-menu" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-				<h2 class="mui-title">我的兑换记录</h2>
-			</header>
-			<div class="fix_hd">
-				<div class="y_exchange">
-					<div class="y_exchange_list">
-						<div class="bb ptb40 plr30 ub ub-ac">
-							<div class="y_exchange_pic">
-								<img src=""/>
-							</div>
-							<div class="ub-f1 pl30">
-								<p class="fz28 c33 word-break">订单号：20180412104525</p>
-								<div class="ub ub-ac">
-									<p class="fz32 c66 ub-te y_gift_info">派克笔</p>
-									<span class="pl20 ">x 1</span>
-								</div>
-								<div class="ub ub-ac">
-									<p class="ub-f1 fz28 c66 ub-te">2500积分</p>
-									<span class="y_reflect_success">【已收货】</span>
-								</div>
-							</div>
-						</div>
-						<div class="bb ptb40 plr30 ub ub-ac">
-							<div class="y_exchange_pic">
-								<img src=""/>
-							</div>
-							<div class="ub-f1 pl30">
-								<p class="fz28 c33 word-break">订单号：20180412104525</p>
-								<div class="ub ub-ac">
-									<p class="fz32 c66 ub-te y_gift_info">派克笔</p>
-									<span class="pl20">x 1</span>
-								</div>
-								<div class="ub ub-ac">
-									<p class="ub-f1 fz28 c66 ub-te">2500积分</p>
-									<span class="y_reflect_examine">【待发货】</span>
-								</div>
-							</div>
-						</div>
-						<div class="bb ptb40 plr30 ub ub-ac">
-							<div class="y_exchange_pic">
-								<img src=""/>
-							</div>
-							<div class="ub-f1 pl30">
-								<p class="fz28 c33 word-break">订单号：20180412104525</p>
-								<div class="ub ub-ac">
-									<p class="fz32 c66 ub-te y_gift_info">派克笔</p>
-									<span class="pl20">x 1</span>
-								</div>
-								<div class="ub ub-ac">
-									<p class="ub-f1 fz28 c66 ub-te">2500积分</p>
-									<span class="y_reflect_error">【待收货】</span>
-								</div>
-							</div>
-						</div>
+			<div class="y_exchange">
+				<div class="y_exchange_no" v-if="list.length == 0">
+					<div class="y_exchange_record">
+						<img src="../../../images/y-exchange-record.png"/>
 					</div>
-					<div class="y_exchange_no">
-						<div class="y_exchange_record">
-							<img src="../../../images/y-exchange-record.png"/>
+					<p class="tx-c fz32 c66">暂无兑换记录</p>
+				</div>
+				<div class="y_exchange_list">
+					<div class="bb ub ub-ac mui-table-view-cell" v-for="(item,index) in list" to="my/integral/changeinfo" title="兑换详情" v-bind:param="item | formatParam">
+						<div class="y_exchange_pic">
+							<img :src="item.original"/>
 						</div>
-						<p class="tx-c fz32 c66">暂无兑换记录</p>
+						<div class="ub-f1 pl30">
+							<p class="fz28 c33 word-break">订单号：{{item.order_number}}</p>
+							<div class="ub ub-ac">
+								<p class="fz32 c66 ub-te y_gift_info">{{item.goods_name}}</p>
+								<span class="pl20 ">x {{item.number}}</span>
+							</div>
+							<div class="ub ub-ac">
+								<p class="ub-f1 fz28 c66 ub-te">{{item.integral}}积分</p>
+								<span class="y_reflect_success" v-if="item.status == 3">【已收货】</span>
+								<span class="y_reflect_examine" v-else-if="item.status == 2">【已发货】</span>
+								<span class="y_reflect_error" v-else-if="item.status == 1">【待发货】</span>
+							</div>
+						</div>
 					</div>
 				</div>
+				
 			</div>
 		</div>
+		<script>
+			new Vue({
+				el: '#app',
+				data :function() {
+				    return {
+				    	list:[],
+
+				    }
+				},
+				methods: {	
+					getlist:function(){
+						
+						App.http('v1/user.base/goodsExchangeLog', {},function(data, status) {
+							App.log(data);
+				            this.list = data.data.list;
+				            console.log(JSON.stringify(data.data.list))
+						}.bind(this));	
+					}
+				},
+				filters:{
+					formatParam:function(item){
+			        	return '{goods_order_id:'+item.goods_order_id+'}';
+			        }
+				},
+				mounted:function() {
+				    this.getlist();
+				}
+			});
+			
+		</script>
 	</body>
 </html>

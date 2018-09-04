@@ -308,7 +308,8 @@
 			"page/my/collection/index.html": {
 				"resources": [],
 				"refer": [
-					"page/my/collection/collectInfo.html"
+					"page/my/collection/collectInfo.html",
+					"page/find/news/info.html"
 				],
 				"priority": 0
 			},
@@ -362,7 +363,10 @@
 				"resources": [],
 				"refer": [
 					"page/my/integral/share.html",
-					"page/my/integral/signin.html"
+					"page/my/integral/signin.html",
+					"page/my/integral/integralDetail.html",
+					"page/my/integral/rule.html",
+					"page/my/integral/exchange.html"
 				],
 				"priority": 0
 			},

@@ -141,7 +141,8 @@
 	},
 	"page/my/collection/index.html": {
 		"refer": [
-			"page/my/collection/collectInfo.html"
+			"page/my/collection/collectInfo.html",
+			"page/find/news/info.html"
 		]
 	},
 	"page/find/news/index.html": {
@@ -181,7 +182,10 @@
 	"page/my/integral/index.html": {
 		"refer": [
 			"page/my/integral/share.html",
-			"page/my/integral/signin.html"
+			"page/my/integral/signin.html",
+			"page/my/integral/integralDetail.html",
+			"page/my/integral/rule.html",
+			"page/my/integral/exchange.html"
 		]
 	},
 	"page/my/skill/addSkill.html": {

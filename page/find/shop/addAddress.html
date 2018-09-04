@@ -12,40 +12,176 @@
 		<script type="text/javascript" src="../../../js/e_fish.js" ></script>
 		<script type="text/javascript" src="../../../js/mui.min.js" ></script>
 	</head>
+	<style>
+		.mui-table-view-cell:after{
+			background-color: transparent;
+		}
+		.mui-table-view-cell{
+			padding: 0;
+		}
+		.modal {
+			right: 0;
+			top: 50%;
+			background: #fff;
+			text-align: center;
+			height: 100%;
+			overflow: auto;
+			width: 100%;
+			padding: 10px;
+		}
+		.y_choose_address .mui-table-view-cell{
+			padding: 0.3rem;
+		}
+	</style>
 	<body id="e_fish_container">
 		<div id="app">
-			<div class="y_container">
-				<form action="" method="" class="plr30">
-					<div class="mb40">
-						<div class="bb ub bb ub-ac">
-							<p class="fz28 c33 y_title">联系人：</p>
-							<div class="mui-input-row y_input_address">
-						    	<input type="text" class="mui-input-clear" placeholder="请填写收货人的姓名">
-						    </div> 
-						</div>
-						<div class="bb ub bb ub-ac">
-							<p class="fz28 c33 y_title">手机号：</p>
-							<div class="mui-input-row y_input_address">
-						    	<input type="number" class="mui-input-clear" placeholder="请填写收货手机号码">
-						    </div>
-						</div>
-						<div class="bb ub bb ub-ac">
-							<p class="fz28 c33 y_title">收货地址：</p>
-							<div class="y_icon y_local"></div>
-							<div class="y_input_address">
-	                            <input type="text" placeholder="点击选择" readonly="readonly">
-	                        </div>
-						</div>
-						<div class="bb ub bb ub-ac">
-							<p class="fz28 c33 y_title">详细地址：</p>
-							<div class="mui-input-row y_input_address">
-						    	<input type="text" class="mui-input-clear" placeholder="请填写到货详细地址">
-						    </div>
-						</div>
+			<div class="y_container plr30">
+				<div class="mb40">
+					<div class="bb ub bb ub-ac mui-table-view-cell">
+						<p class="fz28 c33 y_title">联系人：</p>
+						<div class="mui-input-row y_input_address">
+					    	<input type="text" class="mui-input-clear" placeholder="请填写收货人的姓名" v-model="item.nickname">
+					    </div> 
 					</div>
-					<button class="btn btn-green">保存</button>
-				</form>
+					<div class="bb ub bb ub-ac mui-table-view-cell">
+						<p class="fz28 c33 y_title">手机号：</p>
+						<div class="mui-input-row y_input_address">
+					    	<input type="number" class="mui-input-clear" placeholder="请填写收货手机号码" v-model="item.mobile">
+					    </div>
+					</div>
+					<div class="bb ub bb ub-ac mui-table-view-cell" @tap="isShow=true;get(0);">
+						<p class="fz28 c33 y_title">收货地址：</p>
+						<div class="y_icon y_local"></div>
+						<div class="y_input_address" v-if="!province">
+                            <input type="text" placeholder="点击选择" readonly="readonly" >
+                        </div>
+                        <div class="y_input_address ub ub-ac" v-else>
+                            <span>{{province}}{{city}}{{area}}</span>
+                        </div>
+					</div>
+					<div class="bb ub bb ub-ac mui-table-view-cell">
+						<p class="fz28 c33 y_title">详细地址：</p>
+						<div class="mui-input-row y_input_address">
+					    	<input type="text" class="mui-input-clear" placeholder="请填写到货详细地址" v-model="item.det_add">
+					    </div>
+					</div>
+				</div>
+				<button class="btn btn-green" type="button" @tap="saveAddress">保存</button>
+			</div>
+			<div v-show="isShow" class="modal mui-popup mui-popup-in y_choose_address">
+				<div style="margin: 10px 0 20px 0;">请选择省市区</div>
+				<ul class="mui-table-view" v-for="(item,index) in list" @tap="select(item)">
+					<li class="mui-table-view-cell">
+						<a class="mui-navigate-right" style="text-align: left;">{{item.name}}</a>
+					</li>
+				</ul>
 			</div>
 		</div>
+		<script>
+			new Vue({
+				el:'#app',
+				data:function(){
+					return {
+						isShow: false,
+						item:{
+							nickname:'',
+							mobile:'',
+							province:'',
+							province_text:'',
+							city:'',
+							city_text:'',
+							county:'',
+							county_text:'',
+							det_add:''
+						},
+						type: 'province',
+						param: {
+							det_add: '',
+							live_province: 0,
+							live_city: 0,
+							live_area: 0,
+							//奇葩接口数据
+							name: '',
+							card: '',
+							province: '',
+							city: '',
+							area: ''
+	
+						},
+						list: [],
+						province: '',
+						city: '',
+						area: '',
+					}
+				},
+				methods:{
+					get: function(code, type) {
+						var url = '';
+						switch(type) {
+							case 'province':
+								url = 'v1/user.base/getProvinceList';
+								break;
+							case 'city':
+								url = 'v1/user.base/getCityList';
+								break;
+							case 'area':
+								url = 'v1/user.base/getAreaList';
+								break;
+							default:
+								url = 'v1/user.base/getProvinceList';
+								break;
+						}
+						App.http(url, {
+								code: code
+							}, function(data, status) {
+								this.list = data.data.list;
+	//
+	//							if(data.data.list.length == 0) {
+	//								this.isShow = false;
+	//								this.type = 'province';
+	//								this.id = 0;
+	//							}
+							}.bind(this));
+	
+					},
+					select: function(item) {
+						if(this.type == 'province') {
+							this.type = 'city';
+							this.item.province = item.id;
+							this.province = item.name;
+							this.item.province_text = item.name
+							this.get(item.code, 'city');
+						} else if(this.type == 'city') {
+							this.type = 'area';
+							this.item.city = item.id;
+							this.city = item.name;
+							this.item.city_text = item.name
+							this.get(item.code, 'area');
+						} else if(this.type == 'area') {
+							this.item.county = item.id;
+							this.area = item.name;
+							this.item.county_text = item.name
+							this.isShow = false;
+							this.type = 'province';
+						}
+					},
+					saveAddress:function(){
+						console.log(JSON.stringify(this.item))
+						App.http('v1/user.address/add',this.item, function(data, status) {
+							if(data.status == 1){
+								//更新数据 
+								App.send('find/shop/shop', 'updateAddress',this.item);
+								mui.toast('新增成功');
+								mui.back()
+							}
+							mui.toast(data.msg); 
+						}.bind(this));
+					}
+				},
+				mounted:function(){
+					
+				}
+			})
+		</script>
 	</body>
 </html>

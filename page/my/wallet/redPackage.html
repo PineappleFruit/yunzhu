@@ -21,6 +21,9 @@
 		.mui-table-view-chevron .mui-table-view-cell{
 			padding-right: 0;
 		}
+		.mui-content{
+			background: #fff;
+		}
 	</style>
 	<body id="e_fish_container">
 		<div id="app">
@@ -30,7 +33,7 @@
 					<h2 class="ub-f1 tx-c fz36">我的红包</h2>
 				</div>
 				<p class="header_wallet_tip">共收到红包</p>
-				<p class="tx-c header_wallet_money">504.26</p>
+				<p class="tx-c header_wallet_money">504.26</p> 
 			</div>
 			<div class="y_container bg-grey pt20 ">
 				<!--下拉刷新容器-->
@@ -41,9 +44,9 @@
 							<li class="mui-table-view-cell" v-for="(item,index) in list">
 								<div class="y_redpacket_item plr30 ptb25 bb">
 									<div class="ub ub-ac pb10">
-										<p class="fz32 c33 ub-f1">{{item.name}}</p>
-										<span class="fw-b fz28 c33" v-if="item.status == 1">-{{item.money}}元</span>
-										<span class="fw-b fz28 c33" v-else-if="item.status == 2">+{{item.money}}元</span>
+										<p class="fz32 c33 ub-f1">{{item.name}}</p> 
+										<span class="fw-b fz28 c33" v-if="item.status == 1">+{{item.money}}元</span>
+										<span class="fw-b fz28 c33" v-else-if="item.status == 2">-{{item.money}}元</span>
 									</div>
 									<p class="fz28 c99">{{item.addtime}}</p>
 								</div>
@@ -137,7 +140,7 @@
 	
 						});
 					}
-				}
+				},
 				mounted:function(){
 					mui.init({
 						pullRefresh: {

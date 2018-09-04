@@ -17,6 +17,9 @@
 		.mui-table-view-cell:after{
 			background-color: transparent;
 		}
+		.mui-table-view-cell{
+			padding: 0.3rem;
+		}
 	</style>
 	<body id="e_fish_container">
 		<div id="app">
@@ -25,72 +28,152 @@
 					<img src="../../../images/y-new.png"/>
 				</div>
 				<div class="y_nav ub ub-pac">
-					<div class="ub-f1 active">最新资讯</div>
-					<div class="ub-f1">新闻动态</div>
+					<div class="ub-f1 " :class="{'active':index==0}" @tap="switchTopMenu(0)">最新资讯</div>
+					<div class="ub-f1" :class="{'active':index==1}" @tap="switchTopMenu(1)">新闻动态</div>
 				</div>
-				<div class="y_informa">
-					<div class="ub ub-pac plr30 bb ptb30 mui-table-view-cell" to='find/news/info' title="none">
-						<div class="ub-f1 pr40 ub-te2">
-							<p class="fz32 c33 fw-b pb10 ub-te">桑拿天，防暑降温有妙招</p>
-							<p class="ub-te2 fz28 c66 mb20">盛夏已入尾声，不少地方高温天气 已经持续半个月之久...</p>
-							<p class="fz24 c99">2018-04-28</p>
-						</div>
-						<div class="y_informa_pic">
-							<img src="../../../images/y-information-info.png"/>
-						</div>
-					</div>
-					<div class="ub ub-pac plr30 bb ptb30 mui-table-view-cell">
-						<div class="ub-f1 pr40 ub-te2">
-							<p class="fz32 c33 fw-b pb10 ub-te">桑拿天，防暑降温有妙招</p>
-							<p class="ub-te2 fz28 c66 mb20">盛夏已入尾声，不少地方高温天气 已经持续半个月之久...</p>
-							<p class="fz24 c99">2018-04-28</p>
-						</div>
-						<div class="y_informa_pic">
-							<img src="../../../images/y-information-info.png"/>
-						</div>
-					</div>
-					<div class="ub ub-pac plr30 bb ptb30 mui-table-view-cell">
-						<div class="ub-f1 pr40 ub-te2">
-							<p class="fz32 c33 fw-b pb10 ub-te">桑拿天，防暑降温有妙招</p>
-							<p class="ub-te2 fz28 c66 mb20">盛夏已入尾声，不少地方高温天气 已经持续半个月之久...</p>
-							<p class="fz24 c99">2018-04-28</p>
-						</div>
-						<div class="y_informa_pic">
-							<img src="../../../images/y-information-info.png"/>
-						</div>
-					</div>
-					<div class="ub ub-pac plr30 bb ptb30 mui-table-view-cell">
-						<div class="ub-f1 pr40 ub-te2">
-							<p class="fz32 c33 fw-b pb10 ub-te">桑拿天，防暑降温有妙招</p>
-							<p class="ub-te2 fz28 c66 mb20">盛夏已入尾声，不少地方高温天气 已经持续半个月之久...</p>
-							<p class="fz24 c99">2018-04-28</p>
-						</div>
-						<div class="y_informa_pic">
-							<img src="../../../images/y-information-info.png"/>
-						</div>
-					</div>
-					<div class="ub ub-pac plr30 bb ptb30 mui-table-view-cell">
-						<div class="ub-f1 pr40 ub-te2">
-							<p class="fz32 c33 fw-b pb10 ub-te">桑拿天，防暑降温有妙招</p>
-							<p class="ub-te2 fz28 c66 mb20">盛夏已入尾声，不少地方高温天气 已经持续半个月之久...</p>
-							<p class="fz24 c99">2018-04-28</p>
-						</div>
-						<div class="y_informa_pic">
-							<img src="../../../images/y-information-info.png"/>
-						</div>
-					</div>
-					<div class="ub ub-pac plr30 bb ptb30 mui-table-view-cell">
-						<div class="ub-f1 pr40 ub-te2">
-							<p class="fz32 c33 fw-b pb10 ub-te">桑拿天，防暑降温有妙招</p>
-							<p class="ub-te2 fz28 c66 mb20">盛夏已入尾声，不少地方高温天气 已经持续半个月之久...</p>
-							<p class="fz24 c99">2018-04-28</p>
-						</div>
-						<div class="y_informa_pic">
-							<img src="../../../images/y-information-info.png"/>
-						</div>
-					</div>
+				<div id="refreshContainer2">
+					<div v-if="config[index].list.length == 0" style="margin: 60px;text-align: center;font-size: 16px;color: #ccc;">加载中，请稍候 ⊙﹏⊙ </div>
+					<ul v-else class="mui-table-view">
+						<li class="mui-table-view-cell ub ub-pac bb mui-media" v-for="item in config[index].list" to="find/news/info" title="none" v-bind:param="item | formatParam">
+							<div class="ub-f1 pr40 ub-te2">
+								<p class="fz32 c33 fw-b pb10 ub-te">{{item.title}}</p>
+								<p class="ub-te2 fz28 c66 mb20">{{item.description}}</p>
+								<p class="fz24 c99">{{item.addtime}}</p>
+							</div>
+							<div class="y_informa_pic">
+								<img :src="item.image"/>
+							</div>
+						</li>
+					</ul>
 				</div>
 			</div>
 		</div>
+		<script>
+			new Vue({
+				el:'#app',
+				data: function() {
+					return {
+						config: [{
+								page: 1,
+								list: []
+							},
+							{
+								page: 1,
+								list: []
+							}
+						],
+						classid: 7,
+						index: 0,
+						menuIndex: 0
+					}
+				},
+				methods:{
+					switchTopMenu: function(index) {
+
+						if(index == 0) {
+							this.classid = 7
+						} else {
+							this.classid = 13
+						}
+						this.index = index;
+						if(this.config[index].list.length == 0) {
+							this.getlist();
+						}
+					},
+					getlist: function(type) {
+						App.http('v1/article.base/industry', {
+							page: this.config[this.index].page,
+							classid: this.classid
+						}, function(data, status) {
+							console.log(JSON.stringify(data.data))
+							this.config[this.index].page = data.data.page;
+							/**
+							 * 默认关闭下拉提示
+							 */
+							mui('#refreshContainer2').pullRefresh().endPulldown();
+							/**
+							 * 返回数据为空的时候
+							 */
+							if(data.data.list.length == 0) {
+
+								/**
+								 * 取消上拉加载更多提示
+								 */
+								mui('#refreshContainer2').pullRefresh().endPullupToRefresh(true);
+								return false;
+							}
+							/**
+							 *  总页数等于当前页码的时候
+							 */
+							if(data.data.total_page == this.config[this.index].page) {
+								/**
+								 * 取消上拉加载更多提示
+								 */
+								mui('#refreshContainer2').pullRefresh().disablePullupToRefresh();
+							}
+							/**
+							 * 取消上拉加载中提示
+							 */
+							mui('#refreshContainer2').pullRefresh().endPullupToRefresh(false);
+							/**
+							 * 如果是上拉，则 push 数据
+							 */
+							if(type == 'add') {
+								for(var i = 0; i < data.data.list.length; i++) {
+									this.config[this.index].list.push(data.data.list[i]);
+								}
+								return;
+							}
+							this.config[this.index].list = data.data.list;
+
+						}.bind(this));
+
+					}
+				},
+				filters: {
+					formatParam: function(item) {
+						return '{article_id:' + item.article_id + '}';
+					}
+
+				},
+				mounted: function() {
+
+					mui.plusReady(function() {
+						this.getlist();
+					}.bind(this))
+					
+					mui.init({
+							pullRefresh: {
+								container: "#refreshContainer2", //下拉刷新容器标识，querySelector能定位的css选择器均可，比如：id、.class等
+								up: {
+									height: 50, //可选.默认50.触发上拉加载拖动距离
+									auto: false, //可选,默认false.自动上拉加载一次
+									contentrefresh: "正在加载...", //可选，正在加载状态时，上拉加载控件上显示的标题内容
+									contentnomore: '', //可选，请求完毕若没有更多数据时显示的提醒内容；
+									callback: function() {
+										this.config[this.index].page++;
+										this.getlist('add');
+									}.bind(this)
+								},
+								down: {
+									style: 'circle', //必选，下拉刷新样式，目前支持原生5+ ‘circle’ 样式
+									color: '#2BD009', //可选，默认“#2BD009” 下拉刷新控件颜色
+									height: '50px', //可选,默认50px.下拉刷新控件的高度,
+									range: '100px', //可选 默认100px,控件可下拉拖拽的范围
+									offset: '0px', //可选 默认0px,下拉刷新控件的起始位置
+									auto: false, //可选,默认false.首次加载自动上拉刷新一次
+									callback: function() {
+										mui('#refreshContainer2').pullRefresh().refresh(true);
+										this.config[this.index].page = 1
+										this.getlist();
+									}.bind(this)
+								}
+							}
+						});
+
+				}
+				
+			})
+		</script>
 	</body>
 </html>

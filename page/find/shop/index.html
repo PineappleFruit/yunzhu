@@ -20,98 +20,40 @@
 	<body id="e_fish_container">
 		<div id="app">
 			<div class="y_container">
-				<div class="y_new">
-					<img src="../../../images/y-new.png"/>
+				<div id="slider" class="mui-slider">
+					<div class="mui-slider-group mui-slider-loop">
+						<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
+						<div class="mui-slider-item mui-slider-item-duplicate">
+							<img src="../../../images/y-course.jpg">
+						</div>
+						<!-- 第一张 -->
+						<div class="mui-slider-item mui-slider-item-duplicate">
+							<img src="../../../images/y-course.jpg">
+						</div>
+						<!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
+						<div class="mui-slider-item mui-slider-item-duplicate">
+							<img src="../../../images/y-course.jpg">
+						</div>
+					</div>
 				</div>
 				<div class="mt20">
 					<div class="ptb35 bb plr30 fz36 c33 fw-b">积分商城</div>
 					<div class="y_shop_list">
-						<div class="y_shop_item plr30 bb ub ub-ac ptb40  mui-table-view-cell" to="find/shop/goods" title="物品详情">
+						<div v-if="list.length == 0" style="margin: 80px;text-align: center;font-size: 16px;color: #ccc;">啊哦，暂时没有数据 ⊙﹏⊙ </div>
+						<div v-else v-for="(item,index) in list" class="y_shop_item plr30 bb ub ub-ac ptb40  mui-table-view-cell" to="find/shop/goods" :param="item | formatParam"  :title="item.goods_name" type="transparent">
 							<div class="y_shop_pic">
-								<img src="" alt="" />
+								<img :src="item.original" alt="" />
 							</div>
 							<div class="ub-f1 pl35 ub-te">
-								<p class="fz32 c33 word-break fw-b">意丁堡工作服套装</p>
+								<p class="fz32 c33 word-break fw-b">{{item.goods_brand}}{{item.goods_name}}</p>
 								<div  class="ub ub-ac ub-te">
 									<div class="fz28 c66 pr10 ub-te">
-										<p class="ptb10 ub-te">规格：1000ml</p>
-										<p><span class="c-red ub-te">2500</span>积分</p>
+										<p class="ptb10 ub-te">规格：{{item.goods_size}}</p>
+										<p><span class="c-red ub-te">{{item.goods_integral}}</span>积分</p>
 									</div>
 									<div class="fz28 c66 ub-te">
-										<p class="ptb10 ub-te">库存：100件</p>
-										<p class="c99 y_line ub-te">市场价：￥30.00元</p>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="y_shop_item plr30 bb ub ub-ac ptb40  mui-table-view-cell">
-							<div class="y_shop_pic">
-								<img src="" alt="" />
-							</div>
-							<div class="ub-f1 pl35 ub-te">
-								<p class="fz32 c33 word-break fw-b">意丁堡工作服套装</p>
-								<div  class="ub ub-ac ub-te">
-									<div class="fz28 c66 pr10 ub-te">
-										<p class="ptb10 ub-te">规格：1000ml</p>
-										<p><span class="c-red ub-te">2500</span>积分</p>
-									</div>
-									<div class="fz28 c66 ub-te">
-										<p class="ptb10 ub-te">库存：100件</p>
-										<p class="c99 y_line ub-te">市场价：￥30.00元</p>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="y_shop_item plr30 bb ub ub-ac ptb40  mui-table-view-cell">
-							<div class="y_shop_pic">
-								<img src="" alt="" />
-							</div>
-							<div class="ub-f1 pl35 ub-te">
-								<p class="fz32 c33 word-break fw-b">意丁堡工作服套装</p>
-								<div  class="ub ub-ac ub-te">
-									<div class="fz28 c66 pr10 ub-te">
-										<p class="ptb10 ub-te">规格：1000ml</p>
-										<p><span class="c-red ub-te">2500</span>积分</p>
-									</div>
-									<div class="fz28 c66 ub-te">
-										<p class="ptb10 ub-te">库存：100件</p>
-										<p class="c99 y_line ub-te">市场价：￥30.00元</p>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="y_shop_item plr30 bb ub ub-ac ptb40  mui-table-view-cell">
-							<div class="y_shop_pic">
-								<img src="" alt="" />
-							</div>
-							<div class="ub-f1 pl35 ub-te">
-								<p class="fz32 c33 word-break fw-b">意丁堡工作服套装</p>
-								<div  class="ub ub-ac ub-te">
-									<div class="fz28 c66 pr10 ub-te">
-										<p class="ptb10 ub-te">规格：1000ml</p>
-										<p><span class="c-red ub-te">2500</span>积分</p>
-									</div>
-									<div class="fz28 c66 ub-te">
-										<p class="ptb10 ub-te">库存：100件</p>
-										<p class="c99 y_line ub-te">市场价：￥30.00元</p>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="y_shop_item plr30 bb ub ub-ac ptb40  mui-table-view-cell">
-							<div class="y_shop_pic">
-								<img src="" alt="" />
-							</div>
-							<div class="ub-f1 pl35 ub-te">
-								<p class="fz32 c33 word-break fw-b">意丁堡工作服套装</p>
-								<div  class="ub ub-ac ub-te">
-									<div class="fz28 c66 pr10 ub-te">
-										<p class="ptb10 ub-te">规格：1000ml</p>
-										<p><span class="c-red ub-te">2500</span>积分</p>
-									</div>
-									<div class="fz28 c66 ub-te">
-										<p class="ptb10 ub-te">库存：100件</p>
-										<p class="c99 y_line ub-te">市场价：￥30.00元</p>
+										<p class="ptb10 ub-te">库存：{{item.goods_stock}}</p>
+										<p class="c99 y_line ub-te">市场价：￥{{item.goods_price}}元</p>
 									</div>
 								</div>
 							</div>
@@ -120,5 +62,32 @@
 				</div>
 			</div>
 		</div>
+		<script>
+			new Vue({
+				el:'#app',
+				data: function () {
+				    return {
+				        list:[]
+				    }
+				},
+				methods: {	
+					getlist: function(){
+						
+						App.http('v1/goods.base/getList', {},function(data, status) {
+				           this.list = data.data.list;
+						}.bind(this));	
+					}
+				},
+				filters:{
+			        formatParam:function(item){
+			        	return '{goods_id:'+item.goods_id+'}';
+			        }
+			      
+			    },
+				mounted:function() {
+				    this.getlist();
+				}
+			})
+		</script>
 	</body>
 </html>
