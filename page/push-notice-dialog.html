@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+		<link rel="stylesheet" href="css/mui.min.css">
+		<style>
+			html{
+				background:'transparent'
+			}
+			body{
+				background:'transparent';
+			}
+			.global-push-notice{
+
+			}
+			.global-push-notice .notice-content{
+				margin:20px;
+				
+			}
+			.global-push-notice .notice-wrap{
+				padding:20px;
+				background:#fff;
+				border-radius: 3px;
+				box-shadow:5px 8px 8px rgba(238,238,238,0.5);
+				border:1px solid #eeeeee;
+				color:#24a84c;
+				text-align: center;
+			}
+		</style>
+		<script src="../js/mui.min.js"></script>
+	</head>
+
+	<body>
+		<script>
+			mui.plusReady(function() {
+					var self = plus.webview.currentWebview();
+					document.getElementById('wrap-content').innerHTML=self.content;
+				}.bind(this));
+		</script>
+		<div class="global-push-notice">
+			<div class="notice-content">
+				<div class="notice-wrap" id="wrap-content">
+					&nbsp;&nbsp;
+				</div>
+			</div>
+		</div>
+		
+	</body>
+
+</html>

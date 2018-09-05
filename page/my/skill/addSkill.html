@@ -162,18 +162,18 @@
 		</div>
 		<script>
 			var _oldBack = mui.back; 
-				var backButtonPress = 0;
-				console.log(this.skill_id)
-				mui.back = function(event) {      
-					var btnArray = ['退出', '取消']; 
-					mui.confirm('当前意向未保存，是否退出', '', btnArray, function(e) {
-						if (e.index == 0) {
-							_oldBack()
-						} else {
-							return
-						}
-					})
-				};
+			var backButtonPress = 0;
+			console.log(this.skill_id)
+			mui.back = function(event) {      
+				var btnArray = ['退出', '取消']; 
+				mui.confirm('当前意向未保存，是否退出', '', btnArray, function(e) {
+					if (e.index == 0) {
+						_oldBack()
+					} else {
+						return
+					}
+				})
+			};
 			new Vue({
 				el:'#app',
 				data: function() {

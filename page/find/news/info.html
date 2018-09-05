@@ -69,7 +69,7 @@
 					<span class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left toopl"></span>
 					<span>资讯详情</span>
 					<sapn class="tools">
-						<img v-if="item.is_cancel==1" src="../../../images/y-love-check.png" @click="cancel" style="margin-right: 10px;width: 17px;">
+						<img v-if="item.is_cancel==1" src="../../../images/y-love-check.png" @click="cancel" style="margin-right: 20px;width: 17px;">
 						<img v-else src="../../../images/y-love.png" @click="favorite" style="margin-right: 20px;width: 17px;">
 						<img src="../../../images/y_share.png" onclick="share()" style="margin-top: 2px;">
 					</sapn>
@@ -107,7 +107,7 @@
 							article_id: that.item.article_id
 						}, function(data, status) {
 							that.item.is_cancel=0;
-							App.send('user/favorite/index', 'update');
+							App.send('my/collection/index', 'update');
 							mui.toast("取消收藏成功");
 						});
 					},

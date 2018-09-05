@@ -474,6 +474,13 @@
 					"page/project/myDefault.html"
 				],
 				"priority": 0
+			},
+			"page/my/setting/feedback.html": {
+				"resources": [],
+				"refer": [
+					"page/my/setting/feedback.html"
+				],
+				"priority": 0
 			}
 		},
 		"idle": {

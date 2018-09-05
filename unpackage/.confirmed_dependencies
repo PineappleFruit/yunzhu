@@ -266,5 +266,10 @@
 			"page/project/rushDefault.html",
 			"page/project/myDefault.html"
 		]
+	},
+	"page/my/setting/feedback.html": {
+		"refer": [
+			"page/my/setting/feedback.html"
+		]
 	}
 }

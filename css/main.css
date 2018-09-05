@@ -955,7 +955,6 @@ input:-ms-input-placeholder{  /* Internet Explorer 10-11 */
 	width: 1.56rem;
 	height: 1.28rem;
 	overflow: hidden;
-	background-color: grey;
 }
 .y_shop_pic img{
 	width: 100%;
@@ -1068,9 +1067,10 @@ i.y_rotete{
 	margin-right: 0.2rem;
 }
 .y_edit_icon{
-	width: 0.36rem;
-	height: 0.35rem;
+	width: 0.6rem;
+    height: 0.6rem;
 	background-image: url(../images/y-edit.png);
+    background-size: 0.36rem 0.35rem;
 }
 .y_edit_checkbox{
 	width:0.34rem;

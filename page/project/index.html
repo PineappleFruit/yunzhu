@@ -53,7 +53,7 @@
 					<div class="mui-indicator"></div>
 				</div>
 			</div> 
-			<div class="y_type ub ub-ac bb" >
+			<div class="y_type ub ub-ac bb" ref="mybox">
 				<div class="y_type_item ub-f1 ub ub-ver ub-pac mui-table-view-cell" to="project/paidan" title="none">
 					<div class="y_dispatch y_icon"></div>
 					<p class="pt20 fz28 c33">技能派单</p>
@@ -126,7 +126,15 @@
 			</div>
 		</div>
 		<script>
-			new Vue({
+//			window.onscroll = function () {
+//				
+//				if(vm.$refs.mybox){
+//					var height = vm.$refs.mybox.scrollTop;
+//				}
+////				console.log(document.documentElement.scrollTop )
+//				console.log(height)
+//			}
+			let vm = new Vue({
 				el:"#app",
 				data: function() {
 					return {

@@ -87,11 +87,11 @@
 							nickname:'',
 							mobile:'',
 							province:'',
-							province_text:'',
+							province_name:'',
 							city:'',
-							city_text:'',
+							city_name:'',
 							county:'',
-							county_text:'',
+							county_name:'',
 							det_add:''
 						},
 						type: 'province',
@@ -149,18 +149,18 @@
 							this.type = 'city';
 							this.item.province = item.id;
 							this.province = item.name;
-							this.item.province_text = item.name
+							this.item.province_name = item.name
 							this.get(item.code, 'city');
 						} else if(this.type == 'city') {
 							this.type = 'area';
 							this.item.city = item.id;
 							this.city = item.name;
-							this.item.city_text = item.name
+							this.item.city_name = item.name
 							this.get(item.code, 'area');
 						} else if(this.type == 'area') {
 							this.item.county = item.id;
 							this.area = item.name;
-							this.item.county_text = item.name
+							this.item.county_name = item.name
 							this.isShow = false;
 							this.type = 'province';
 						}
@@ -171,6 +171,7 @@
 							if(data.status == 1){
 								//更新数据 
 								App.send('find/shop/shop', 'updateAddress',this.item);
+								this.item = {};
 								mui.toast('新增成功');
 								mui.back()
 							}

@@ -18,31 +18,76 @@
 			<form action="" method="" class="plr40">
 				<div class="y_message">
 					<div class="mui-input-row y_input_item">
-				    	<input type="password" class="mui-input-password"  placeholder="请输入原密码">
+				    	<input type="password" class="mui-input-password"  placeholder="请输入原密码" v-model='item.password'>
 				    </div> 
 				    <div class="mui-input-row y_input_item">
-				    	<input type="password" class="mui-input-password" placeholder="请输入新密码">
+				    	<input type="password" class="mui-input-password" placeholder="请输入新密码" v-model='item.pwd'>
 				    </div> 
 				    <div class="mui-input-row y_input_item">
-				    	<input type="password" class="mui-input-password" placeholder="请确认新密码">
+				    	<input type="password" class="mui-input-password" placeholder="请确认新密码" v-model='item.pwds'>
 				    </div> 
 	                <div class="y_input_item ub ub-ac">
                         <input type="text" placeholder="请输入验证码" class="ub-f1">
-                        <p class="y_getcode">获取验证码</p>
+                        <p class="y_getcode" @tap="getcode" v-if="!sended">获取验证码</p>
+                        <p class="y_getcode" v-if="sended" disabled="disabled">剩余 {{timer}} 秒</p>
                     </div>
 				</div>
-                <button class="btn btn-green" type="button" @tap="modifySuccess">确定修改</button>
+                <button class="btn btn-green" type="button" @tap="update">确定修改</button>
 			</form>
 		</div>
 		<script>
 			new Vue({
 				el:'#app',
+				data:function(){
+					return{
+						sended: false,
+						timer: 60,
+						item: {
+							password: '',
+							pwd: '',
+							pwds: '',
+							proving: '',
+						}
+					}
+				},
 				methods:{
-					modifySuccess(){
-						mui.openWindow({
-						    url: './modifySuccess.html', 
-						    id:'modifySuccess'
+					update: function() {
+
+						if(this.pwd != this.pwds) {
+							mui.toast('新密码两次输入不一致');
+							return;
+						}
+	
+						App.http('v1/user.base/modifyPwd', this.item, function(data, status) {
+				
+							if(data.status != 1) {
+								mui.toast(data.msg);
+								return false;
+							}
+							mui.toast('修改密码成功');
+							mui.back();
+	
 						});
+					},
+					getcode: function() {
+						this.sended = true;
+						var that = this;
+						App.http('v1/user.base/sendEditPwdSms', {}, function(data, status) {
+							mui.toast(data.msg);
+							that.gettimer();
+						});
+					},
+					gettimer: function() {
+	
+						var that = this;
+						var time = setInterval(function() {
+							that.timer--;
+							if(that.timer == 0) {
+								that.sended = false;
+								that.timer=60;
+								clearInterval(time);
+							}
+						}, 1000)
 					}
 				}
 			})

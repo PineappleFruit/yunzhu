@@ -21,15 +21,86 @@
 				</div>
 				<div class="tx-c">
 					<p class="fz40 c33 fw-b">打造劳务工人幸福之家！</p>
-					<p class="fz28 c66 pt20">版本：2.2.180609</p>
+					<p class="fz28 c66 pt20">版本：{{version}}</p>
 				</div>
 				<div class="tx-c y_update">
-					<button class="y_green_bigbtn">检查更新</button>
+					<button class="y_green_bigbtn" type="button" v-show="checkBtn" @tap="checkUpdate()">检查更新</button>
+				</div>
+				<div v-show="downloadstatus" class="download-dialog" style="width:80%;margin:40px auto;padding:10px;">
+					<div style="margin-top:10px" id="progress"></div>
 				</div>
 			</div>
 		</div>
 		<script>
-			
+			new Vue({
+				el:'#app',
+				data:function(){
+					return {
+						msg: "已是最新版本",
+						version: '',
+						downloadstatus: false,
+						checkBtn: true
+					}
+				},
+				methods:{
+					checkUpdate:function(){
+						var that = this;
+						App.http('v1/publics.version/check',{
+							version:this.version,
+							system:plus.os
+						},function(data,status){
+							App.log(data)
+							if(data.status !=1){
+								mui.toast('暂无更新');
+								return  false;
+							}
+							mui.confirm('发现新版本，要更新吗？','',['取消','立即更新'],function(e){
+								if(e.index == 1){
+									that.checkBtn = false;
+									var url = data.data.apk_file;
+									//判断是否为苹果
+									if(plus.os.name == 'iOS'){
+										plus.runtime.openURL('itms-apps://itunes.apple.com/us/app/apple-store/id1351642427');
+										return;
+									}
+									//安卓
+									that.downloadstatus = true;
+									mui("#progress").progressbar({
+										progress:0
+									}).show()
+									
+									var dtask = plus.downloader.createDownload(url,{},function(d,status){
+										if(status == 200){
+											var path = d.filename;
+											plus.runtime.install(path);
+										}else{
+											alert("下载失败:" + status)
+										}
+									})
+									dtask.addEventListener("statechanged",function(download,status){
+										var p = parseInt((download.downloadedSize / download.totalSize) * 100);
+										mui('#progress').progressbar().setProgress(p);
+										if(download.state == 4 && status == 200){
+											that.downloadstatus = false;
+											mui.toast('下载成功')
+										}
+									},false);
+									dtask.start();
+								}
+							})
+						}.bind(this))
+					}
+				},
+				mounted:function(){
+					mui.plusReady(function(){
+						this.version = plus.runtime.version;
+						mui("#progress").progressbar({
+							progress:0
+						}).show();
+					})
+					
+				}
+			})
 		</script>
 	</body>
 </html>

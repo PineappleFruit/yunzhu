@@ -32,7 +32,7 @@
 						<div class="bb ptb20 ub ub-ac pr30">
 							<p class="fz32 c33 y_title">派单通知</p>
 							<div class="ub-f1"></div>
-							<div class="mui-switch mui-switch-mini">
+							<div class="mui-switch mui-switch-mini" :class="{'mui-active':type==1}" @click="onpush">
 							  	<div class="mui-switch-handle"></div>
 							</div>
 						</div>
@@ -79,8 +79,25 @@
 		<script>
 			new Vue({
 				el:'#app',
+				data: {
+					type: 0
+				},
 				methods:{
-					loginout(){
+					onpush: function() {
+						this.type = this.type == 1 ? 0 : 1;
+						App.http('v1/user.base/switchPushDispatchNotice', {
+							type: this.type
+						}, function(data, status) {
+							if(data.status == 1) {
+								var user = App.getItem('user');
+								user.is_dispatch = this.type;
+								App.setItem('user', user);
+								mui.toast('操作成功');
+							}
+	
+						}.bind(this));
+					},
+					loginout:function(){
 						mui.confirm('确定要退出吗？', '', ['取消', '确定退出'], function(e) {
 							if(e.index == 1) {
 								App.delItem('token');

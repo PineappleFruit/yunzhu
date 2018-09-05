@@ -16,6 +16,20 @@
 		.mui-table-view-cell:after{
 			background-color: transparent;
 		}
+		.mui-table-view{
+			overflow: scroll;
+		}
+		#address{
+			height: 7.87rem;
+			background: #FFFFFF;
+		}
+		.box{
+			height: 100%;
+			background: #fff !important;
+		}
+		.mui-popover.mui-popover-action .mui-table-view{
+			margin: 0;
+		}
 	</style>
 	<body id="e_fish_container">
 		<div id="app">
@@ -25,18 +39,20 @@
 					<i class="mui-icon mui-icon-arrowright c99"></i>
 				</div>
 				<a href="#address" v-else>
-					<div class="ub ub-ac plr30 bb ptb25 mui-table-view-cell">
+					<div class="ub ub-ac plr30 bb ptb25 mui-table-view-cell" v-if="!select.mobile">
 						<p class="fz32 c99 pr10">选择收货地址</p>
 						<i class="mui-icon mui-icon-arrowright c99"></i>
 					</div>
 				</a>
-				<div class="ub ub-ac plr30 bb ptb25 mui-table-view-cell" to="find/shop/editAddress" title="none" v-if="select.mobile">
-					<div class="ub-f1">
-						<p class="fz36 c33 fw-b">成都市高新区金融大厦A座2101</p>
-						<p class="fz28 c33">张利龙<span class="plr30">13699448412</span></p>
+				<a href="#address">
+					<div class="ub ub-ac plr30 bb ptb25 mui-table-view-cell" v-if="select.mobile">
+						<div class="ub-f1">
+							<p class="fz36 c33 fw-b">{{select.province_name}}{{select.city_name}}{{select.county_name}}{{select.det_add}}</p>
+							<p class="fz28 c33">{{select.nickname}}<span class="plr30">{{select.mobile}}</span></p>
+						</div>
+						<i class="mui-icon mui-icon-arrowright c99"></i>
 					</div>
-					<i class="mui-icon mui-icon-arrowright c99"></i>
-				</div>
+				</a>
 				<div class="y_gift_list">
 					<div class="y_gift_item bb plr30 ptb40 ub ub-ac">
 						<div class="y_gift_pic">
@@ -52,40 +68,48 @@
 				<p class="fz32 c33 plr30 ptb30">合计：<span class="c-red">-{{param.number * item.goods_integral}}积分</span></p>
 			</div>
 			<div class="fix_box">
-				<!--<button class="btn btn-white" type="button">立即兑换</button>-->
-				<button class="btn btn-green" to="find/shop/shop" title="兑换">立即兑换</button>
+				<button class="btn btn-green" v-if="select.mobile" @tap="exchange">确定兑换</button>
+				<button class="btn btn-white" v-else type="button">确定兑换</button>
+				
 			</div>
 			<div id="address" class="mui-popover mui-popover-action mui-popover-bottom">
-				<ul class="mui-table-view">
-					<li class="mui-table-view-cell">
-						<div class="ub ub-ac">
-							<a href="#address" class="fz36 c99">取消</a>
-							<p class="tx-c fz36 c33 ub-f1 fw-b">选择收货地址</p>
-						</div>
-					</li>
-					<li class="mui-table-view-cell">
-						<div class="ub ub-ac">
-							<input type="checkbox" name="" id="" value="" class="y_edit_checkbox"/>
-							<div class="ub-f1 pl20">
-								<p class="fz28 c33 tx-l word-break"></p>
-								<div class="ub ub-ac fz28 c66">
-									<span></span>
-									<span></span>
+				<div class="mui-scroll-wrapper">
+				    <div class="mui-scroll">
+				    	<ul class="mui-table-view box">
+							<li class="mui-table-view-cell">
+								<div class="ub ub-ac">
+									<a href="#address" class="fz36 c99">取消</a>
+									<p class="tx-c fz36 c33 ub-f1 fw-b">选择收货地址</p>
 								</div>
-							</div>
-							<div class="y_icon y_edit_icon" to="find/shop/editAddress" title="none"></div>
-						</div>
-					</li>
-					<li class="mui-table-view-cell" to="find/shop/addAddress" title="新增收货地址">
-						<div class="ub ub-pac">
-							<div class="y_icon y_add_green"></div>
-							<p class="fz32 c33 pl20">新增收货地址</p>
-						</div>
-					</li>
-				</ul>	
+							</li>
+							<li class="mui-table-view-cell" v-for="(addressitem,index) in address" >
+								<div class="ub ub-ac">
+									<div class="ub-f1 ub ub-ac" @tap="selectAddress(addressitem,index)">
+										<input type="checkbox" name="" id="" value="1" class="y_edit_checkbox" :checked="index == isChecked"/>
+										<div class="ub-f1 pl20">
+											<p class="fz28 c33 tx-l word-break">{{addressitem.province_name}}{{addressitem.city_name}}{{addressitem.county_name}}{{addressitem.det_add}}</p>
+											<div class="ub ub-ac fz28 c66">
+												<span class="pr20">{{addressitem.nickname}}</span>
+												<span>{{addressitem.mobile}}</span>
+											</div>
+										</div>
+									</div>
+									<div class="y_icon y_edit_icon pl20" to="find/shop/editAddress" title="none" v-bind:param="addressitem | formatParam"></div>
+								</div>
+							</li>
+							<li class="mui-table-view-cell" to="find/shop/addAddress" title="新增收货地址">
+								<div class="ub ub-pac ptb10">
+									<div class="y_icon y_add_green"></div>
+									<p class="fz32 c33 pl20">新增收货地址</p>
+								</div>
+							</li>
+						</ul>	
+				   	</div>
+			    </div>
 			</div>
 		</div>
 		<script>
+			
 			new Vue({
 				el:'#app',
 				data:function(){
@@ -99,7 +123,8 @@
 							goods_integral: 0
 						},
 						imgs: '',
-						select:{} 
+						select:{} ,
+						isChecked:null
 					}
 				},
 				methods:{
@@ -107,10 +132,9 @@
 						App.http('v1/goods.base/details', {
 							goods_id: this.param.goods_id
 						}, function(data, status) {
-							this.item = data.data;
-							console.log(JSON.stringify(this.item))
+							this.item = data.data;  
 							if(data.data.goods_img_list.length > 0){
-								this.imgs = data.data.goods_img_list[0];
+								this.imgs = data.data.goods_img_list[0]; 
 							}
 							
 						}.bind(this));
@@ -118,14 +142,46 @@
 						App.http('v1/user.address/getAll', {}, function(data, status) {
 							this.address = data.data;
 //							this.select = data.data[0]
-							console.log(JSON.stringify(this.address))
 						}.bind(this),'get');
 
 					},
 					getAddress:function(){
-						
+						App.http('v1/user.address/getAll', {}, function(data, status) {
+							this.address = data.data;
+//							this.select = data.data[0]
+						}.bind(this),'get');
+					},
+					selectAddress:function(addressitem,index){
+						this.select = addressitem
+						this.isChecked = index
+						mui('.mui-popover-bottom').popover('hide'); 
+					},
+					exchange:function(){
+						let that = this;
+						mui.confirm('是否花费'+this.item.goods_integral+'积分兑换此商品？', '', ['取消', '确认'], function(e) {
+							if(e.index == 1) {
+								
+								App.http('v1/goods.base/createOrder', that.param, function(data, status) {
+									console.log(JSON.stringify(data))
+									if(data.status != 1) {
+										mui.toast(data.msg);
+										return false;
+									}
+									App.send('find/shop/goods', 'update');
+									mui.toast('兑换成功！');
+									mui.back();
+		
+								});
+							}
+
+						});
 					}
 				},
+				filters:{
+			        formatParam:function(item){
+			        	return '{addressid:'+item.id+'}'; 
+			        }
+			    },
 				mounted:function(){
 					mui.plusReady(function() {
 						var self = plus.webview.currentWebview();
@@ -133,7 +189,6 @@
 						this.param.number = self.num;
 						this.getitem();
 //						this.getAddress()
-
 					}.bind(this));
 
 					//状态更改监听
@@ -144,8 +199,12 @@
 					//修改地址监听
 					App.request('updateAddress', function(item) {
 						this.select = item;
-						console.log(JSON.stringify(this.select))
+						this.isChecked = null
+						this.getAddress();
 					}.bind(this));
+					mui('.mui-scroll-wrapper').scroll({
+						indicators: false //设置滚动条不显示
+					});
 				}
 			})
 		</script>
