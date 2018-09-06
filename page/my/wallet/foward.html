@@ -41,12 +41,12 @@
 					<div class="bb"> 
 						<p class="fz32 c66 pb30">提现金额</p>
 						<div class="y_forward_money ub ub-ac">
-							<span>￥</span>
-							<input type="number" name="" id="" value="0" placeholder="0" class="ub-f1 mui-input-clear" v-model="item.money" />
+							<span>￥</span> 
+							<input type="number" name="" id="" placeholder="0" class="ub-f1 mui-input-clear" v-model="item.money" />
 						</div>
 					</div>
 					<div class="ub ub-ac ptb25 fz28">
-						<p class="ub-f1  c-red" v-if="balance > item.money">金额已超出可提现余额</p>
+						<p class="ub-f1  c-red" v-if="parseInt(item.money) > balance">金额已超出可提现余额</p>
 						<p class="ub-f1  c99" v-else>可用余额{{balance}}元</p>
 						<span class="c-green" @tap="allMoney">全部提现</span>
 					</div>
@@ -68,7 +68,7 @@
 				    	item:{
 				    		card_id:0,
 				    		bank_no:'',
-				    		money:0
+				    		money: null
 				    	},
 				    	card_id :''
 				    }
@@ -105,7 +105,7 @@
 							
 					},
 					withdraw:function(){
-						
+						console.log(JSON.stringify(this.item))
 						App.http('v1/user.base/withdrawApply', this.item,function(data, status) {
 							mui.toast(data.msg);
 							if(data.status!=1){
@@ -142,10 +142,11 @@
 			    },
 				mounted:function(){
 					this.getlist();
+					console.log(this.item.money)
 				    //状态更改监听
 					App.request('update', function() {
 						this.getlist();
-					}.bind(this));
+					}.bind(this)); 
 				}
 			})
 		</script>

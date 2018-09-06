@@ -3,7 +3,8 @@
 		"resources": [
 			"pages/my/index.html",
 			"pages/project/index.html",
-			"page/project/index.html"
+			"page/project/index.html",
+			"page/find/index.html"
 		],
 		"refer": [
 			"pages/find/index.html",
@@ -136,7 +137,8 @@
 			"page/my/skill/index.html",
 			"page/my/userInfo/index.html",
 			"page/my/wallet/redPackage.html",
-			"page/my/follow/index.html"
+			"page/my/follow/index.html",
+			"page/my/login/login.html"
 		]
 	},
 	"page/my/collection/index.html": {
@@ -215,7 +217,8 @@
 			"page/project/projectDefault.html",
 			"page/project/paidan.html",
 			"page/project/rush.html",
-			"page/project/my.html"
+			"page/project/my.html",
+			"page/my/integral/signin.html"
 		]
 	},
 	"page/my/login/login.html": {
@@ -264,12 +267,18 @@
 	"page/project/my.html": {
 		"refer": [
 			"page/project/rushDefault.html",
-			"page/project/myDefault.html"
+			"page/project/myDefault.html",
+			"page/project/index.html"
 		]
 	},
 	"page/my/setting/feedback.html": {
 		"refer": [
 			"page/my/setting/feedback.html"
+		]
+	},
+	"page/project/myDefault.html": {
+		"refer": [
+			"page/project/map.html"
 		]
 	}
 }

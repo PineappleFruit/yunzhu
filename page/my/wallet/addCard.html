@@ -20,6 +20,7 @@
 			.y_action_left{
 				width: 2.45rem;
 				text-align: right;
+				margin-right: 0.2rem;
 			}
 			.y_action_left div{
 				float: right;
@@ -77,9 +78,9 @@
 					</div>
 				</div>
 				<div class="plr30">
-					<div class="ub ub-ac">
+					<div class="ub ub-ac"  @tap="isShow = true">
 						<input type="checkbox" name="" id="" class="y_checkbox" disabled  v-model="picked" value="1"/>
-						<p class="fz32 ca7 ptb20 pl20">我已阅读并同意<span class="c-green" @tap="isShow = true">《银行卡使用协议》</span></p>
+						<p class="fz32 ca7 ptb20 pl20">我已阅读并同意<span class="c-green">《银行卡使用协议》</span></p>
 					</div>
 					<button class="btn btn-green mt20" type="button" @tap="save">确定</button>
 				</div>

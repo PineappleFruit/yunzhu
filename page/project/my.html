@@ -38,7 +38,7 @@
 						<img src="../../images/y-exchange-record.png"/>
 					</div>
 					<p class="tx-c fz32 c66">暂无抢单成功项目 </p>
-					<p class="tx-c fz32 c66">去<span class="c-green">首页</span>看看吧</p>
+					<p class="tx-c fz32 c66">去<span class="c-green" to="project/index" title="none">首页</span>看看吧</p>
 				</div>
 				<div class="mui-scroll bg-grey">
 					<ul class="mui-table-view mui-table-view-chevron">
@@ -48,7 +48,7 @@
 									<div class="ub-f1">
 										<p class="fz32 c33 fw-b">{{item.skill_name}}<span class="c66 fz28 plr20">[招{{item.number}}人]</span></p>
 										<div class="fz24 c66 y_label pt20">
-											<span>{{item.address}}</span>
+											<span>{{item.province}}{{item.city}}{{item.county}}</span>
 											<span class="cc7">|</span>
 											<span>{{item.aptitude | formatCertificates}}</span>
 											<span class="cc7">|</span>
@@ -63,7 +63,7 @@
 									<div class="tx-r"> 
 										<p class="fz28 c-red fw-b" v-if="item.skill_type==6">面议</p>
 										<p v-if="item.skill_type!=6" class="fz28 c33 fw-b">{{item.wages}}元/{{item.skill_type | formatUnit}}</p>
-										<p  class="fz24 c66 pt20">{{item.addtime}}</p>
+										<p  class="fz24 c66 pt20">{{timestampToTime(item.addtime)}}</p>
 									</div>
 								</div>
 								<p class="fz28 c33">{{item.project_name}}</p>
@@ -92,7 +92,7 @@
 								page: this.page
 							}, function(data, status) {
 								this.page = data.data.page;
-								console.log(JSON.stringify(data.data))
+								console.log(JSON.stringify(data.data.list))
 								/**
 								 * 默认关闭下拉提示
 								 */
@@ -144,7 +144,6 @@
 										if(data.status == 1) {
 											window.location.reload();
 										}
-	
 									});
 								} else {
 									setTimeout(function() {
@@ -159,7 +158,17 @@
 								let str = item.split(",") 
 								return str
 							}
-						}
+						},
+						timestampToTime:function(timestamp) {
+			                var date = new Date(timestamp * 1000);
+			                Y = date.getFullYear() + '-';
+			                M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+			                D = date.getDate() + ' ';
+			                h = date.getHours() + ':';
+			                m = date.getMinutes() + ':';
+			                s = date.getSeconds();
+			                return Y+M+D;
+			            },
 					},
 					filters: {
 						formatStatus: function(item) {
@@ -205,8 +214,11 @@
 						},
 						formatParam: function(item) {
 							return '{skill_id:' + item.project_skill_id + ',dis_id:' + item.dis_id + ',dis_status:'+item.dis_status+'}';
-						}
-	 
+						},
+						formatCertificates: function(aptitude ) {
+							return aptitude == 2 ? '持证' : '';
+						},
+	  
 					}, 
 					mounted: function() {
 						App.request('update', function() {
@@ -242,7 +254,9 @@
 						});
 						mui.plusReady(function(){
 							this.getlist();
+							
 						}.bind(this))
+						
 					}
 				})
 			</script>

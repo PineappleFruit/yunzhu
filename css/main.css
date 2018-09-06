@@ -1090,3 +1090,14 @@ i.y_rotete{
  .mui-input-row .mui-input-password~.mui-icon-eye.mui-active{
  	color: #53a656;
  }
+.y_delet{
+	width: 0.4rem;
+	height: 0.4rem;
+	background-image: url(../images/y-cha.png);
+	background-repeat: no-repeat;
+	background-size: 0.4rem .4rem;
+	background-position: center;
+	position: absolute;
+	top: 0;
+	right: 0; 
+}

@@ -135,13 +135,13 @@
 				"resources": [
 					"pages/my/index.html",
 					"pages/project/index.html",
-					"page/project/index.html"
+					"page/project/index.html",
+					"page/find/index.html"
 				],
 				"refer": [
 					"pages/find/index.html",
 					"pages/my/login/login.html",
 					"page/my/index.html",
-					"page/find/index.html",
 					"page/my/login/login.html"
 				],
 				"priority": 0
@@ -301,7 +301,8 @@
 					"page/my/skill/index.html",
 					"page/my/userInfo/index.html",
 					"page/my/wallet/redPackage.html",
-					"page/my/follow/index.html"
+					"page/my/follow/index.html",
+					"page/my/login/login.html"
 				],
 				"priority": 0
 			},
@@ -404,7 +405,8 @@
 					"page/project/projectDefault.html",
 					"page/project/paidan.html",
 					"page/project/rush.html",
-					"page/project/my.html"
+					"page/project/my.html",
+					"page/my/integral/signin.html"
 				],
 				"priority": 0
 			},
@@ -471,7 +473,8 @@
 				"resources": [],
 				"refer": [
 					"page/project/rushDefault.html",
-					"page/project/myDefault.html"
+					"page/project/myDefault.html",
+					"page/project/index.html"
 				],
 				"priority": 0
 			},
@@ -479,6 +482,13 @@
 				"resources": [],
 				"refer": [
 					"page/my/setting/feedback.html"
+				],
+				"priority": 0
+			},
+			"page/project/myDefault.html": {
+				"resources": [],
+				"refer": [
+					"page/project/map.html"
 				],
 				"priority": 0
 			}

@@ -66,7 +66,7 @@
 					<div class="y_project y_icon"></div>
 					<p class="pt20 fz28 c33">我的项目</p>
 				</div>
-				<div class="y_type_item ub-f1 ub ub-ver ub-pac mui-table-view-cell">
+				<div class="y_type_item ub-f1 ub ub-ver ub-pac mui-table-view-cell" to="my/integral/signin" title="none">
 					<div class="y_signin y_icon"></div>
 					<p class="pt20 fz28 c33">每日签到</p>
 				</div>
@@ -74,18 +74,6 @@
 			<!--下拉刷新容器-->
 			<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
 				<div v-if="list.length == 0" style="margin: 80px 10px;text-align: center;font-size: 16px;color: #ccc;">
-					<!--
-					<div v-if="userinfo.status==0">
-						未实名认证，暂无派单 ⊙﹏⊙ <br/>
-						<button style="border-color: #e5e5e5 ;color: #999;margin-top: 10px;" to="user/perfile/idcard" title="身份证信息">马上去认证</button>
-					</div>
-					<div v-else-if="userinfo.status==1">
-						实名认证，审核中... ⊙﹏⊙ <br/>
-					</div>
-					<div v-else-if="userinfo.status==3">
-						实名认证失败，请重新提交 ⊙﹏⊙ <br/>
-						<button style="border-color: #e5e5e5 ;color: #999;margin-top: 10px;" to="user/perfile/idcard" title="身份证信息">重新提交认证</button>
-					</div>-->
 					<div>
 						暂无派单 ⊙﹏⊙
 					</div>
@@ -194,7 +182,7 @@
 					formatCertificates: function(aptitude ) {
 						return aptitude == 2 ? '持证' : '';
 					},
-	
+	 
 				},
 				methods:{
 					/**
@@ -257,7 +245,6 @@
 							let str = item.split(",")
 							return str
 						}
-						
 					}
 				},
 				mounted:function(){
@@ -313,7 +300,7 @@
 					
 					mui.plusReady(function(){
 						this.getlist();
-					}.bind(this))
+					}.bind(this)) 
 				}
 			})
 		</script>
