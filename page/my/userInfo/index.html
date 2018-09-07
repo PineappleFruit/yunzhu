@@ -123,17 +123,17 @@
 					},
 					avatar: function() {
 					
-					App.images('v1/user.base/avatar', function(data, status) {
-//						console.log( data.data.avatar);
-						if(data.status == 1) {
-//							console.log( data.data.avatar);
-							this.item.photo = data.data.avatar;
-							
-							App.send('page/user/index.html', 'update');
-						}
-
-					}.bind(this));
-				},
+						App.images('v1/user.base/avatar', function(data, status) {
+	//						console.log( data.data.avatar);
+							if(data.status == 1) {
+	//							console.log( data.data.avatar);
+								this.item.photo = data.data.avatar;
+								
+								App.send('page/user/index.html', 'update');
+							}
+	
+						}.bind(this));
+					},
 				},
 				mounted:function(){
 					//先取缓存数据

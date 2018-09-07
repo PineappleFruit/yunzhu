@@ -659,7 +659,6 @@ input:-ms-input-placeholder{  /* Internet Explorer 10-11 */
 	width: 1.6rem;
 	height: 1.28rem;
 	overflow: hidden;
-	background: gray;
 }
 .y_exchange_pic img{
 	width: 100%;
@@ -979,7 +978,6 @@ i.y_rotete{
 	width: 1.57rem;
 	height: 1.28rem;
 	overflow: hidden;	
-	background-color: gray;
 }
 .y_gift_pic img{
 	width: 100%;

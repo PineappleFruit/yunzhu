@@ -49,7 +49,7 @@
 							version:this.version,
 							system:plus.os
 						},function(data,status){
-							App.log(data)
+							App.log(data);
 							if(data.status !=1){
 								mui.toast('暂无更新');
 								return  false;
@@ -68,7 +68,6 @@
 									mui("#progress").progressbar({
 										progress:0
 									}).show()
-									
 									var dtask = plus.downloader.createDownload(url,{},function(d,status){
 										if(status == 200){
 											var path = d.filename;
@@ -82,10 +81,11 @@
 										mui('#progress').progressbar().setProgress(p);
 										if(download.state == 4 && status == 200){
 											that.downloadstatus = false;
-											mui.toast('下载成功')
+											mui.toast('下载成功');
 										}
 									},false);
 									dtask.start();
+									
 								}
 							})
 						}.bind(this))
@@ -97,8 +97,7 @@
 						mui("#progress").progressbar({
 							progress:0
 						}).show();
-					})
-					
+					}.bind(this))
 				}
 			})
 		</script>

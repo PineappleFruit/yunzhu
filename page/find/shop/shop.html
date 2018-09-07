@@ -117,6 +117,7 @@
 						param: {
 							goods_id: 0,
 							number: 1,
+							address_id : ''
 						},
 						address: [],
 						item: {
@@ -153,14 +154,16 @@
 					},
 					selectAddress:function(addressitem,index){
 						this.select = addressitem
+						console.log(JSON.stringify(addressitem))
 						this.isChecked = index
+						this.param.address_id = addressitem.id
 						mui('.mui-popover-bottom').popover('hide'); 
 					},
 					exchange:function(){
 						let that = this;
 						mui.confirm('是否花费'+this.item.goods_integral+'积分兑换此商品？', '', ['取消', '确认'], function(e) {
 							if(e.index == 1) {
-								
+								console.log(JSON.stringify(that.param))
 								App.http('v1/goods.base/createOrder', that.param, function(data, status) {
 									console.log(JSON.stringify(data))
 									if(data.status != 1) {
@@ -199,7 +202,8 @@
 					//修改地址监听
 					App.request('updateAddress', function(item) {
 						this.select = item;
-						this.isChecked = null
+						this.isChecked = null;
+						this.param.address_id = this.select.id
 						this.getAddress();
 					}.bind(this));
 					mui('.mui-scroll-wrapper').scroll({

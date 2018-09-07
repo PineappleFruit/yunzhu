@@ -46,7 +46,7 @@
 			/*  收货信息 */
 			
 			.integState {
-				background: #23a84f;
+				background: #52a557;
 				height: 100px;
 				padding: 20px 65px 0 45px;
 			}
@@ -55,6 +55,7 @@
 				float: left;
 				padding-top: 10px;
 				color: #fff;
+				font-size: 14px;
 			}
 			
 			.integState img {
@@ -159,12 +160,13 @@
 			.copy {
 				width: 50px;
 				height: 20px;
-				border-radius: 10px;
+				line-height: 20px;
+				border-radius: 6px;
 				font-size: 12px;
 				text-align: center;
 				float: right;
 				color: #fff;
-				background: #23a84f;
+				background: #52a557;
 				margin-top: 15px;
 			}
 			
@@ -216,6 +218,7 @@
 			<div class="bgNull"></div>
 			<!-- 快递信息 -->
 			<div class="express" v-if="item.status == 2">
+			<!--<div class="express">-->
 				<!--<button type="button"  v-clipboard:copy="numbertext"  v-clipboard:success="onCopy">复制</button>-->
 				<div class="copy" @click="copy(item.logistics_number)">复制</div>
 				<div class="expressTitle">{{item.logistics_company}}</div>
@@ -247,6 +250,7 @@
 							goods_order_id: id
 						}, function(data, status) {
 							App.log(data);
+							console.log(JSON.stringify(data))
 							if(data.status != 1) {
 								mui.toast(data.msg);
 								return false;

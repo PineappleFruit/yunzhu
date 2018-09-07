@@ -65,7 +65,6 @@
 						App.http('v1/user.base/goodsExchangeLog', {},function(data, status) {
 							App.log(data);
 				            this.list = data.data.list;
-				            console.log(JSON.stringify(data.data.list))
 						}.bind(this));	
 					}
 				},
