@@ -138,6 +138,7 @@
 				mounted:function(){
 					//先取缓存数据
 					this.item = App.getItem('user');
+					console.log(JSON.stringify(this.item))
 					//取到线上数据后重新赋值
 					this.getuser();
 					//状态更改监听

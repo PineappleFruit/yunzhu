@@ -46,26 +46,26 @@
 						<div class="y_card_item ub ub-ac" @tap="isShow=true;get(0);">
 							<p>身份证住址</p>
 							<div class="ub-f1 y_card_input ub  ub-ac">
-								<span>{{province}}{{city}}{{area}}</span>
+								<span>{{item.live_province}}{{item.live_city}}{{item.live_county}}</span>
 							</div>
 						</div>
 					</div>
 					<div class="y_photo_box tx-c">
 						<p class="fz28 c33">上传身份证正反面及本人手持身份证照片</p>
 						<div class="y_card_face y_card_pic" @click="uploadCard('just')">
-							<img v-if="idcard.id_card_just !=''" :src="idcard.id_card_just" />
+							<img v-if="item.id_card_just !=''" :src="item.id_card_just" />
 							<img v-else src="../../../images/y-card-face.png" alt="" />
 						</div>
 						<div class="y_photot_btn" @tap="uploadCard('just')"></div>
 						<p class="fz32 c00 pt20">身份证正面照</p>
 						<div class="y_card_back y_card_pic">
-							<img v-if="idcard.id_card_back !=''" :src="idcard.id_card_back" />
+							<img v-if="item.id_card_back !=''" :src="item.id_card_back" />
 							<img v-else src="../../../images/y-card-back.png" alt="" />
 						</div>
 						<div class="y_photot_btn" @tap="uploadCard('back')"></div>
 						<p class="fz32 c00 pt20">身份证背面照</p>
 						<div class="y_card_people y_card_pic">
-							<img v-if="idcard.id_card_hand !=''" :src="idcard.id_card_hand" /> 
+							<img v-if="item.id_card_in_hand !=''" :src="item.id_card_in_hand" /> 
 							<img v-else src="../../../images/y-card-people.png" alt="" />
 						</div>
 						<div class="y_photot_btn" @tap="uploadCard('hand')"></div>
@@ -93,25 +93,28 @@
 						list: [],
 						province: '',
 						city: '',
-						area: '',
+						county: '',
 						item: {
 							name: '',
 							card: '',
-							province: '',
-							city: '',
-							area: '',
+							province: 0,
+							city: 0,
+							county: 0,
 							//奇葩接口数据
 							det_add: '',
-							live_province: 0,
-							live_city: 0,
-							live_area: 0,
-						},
-						idcard: {
+							live_province: '',
+							live_city: '',
+							live_county: '',
 							id_card_just: '',
 							id_card_back: '',
-							id_card_hand: ''
+							id_card_in_hand: ''
 						},
-						errInfo : ''
+//						idcard: {
+//							id_card_just: '',
+//							id_card_back: '',
+//							id_card_in_hand: ''
+//						},
+						errInfo : '',
 					}
 				},
 				methods:{
@@ -149,40 +152,31 @@
 						if(this.type == 'province') {
 							this.type = 'city';
 							this.item.province = item.id;
-							this.province = item.name;
+							this.item.live_province = item.name;
 							this.city = "";
 							this.area = "";
 							this.get(item.code, 'city');
 						} else if(this.type == 'city') {
 							this.type = 'area';
 							this.item.city = item.id;
-							this.city = item.name;
+							this.item.live_city = item.name;
 							this.area = "";
 							this.get(item.code, 'area');
 						} else if(this.type == 'area') {
-							this.item.area = item.id;
-							this.area = item.name;
+							this.item.county = item.id;
+							this.item.live_county = item.name;
 							this.isShow = false;
 							this.type = 'province';
 						}
 					},
 					upload: function() {
 						
-						if(this.idcard.id_card_back=='' || this.idcard.id_card_just=='' || this.idcard.id_card_hand==''){
+						if(this.item.id_card_back=='' || this.item.id_card_just=='' || this.item.id_card_in_hand==''){
 							mui.toast('请上传完整的身份证照片，包含正反面');
 							return false;
 						}
-						console.log(this.item.province)
-						App.http('v1/user.base/identityAuth', {
-							name : this.item.name,
-							card : this.item.card,
-							province : this.item.province,
-							city : this.item.city,
-							county :this.item.area,
-							id_card_just : this.idcard.id_card_just,
-							id_card_back : this.idcard.id_card_back,
-							id_card_in_hand : this.idcard.id_card_hand
-						}, function(data, status) {
+						console.log(JSON.stringify(this.item))
+						App.http('v1/user.base/identityAuth', this.item, function(data, status) {
 							mui.toast('操作成功，请等待审核');
 							console.log(data.msg)
 							App.send('my/userInfo/index', 'update');
@@ -196,11 +190,11 @@
 								return false;
 							}
 							if(type == 'just') {
-								this.idcard.id_card_just = data.data.url;
+								this.item.id_card_just = data.data.url;
 							} else if(type == 'back') {
-								this.idcard.id_card_back = data.data.url;
+								this.item.id_card_back = data.data.url;
 							}else{
-								this.idcard.id_card_hand = data.data.url;
+								this.item.id_card_in_hand = data.data.url;
 							}
 
 						}.bind(this));
@@ -208,20 +202,20 @@
 				},
 				mounted:function(){
 					App.http('v1/user.base/getIdentityInfo', {}, function(data, status) {
-						console.log(data.data)
-						this.item.det_add = data.data.det_add;
-						this.item.live_province = data.data.province;
-						this.item.live_city = data.data.city;
-						this.item.live_area = data.data.area;
+						console.log(JSON.stringify(data.data));
+//						this.item.det_add = data.data.det_add;
+						this.item.province = data.data.province_id;
+						this.item.city = data.data.city_id;
+						this.item.county = data.data.county_id;
 						this.errInfo = data.data.reason;
 						this.item.name = data.data.name;
 						this.item.card = data.data.card; 
-						this.province = data.data.province;
-						this.city = data.data.city;
-						this.area = data.data.county;
-						this.idcard.id_card_just = data.data.id_card_just;
-						this.idcard.id_card_back = data.data.id_card_back;
-						this.idcard.id_card_hand = data.data.id_card_in_hand;
+						this.item.live_province = data.data.province;
+						this.item.live_city = data.data.city;
+						this.item.live_county = data.data.county; 
+						this.item.id_card_just = data.data.id_card_just;
+						this.item.id_card_back = data.data.id_card_back;
+						this.item.id_card_in_hand = data.data.id_card_in_hand;
 					}.bind(this),'get');
 				}
 				

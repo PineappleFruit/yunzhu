@@ -58,6 +58,10 @@
 		}
 
 		mui('.mui-bar-tab').on('tap', 'a', function(e) {
+			//更新数据 
+//			App.send('page/project/index.html', 'update');
+//			App.send('page/my/index.html', 'update');
+			
 			var targetTab = this.getAttribute('href');
 			if(targetTab == activeTab) { 
 				return;
@@ -67,7 +71,7 @@
 			plus.webview.hide(activeTab);
 			//更改当前活跃的选项卡
 			activeTab = targetTab;
-		});
+		}); 
 	});
 	var token = localStorage.getItem("token");;
 //	判断是否登陆 
@@ -172,5 +176,6 @@
 	document.addEventListener("netchange", function() {
 		App.networkStatus();
 	}, false);
+	
 </script>
 </html>

@@ -1099,3 +1099,34 @@ i.y_rotete{
 	top: 0;
 	right: 0; 
 }
+.share_item{
+	float: left;
+	margin-right: 9.6%;
+}
+.share_item:last-child{
+	margin-right: 0;
+}
+.share_item p{
+	text-align: center;
+	margin-top: 0.15rem;
+}
+.y_weixin_icon{
+	width: 1.15rem;
+	height: 1.15rem;
+	background-image: url(../images/y-weixin.png);
+}
+.y_quan_icon{
+	width: 1.15rem;
+	height: 1.15rem;
+	background-image: url(../images/y-pengyouqun.png);
+}
+.y_xinlang_icon{
+	width: 1.15rem;
+	height: 1.15rem;
+	background-image: url(../images/y-weibo.png);
+}
+.y_qq_icon{
+	width: 1.15rem;
+	height: 1.15rem;
+	background-image: url(../images/y-qq.png);
+}
