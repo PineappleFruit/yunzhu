@@ -96,9 +96,9 @@
 						<div class="bb ub ub-ac plr30 ptb10">
 							<p class="fz32 c33 y_title ub-f1">期望薪资</p>
 							<div class=" ub ub-ac tx-r">
-								<input type="number" v-model="item.max_salary" placeholder="最高薪资" class="input-width">
-								<span class="salary_to">~</span>
 								<input type="number" placeholder="最低薪资" v-model="item.min_salary" class="input-width">
+								<span class="salary_to">~</span>
+								<input type="number" v-model="item.max_salary" placeholder="最高薪资" class="input-width">
 								<span class="danwei">元</span>
 							</div>
 							
@@ -312,6 +312,7 @@
 											return false;
 										}
 										App.send('my/skill/index', 'update');
+										App.send('my/index', 'update');
 										var page = {
 											"url":"my/skill/index",
 											"title":"技能工种"

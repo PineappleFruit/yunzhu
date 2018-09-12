@@ -60,7 +60,7 @@
 						this.det_add = this.self.det_add;
 						var myGeo = new BMap.Geocoder();
 						// 将地址解析结果显示在地图上，并调整地图视野    
-						myGeo.getPoint(this.self.address + self.det_add, function(point) {
+						myGeo.getPoint(this.self.address + this.self.det_add, function(point) {
 							if(point) {
 								map.centerAndZoom(point, 13);
 								map.addOverlay(new BMap.Marker(point));
@@ -77,69 +77,24 @@
 //								map.openInfoWindow(infoWindow, map.getCenter());
 								 
 								plus.geolocation.getCurrentPosition(function(e) {
-									src = new plus.maps.Point(e.coords.longitude, e.coords.latitude);
-									dst = new plus.maps.Point(point.lng, point.lat);
-								}, function(e) {
+									this.src = new plus.maps.Point(e.coords.longitude, e.coords.latitude);
+									this.dst = new plus.maps.Point(point.lng, point.lat);
+								}.bind(this), function(e) {
 									App.log(e);
 								});
 								
 							}
-						});
+						}.bind(this));
 		
 					}.bind(this))
 				},
 				methods:{
 					navt:function() {
 						//				mui('#sheet1').popover('toggle');
-						console.log(this.self.address)
 						plus.maps.openSysMap(this.dst, this.self.address + this.self.det_add, this.src);
 					}
 				}
 			})
-//			var dst, src, self;
-//			mui.plusReady(function() {
-//				var map = new BMap.Map("maps");
-//				var point = new BMap.Point(116.331398, 39.897445);
-//				map.centerAndZoom(point, 12);
-//				var geolocation2 = new BMap.Geolocation();
-//				self = plus.webview.currentWebview();
-//				this.address = self.address;
-//				this.det_add = self.det_add;
-//
-//				var myGeo = new BMap.Geocoder();
-//				// 将地址解析结果显示在地图上，并调整地图视野    
-//				myGeo.getPoint(self.address + self.det_add, function(point) {
-//					if(point) {
-//						map.centerAndZoom(point, 13);
-//						map.addOverlay(new BMap.Marker(point));
-//						var opts = {
-//							enableCloseOnClick: false,
-//							width: 50, // 信息窗口宽度    
-//							height: 120, // 信息窗口高度     
-//							title: "" // 信息窗口标题   
-//						}
-//						var infoWindow = new BMap.InfoWindow("<button onclick='navt()'>点击导航</button><br><br>" + self.address + self.det_add, opts); // 创建信息窗口对象    
-//						infoWindow.addEventListener('close', function() {
-//							return false;
-//						})
-//						map.openInfoWindow(infoWindow, map.getCenter());
-//						 
-//							plus.geolocation.getCurrentPosition(function(e) {
-//								src = new plus.maps.Point(e.coords.longitude, e.coords.latitude);
-//								dst = new plus.maps.Point(point.lng, point.lat);
-//							}, function(e) {
-//								App.log(e);
-//							});
-//						
-//					}
-//				});
-//
-//			})
-//
-//			function navt() {
-//				//				mui('#sheet1').popover('toggle');
-//				plus.maps.openSysMap(dst, self.address + self.det_add, src);
-//			}
 		</script>
 	</body>
 </html>

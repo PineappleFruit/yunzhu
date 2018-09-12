@@ -63,7 +63,7 @@
 												<span>{{item.address}}</span>
 												<span class="cc7">|</span>
 												<span>{{item.aptitude | formatCertificates}}</span>
-												<span class="cc7">|</span>
+												<span class="cc7" v-if="item.aptitude == 2">|</span>
 												<span>{{item.sex | formatSex}}</span>
 												<span class="cc7">|</span>
 												<span>{{item.age | formatAge}}</span>

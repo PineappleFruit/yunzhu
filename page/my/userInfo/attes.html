@@ -40,7 +40,7 @@
 						<div class="y_card_item ub ub-ac">
 							<p>身份证号码</p>
 							<div class="mui-input-row y_input_item ub-f1 y_card_input ub  ub-ac">
-						    	<input type="text" class="mui-input-clear" placeholder="请输入身份证号码" v-model='item.card'>
+						    	<input type="text" class="mui-input-clear" placeholder="请输入身份证号码" v-model='item.card' v-on:blur="codeCard">
 						    </div>
 						</div>
 						<div class="y_card_item ub ub-ac" @tap="isShow=true;get(0);">
@@ -115,15 +115,10 @@
 //							id_card_in_hand: ''
 //						},
 						errInfo : '',
+						isCardTrue:true
 					}
 				},
 				methods:{
-//					attesSubmit(){
-//						mui.openWindow({
-//						    url: './attesSuccess.html', 
-//						    id:'attesSuccess'
-//						});
-//					}
 					get: function(code, type) {
 						var url = '';
 						switch(type) {
@@ -170,18 +165,44 @@
 						}
 					},
 					upload: function() {
-						
-						if(this.item.id_card_back=='' || this.item.id_card_just=='' || this.item.id_card_in_hand==''){
-							mui.toast('请上传完整的身份证照片，包含正反面');
+						if(this.item.name==''){
+							mui.toast('请填写姓名');
 							return false;
 						}
-						console.log(JSON.stringify(this.item))
-						App.http('v1/user.base/identityAuth', this.item, function(data, status) {
-							mui.toast('操作成功，请等待审核');
-							console.log(data.msg)
-							App.send('my/userInfo/index', 'update');
-							mui.back();
-						}.bind(this));
+						if(this.item.card==''){
+							mui.toast('请填写身份证号码');
+							return false;
+						}
+						if(this.item.live_county==''){
+							mui.toast('请填写详细地址');
+							return false;
+						}
+						if(this.item.id_card_back==''){
+							mui.toast('请上传完整的身份证反面照');
+							return false;
+						}
+						if(this.item.id_card_just==''){
+							mui.toast('请上传完整的身份证正面照');
+							return false;
+						}
+						if(this.item.id_card_in_hand==''){
+							mui.toast('请上传完整的手持身份证照');
+							return false;
+						}
+//						console.log(JSON.stringify(this.item)) 
+						console.log(this.isCardTrue)
+						if(this.isCardTrue){
+							App.http('v1/user.base/identityAuth', this.item, function(data, status) {
+								if(data.status == 1){
+									mui.toast('操作成功，请等待审核');
+									App.send('my/userInfo/index', 'update');
+									App.send('my/index', 'update');
+									mui.back();
+								}
+								mui.toast(data.msg)
+							}.bind(this));
+						}
+						
 					},
 					uploadCard: function(type) {
 						App.images('v1/user.base/uploadCard', function(data, status) {
@@ -199,10 +220,23 @@
 
 						}.bind(this));
 					},
+					/**
+					 * 验证身份证是否为18位
+					 * */
+					codeCard:function(){
+						console.log(this.item.card.length)
+						if(this.item.card.length != 18){
+							mui.toast('身份证号码格式有误');
+							this.isCardTrue = false
+						}else{
+							this.isCardTrue = true
+						}
+						console.log(this.isCardTrue)
+					}
 				},
 				mounted:function(){
 					App.http('v1/user.base/getIdentityInfo', {}, function(data, status) {
-						console.log(JSON.stringify(data.data));
+//						console.log(JSON.stringify(data.data));
 //						this.item.det_add = data.data.det_add;
 						this.item.province = data.data.province_id;
 						this.item.city = data.data.city_id;

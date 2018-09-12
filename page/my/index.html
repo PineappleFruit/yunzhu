@@ -41,7 +41,10 @@
 							</div>
 							<p class="fz32 c99 ub-te" v-text="item.phone"></p>
 						</div>
-						<p class="fz32 c-red" v-if="item.status != 2">未认证</p>
+						<p class="fz32 c-green" v-if="item.status == 2">已认证</p>
+						<p class="fz32 c-yellow" v-else-if="item.status == 1">审核中</p>
+						<p class="fz32 c-red2" v-else-if="item.status == 3">认证失败</p>
+						<p class="fz32 c-red" v-else>未认证</p>
 						<div class="y_arrow"></div>
 					</div>
 				</div> 
@@ -127,9 +130,9 @@
 				getuser: function() {
 					App.http('v1/user.base/getInfo', {}, function(data, status) {
 						this.item = data.data;
-						this.geade = data.data.geade
-//						console.log(JSON.stringify(this.item))
-						App.setItem('user', data.data);
+						this.geade = data.data.geade 
+						console.log(JSON.stringify(this.item))
+						App.setItem('user', data.data);   
 					}.bind(this));
 				},
 
@@ -138,6 +141,7 @@
 				this.getuser();
 				//状态更改监听
 				App.request('update', function() {
+					console.log('技能更新')
 					this.getuser();
 				}.bind(this));
 

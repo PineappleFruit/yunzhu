@@ -28,6 +28,9 @@
 		.mui-table-view-chevron .mui-table-view-cell{
 			padding-right: 0;
 		}
+		.limit_width{
+			width: 5rem;
+		}
 	</style>
 	<body id="e_fish_container">
 		<div id="app">
@@ -53,10 +56,10 @@
 										<div class="ub-f1">
 											<p class="fz32 c33 fw-b">{{item.skill_name}}<span class="c66 fz28 plr20">[招{{item.number}}人]</span></p>
 											<div class="fz24 c66 y_label pt20">
-												<span>{{item.address}}</span>
+												<span>{{item.province}}-{{item.city}}</span>
 												<span class="cc7">|</span>
 												<span>{{item.aptitude | formatCertificates}}</span>
-												<span class="cc7">|</span>
+												<span class="cc7" v-if="item.aptitude == 2">|</span>
 												<span>{{item.sex | formatSex}}</span>
 												<span class="cc7">|</span>
 												<span>{{item.age | formatAge}}</span>
@@ -71,8 +74,10 @@
 											<p  class="fz24 c66 pt20">{{item.addtime}}</p>
 										</div>
 									</div>
-									<p class="fz28 c33">{{item.project_name}}</p>
-									<p class="fz28 c99">{{item.company_name}}</p>
+									<div class="limit_width">
+										<p class="fz28 c33">{{item.project_name}}</p>
+										<p class="fz28 c99">{{item.company_name}}</p>
+									</div>
 								</div>
 								<div class=" y_icon y_classify" :class="{'y_full' : item.dis_status == 12}"></div>
 							</li>

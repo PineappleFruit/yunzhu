@@ -12,6 +12,11 @@
 		<script type="text/javascript" src="../../../js/e_fish.js" ></script>
 		<script type="text/javascript" src="../../../js/mui.min.js" ></script>
 		<script type="text/javascript" src="../../../js/vue.js" ></script>
+		<style>
+			.y_input_item button{
+				border: none;
+			}
+		</style>
 	</head>
 	<body id="e_fish_container">
 		<div id="app">
@@ -27,9 +32,9 @@
 				    	<input type="password" class="mui-input-clear" placeholder="请确认新密码" v-model='item.pwds'>
 				    </div> 
 	                <div class="y_input_item ub ub-ac">
-                        <input type="text" placeholder="请输入验证码" class="ub-f1">
-                        <p class="y_getcode" @tap="getcode" v-if="!sended">获取验证码</p>
-                        <p class="y_getcode" v-if="sended" disabled="disabled">剩余 {{timer}} 秒</p>
+                        <input type="text" placeholder="请输入验证码" class="ub-f1" v-model="item.proving"> 
+                        <button class="y_getcode" @tap="getcode" v-if="!sended" type="button" disabled="isSame">获取验证码</button>
+                        <button class="y_getcode" v-else disabled="disabled" type="button">剩余 {{timer}} 秒</button>
                     </div>
 				</div>
                 <button class="btn btn-green" type="button" @tap="update">确定修改</button>
@@ -41,6 +46,7 @@
 				data:function(){
 					return{
 						sended: false,
+						isSame : false,
 						timer: 60,
 						item: {
 							password: '',
@@ -50,14 +56,29 @@
 						}
 					}
 				},
+				computed:{
+					code(){
+						const {pwd,pwds} = this.item;
+						return {
+							pwd,
+							pwds
+						}
+					}
+				},
+				watch:{
+					code:{
+						handler:function(val){
+							console.log(JSON.stringify(val))
+							if(val.pwad == val.pwds){
+								this.isSame = true
+							}
+						},
+						deep:true
+					}
+				},
 				methods:{
 					update: function() {
-
-						if(this.pwd != this.pwds) {
-							mui.toast('新密码两次输入不一致');
-							return;
-						}
-	
+						
 						App.http('v1/user.base/modifyPwd', this.item, function(data, status) {
 				
 							if(data.status != 1) {

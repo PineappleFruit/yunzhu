@@ -77,11 +77,9 @@
 					getlist:function(){
 						this.balance= App.getItem('balance');
 						this.selected = App.getItem('selected')
-						console.log(JSON.stringify(this.selected))
 						App.http('v1/user.base/bankCardList', {},function(data, status) {
 				            this.list = data.data.list;
-//				            this.selected = this.list[0];
-				            if(this.selected){
+				            if(this.selected.card_id && this.isCard()){
 					            this.item.card_id = this.selected.card_id;
 					            this.item.bank_no = this.selected.bank_no;
 //					            this.item.money = this.balance;
@@ -91,7 +89,7 @@
 				            	mui.plusReady(function() {
 					            	mui.confirm('您需要绑定银行卡才能提现？', '', ['取消', '确定绑定'], function(e) {
 										if (e.index == 1) {
-											var page={"url":"user/account/addcard","title":"绑定银行卡","ani":"slide-out-top"};
+											var page={"url":"my/wallet/addcard","title":"绑定银行卡","ani":"slide-out-top"};
 											App.open(page);
 											
 										}else{
@@ -125,6 +123,18 @@
 					allMoney:function(item){
 						this.item.money = this.balance;	
 					},
+					/**
+					 * 判断当前列表中有选中银行卡
+					 * */
+					isCard:function(){
+						let isOff = false
+						this.list.forEach(function(item){
+							if(item.card_id == this.selected.card_id){
+								return isOff = true
+							}
+						}.bind(this))
+						return isOff
+					}
 					
 				},
 				filters: {
@@ -142,7 +152,6 @@
 			    },
 				mounted:function(){
 					this.getlist();
-					console.log(this.item.money)
 				    //状态更改监听
 					App.request('update', function() {
 						this.getlist();

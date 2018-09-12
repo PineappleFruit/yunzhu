@@ -28,6 +28,9 @@
 		.mui-table-view-chevron .mui-table-view-cell{
 			padding-right: 0;
 		}
+		.limit_width{
+			width: 5rem;
+		}
 	</style>
 	<body id="e_fish_container">
 		<div id="app">
@@ -51,7 +54,7 @@
 											<span>{{item.province}}{{item.city}}{{item.county}}</span>
 											<span class="cc7">|</span>
 											<span>{{item.aptitude | formatCertificates}}</span>
-											<span class="cc7">|</span>
+											<span class="cc7" v-if="item.aptitude == 2">|</span>
 											<span>{{item.sex | formatSex}}</span>
 											<span class="cc7">|</span>
 											<span>{{item.age | formatAge}}</span>
@@ -62,12 +65,14 @@
 									</div>  
 									<div class="tx-r"> 
 										<p class="fz28 c-red fw-b" v-if="item.skill_type==6">面议</p>
-										<p v-if="item.skill_type!=6" class="fz28 c33 fw-b">{{item.wages}}元/{{item.skill_type | formatUnit}}</p>
+										<p v-if="item.skill_type!=6" class="fz28 c-red fw-b">{{item.wages}}元/{{item.skill_type | formatUnit}}</p>
 										<p  class="fz24 c66 pt20">{{timestampToTime(item.addtime)}}</p>
 									</div>
 								</div>
-								<p class="fz28 c33">{{item.project_name}}</p>
-								<p class="fz28 c99">{{item.company_name}}</p>
+								<div class="limit_width">
+									<p class="fz28 c33">{{item.project_name}}</p>
+								    <p class="fz28 c99">{{item.company_name}}</p>
+								</div>
 							</div>
 							<div class="c-yellow y_classify" v-if="item.skill_status == 1">【未开工】</div>
 							<div class="c-red2 y_classify" v-else-if="item.skill_status == 4">【已解雇】</div>
@@ -90,9 +95,8 @@
 						getlist: function(type) {
 							App.http('v1/project.project_worker/getMyProject', {
 								page: this.page
-							}, function(data, status) {
-								this.page = data.data.page;
-								console.log(JSON.stringify(data.data.list))
+							}, function(data, status) { 
+								this.page = data.data.page; 
 								/**
 								 * 默认关闭下拉提示
 								 */
@@ -131,6 +135,7 @@
 									return;
 								}
 								this.list = data.data.list;
+								console.log(JSON.stringify(this.list))
 							}.bind(this));
 						},
 						delItem: function(index, id, event) {

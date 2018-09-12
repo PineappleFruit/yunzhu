@@ -14,7 +14,8 @@
 			"page/my/index.html",
 			"page/find/index.html",
 			"page/project/index.html",
-			"page/my/login/login.html"
+			"page/my/login/login.html",
+			"page/push-notice-dialog.html"
 		]
 	},
 	"pages/my/login/login.html": {
@@ -251,7 +252,8 @@
 	},
 	"page/project/projectDefault.html": {
 		"refer": [
-			"page/project/map.html"
+			"page/project/map.html",
+			"page/my/userInfo/attes.html"
 		]
 	},
 	"page/project/paidan.html": {
@@ -263,7 +265,8 @@
 	},
 	"page/project/rush.html": {
 		"refer": [
-			"page/project/rushDefault.html"
+			"page/project/rushDefault.html",
+			"page/project/index.html"
 		]
 	},
 	"page/project/my.html": {

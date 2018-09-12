@@ -142,7 +142,8 @@
 					"pages/find/index.html",
 					"pages/my/login/login.html",
 					"page/my/index.html",
-					"page/my/login/login.html"
+					"page/my/login/login.html",
+					"page/push-notice-dialog.html"
 				],
 				"priority": 0
 			},
@@ -451,7 +452,8 @@
 			"page/project/projectDefault.html": {
 				"resources": [],
 				"refer": [
-					"page/project/map.html"
+					"page/project/map.html",
+					"page/my/userInfo/attes.html"
 				],
 				"priority": 0
 			},
@@ -467,7 +469,8 @@
 			"page/project/rush.html": {
 				"resources": [],
 				"refer": [
-					"page/project/rushDefault.html"
+					"page/project/rushDefault.html",
+					"page/project/index.html"
 				],
 				"priority": 0
 			},

@@ -73,9 +73,10 @@
 						
 						App.http('v1/user.base/mySkillList', {},function(data, status) {
 				           this.list = data.data.list;
+				           console.log(JSON.stringify(this.list))
 						}.bind(this));	
 					},
-					delItem:function(index,id,event){
+					delItem:function(index,id,event){ 
 						var that =this;
 						mui.confirm('确认删除该技能吗？', '', ['取消', '确定'], function(e) {
 							if (e.index == 1) {
@@ -86,6 +87,7 @@
 									if(data.status!=1){
 										return false;
 									}
+									App.send('my/index', 'update');
 									window.location.reload();
 //									this.getlist();
 								}.bind(this));

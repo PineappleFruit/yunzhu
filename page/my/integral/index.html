@@ -32,7 +32,7 @@
 					<h2 class="ub-f1 tx-c fz36">我的积分</h2>
 					<div class="fz32 y_wallet_right" to="my/integral/integralDetail" title="积分明细">明细</div>
 				</div>
-				<p class="tx-c header_wallet_money mb20">504.26</p>
+				<p class="tx-c header_wallet_money mb20">{{ item.integral }}</p>
 				<div class="ub ub-pac" to="my/integral/rule" title="积分规则">
 					<div class="y_question y_icon"></div>
 					<p class="fz28 cff">积分规则</p>
@@ -65,8 +65,27 @@
 		<script>
 			new Vue({
 				el:'#app',
+				data :function() {
+				    return {
+				    	item:{},
+
+				    }
+				},
 				methods:{
-					
+					getlist:function(){
+						
+						App.http('v1/user.base/getInfo', {},function(data, status) {
+				            this.item = data.data;
+						}.bind(this));	
+					}
+				},
+				mounted:function() {
+				    this.getlist();
+				    
+				    //状态更改监听
+					App.request('update', function() {
+						this.getlist();
+					}.bind(this));
 				}
 			})
 			function toShare(){

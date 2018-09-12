@@ -42,15 +42,8 @@
 				}
 			},
 			methods:{
-				if(this.tel == '') {
-					mui.toast('请填写手机号码');
-					return;
-				}
-				if(this.code == '') {
-					mui.toast('请填写验证码');
-					return;
-				}
 				getCode:function(){
+					
 					var that = this;
 					App.http('v1/publics.sms/sendRegSms/url', {
 						phone:this.tel
@@ -77,6 +70,14 @@
 			        },1000)
 			    },
 			    login:function(){
+			    	if(this.tel == '') {
+						mui.toast('请填写手机号码'); 
+						return;
+					}
+					if(this.code == '') {
+						mui.toast('请填写验证码');
+						return;
+					}
 			    	App.http('v1/publics.user/loginByCode',{
 			    		phone:this.tel,
 			    		proving:this.code
@@ -88,8 +89,13 @@
 			    			App.send('page/project/index.html', 'update');
 							App.send('page/my/index.html', 'update');
 							mui.toast('登陆成功');
-							mui.currentWebview.close('slide-out-bottom',300);
+							this.tel = '';
+							this.code = '';
+							var index=plus.webview.getLaunchWebview();//获得初始窗口
+							plus.webview.show(index);//打开初始窗口
+//							mui.currentWebview.close('slide-out-bottom',300);
 			    		}
+			    		mui.toast(data.msg)
 			    	}.bind(this))
 			    }
 			}

@@ -13,8 +13,8 @@
 		<script type="text/javascript" src="../../../js/mui.min.js" ></script>
 	</head>
 	<body id="e_fish_container">
-		<div id="app">
-			<div class="y_container bg-grey fix_btn">
+		<div id="app" class="fix_btn">
+			<div class="y_container bg-grey ">
 				<div id="slider" class="mui-slider">
 					<div class="mui-slider-group mui-slider-loop">
 						<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
@@ -71,15 +71,15 @@
 				    return {
 				    	goods_id:0,
 				        item:[],
-				        imgs:{},
+				        imgs:{}, 
 				        num:1,
 				        integral : 0
 				    }
 				},
 				computed:{
 					Money(){
-						let money = this.item.goods_integral * this.num
-////						console.log(money > this.item.goods_integral)
+						let money = this.item.goods_integral * this.num;
+//						console.log(money > this.item.goods_integral)
 						if(money > this.integral){
 							return false
 						}else{
@@ -92,6 +92,7 @@
 						App.http('v1/goods.base/details', {goods_id:this.goods_id},function(data, status) {
 				           this.item = data.data;
 				           this.imgs = data.data.goods_img_list[0];
+				           console.log(JSON.stringify(this.item))
 						}.bind(this));	
 						
 						App.http('v1/user.base/getInfo', {},function(data, status) {
@@ -122,7 +123,7 @@
 							this.getitem();
 						}.bind(this));
 						
-				    }.bind(this)); 
+				   }.bind(this));  
 				}
 			})
 		</script>

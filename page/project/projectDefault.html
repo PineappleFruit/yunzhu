@@ -21,7 +21,7 @@
 		<div id="app">
 			<header class="mui-bar mui-bar-nav mui-bar-transparent header">
 				<a id="icon-menu" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-				<h2 class="mui-title"></h2>
+				<h2 class="mui-title">查看详情</h2>
 				<div v-if="item.is_cancel==1" class="y_collect y_icon y_right active"  @tap="follow(0)"></div>
 				<div v-else class="y_collect y_icon y_right"  @tap="follow(1)"></div>
 				<a href="#sheet1">
@@ -39,7 +39,7 @@
 									<span>{{item.address}}</span>
 									<span class="cc7">|</span>
 									<span>{{item.aptitude | formatCertificates}}</span>
-									<span class="cc7">|</span>
+									<span class="cc7" v-if="item.aptitude == 2">|</span>
 									<span>{{item.sex | formatSex}}</span> 
 									<span class="cc7">|</span>
 									<span>{{item.age | formatAge}}</span>
@@ -80,21 +80,26 @@
 						</div>
 					</div>
 				</div>
-				<div class="fix_box">
-					<button class="btn btn-green" type="button" @tap="confirm" v-if="!item.dis_status">抢单</button>
+				<div class="fix_box" v-if="!item.dis_status">
+					<button class="btn btn-green" type="button" @tap="confirm" >抢单</button>
+				</div>
+				<div class="fix_box" v-if="item.dis_status == 1">
+					<button class="btn btn-green" type="button" disabled="disabled">已抢单</button> 
 				</div>
 			</div>
 			<div id="sheet1" class="mui-popover mui-popover-bottom mui-popover-action ">
 			    <!-- 可选择菜单 -->
 			    <ul class="mui-table-view">
 				    <li class="mui-table-view-cell">
-				    	<p class="fz28 c99 tx-c ptb30">分享到</p>
-				        <div class="clear">
-				        	<div class="share_item" v-for="shareItem in shareBts" @tap="shareAction(shareBts[0], true)">
-				        		<div class="y_icon" :class="shareItem.icon"></div>
-				        		<p class="fz28 c33 tx-c">{{shareItem.title}}</p>
-				        	</div>
-				        </div>
+				    	<a href="#sheet1">
+				    		<p class="fz28 c99 tx-c ptb30">分享到</p>
+					        <div class="clear"> 
+					        	<div class="share_item" v-for="(shareItem,index) in shareBts" @tap="shareAction(shareBts[index], true)">
+					        		<div class="y_icon" :class="shareItem.icon"></div>
+					        		<p class="fz28 c33 tx-c">{{shareItem.title}}</p>
+					        	</div>
+					        </div>
+				    	</a>
 				    </li>
 			    </ul>
 			    <!-- 取消菜单 -->
@@ -131,6 +136,7 @@
 						}, function(data, status) {
 							this.item = data.data.info;
 							this.workfare = data.data.info.workfare
+							console.log(JSON.stringify(this.item)) 
 						}.bind(this));
 						/**
 						 * 获取分享规则
@@ -155,23 +161,21 @@
 									App.open(page);
 								}
 							});
+						}else{
+							App.http('v1/distribute.distribute/rob', {
+								dis_id: that.item.dis_id,
+								project_skill_id: that.item.project_skill_id
+							}, function(data, status) {
+								if(data.status != 1) {
+									mui.toast(data.msg); 
+									return;
+								}
+								that.item.dis_status = 1;
+								mui.toast('已抢单'); 
+								App.send('page/project/index.html', 'updateItem', that.item.project_skill_id);
+							});
 						}
-						mui.confirm("您确认抢单吗？", "", ["再考虑一下", "立即抢单"], function(e) {
-							if(e.index == 1) {
-								App.http('v1/distribute.distribute/rob', {
-									dis_id: that.item.dis_id,
-									project_skill_id: that.item.project_skill_id
-								}, function(data, status) {
-									if(data.status != 1) {
-										mui.toast(data.msg);
-										return;
-									}
-									that.item.dis_status = 1;
-									mui.toast("抢单成功啦");
-									App.send('page/project/index.html', 'updateItem', that.item.project_skill_id);
-								});
-							}
-						});
+						
 					},
 					/**
 					 * 收藏
@@ -183,9 +187,12 @@
 							//							dis_id: that.dis_id,
 							project_skill_id: that.skill_id
 						}, function(data, status) {
-							that.item.is_cancel = type;
+							that.item.is_cancel = type; 
 							App.send('my/follow/index', 'update');
-							mui.toast("操作成功");
+							if(type == 1){
+								mui.toast("已关注"); 
+							}
+							
 						});
 					},
 					spilceNum:function(item){
@@ -284,7 +291,7 @@
 						} else {
 							sb.s.authorize(function() {
 								this.shareMessage(msg, sb.s);
-							}, function(e) {
+							}.bind(this), function(e) {
 								mui.toast('认证授权失败：' + e.code + ' - ' + e.message);
 							});
 						}

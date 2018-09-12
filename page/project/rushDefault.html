@@ -21,10 +21,12 @@
 		<div id="app">
 			<header class="mui-bar mui-bar-nav mui-bar-transparent header">
 				<a id="icon-menu" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-				<h2 class="mui-title"></h2>
+				<h2 class="mui-title">查看详情</h2>
 				<div v-if="item.is_cancel==1" class="y_collect y_icon y_right active"  @tap="follow(0)"></div>
 				<div v-else class="y_collect y_icon y_right"  @tap="follow(1)"></div>
-				<div class="y_share_hd y_right y_icon" @tap="share"></div>
+				<a href="#sheet1">
+					<div class="y_share_hd y_right y_icon"  @tap="share"></div>
+				</a>
 			</header>
 			<div class="fix_hd">
 				<div class="y_details_info bg-ff mb20 fix_btn">
@@ -36,7 +38,7 @@
 									<span>{{item.address}}</span>
 									<span class="cc7">|</span>
 									<span>{{item.aptitude | formatCertificates}}</span>
-									<span class="cc7">|</span>
+									<span class="cc7" v-if="item.aptitude == 2">|</span>
 									<span>{{item.sex | formatSex}}</span> 
 									<span class="cc7">|</span>
 									<span>{{item.age | formatAge}}</span>
@@ -48,7 +50,7 @@
 							<div class="tx-r">
 								<p class="fz28 c-red fw-b" v-if="item.skill_type==6">面议</p>
 								<p v-if="item.skill_type!=6" class="fz28 c-red fw-b">{{item.wages}}元/{{item.skill_type | formatUnit}}</p>
-								<p  class="fz24 c66 pt20">{{item.addtime}}</p>
+								<p  class="fz24 c66 pt20">{{timestampToTime(item.addtime)}}</p>
 							</div>
 						</div>
 						<div class="ptb40 bt word-break">
@@ -56,11 +58,12 @@
 							<p class="fz28 c99 pt20">{{item.company_name}}</p>
 						</div>
 						<div class="ptb40 bt">
+							<p class="fz28 c33" v-if="item.skill_stime!=0">开工时间：{{item.skill_stime}}</p>
 							<p class="fz28 c33">状态：
-								<span class="c-yellow" v-if="dis_status == 1">【审核中】</span>
-								<span class="c-red2" v-else-if="dis_status == 11">【抢单失败】</span>
-								<span class="c-green" v-else-if="dis_status == 2">【抢单成功】</span>
-								<span class="c-red2" v-else-if="dis_status == 22">【已失效】</span>
+								<span class="c-yellow" v-if="item.skill_status == 1">【未开工】</span>
+								<span class="c-red2" v-else-if="item.skill_status == 4">【已解雇】</span>
+								<span class="c-green" v-else-if="item.skill_status == 2">【进行中】</span>
+								<span class="c-red2" v-else-if="item.skill_status == 3">【已完工】</span>
 							</p>
 							<div class="ub ub-ac pt20" to="project/map" title="项目地址" v-bind:param="item | formatParam">
 								<p class="fz28 c99  ub-f1 word-break">项目地址：{{item.address}} {{item.det_add}}</p>
@@ -69,7 +72,7 @@
 						</div>
 						<div class="ptb40 bt word-break">
 							<p class="fz32 fw-b c33">项目详情</p>
-							<p class="fz28 c66 pt20">项目工期:<span>{{item.duration}}</span></p>
+							<p class="fz28 c66 pt20">项目工期:<span>{{item.duration}}日历天</span></p>
 							<p class="fz28 c66 pt20">项目类型:<span>{{item.type_name}}</span></p>
 							<p class="fz28 c66 pt20">项目法人:<span>{{item.legal}}</span></p>
 							<p class="fz28 c66 pt20">监理公司:<span>{{item.com_name}}</span></p>
@@ -81,10 +84,32 @@
 							<p class="fz28 c66 pt20">{{item.description}}</p>
 						</div>
 					</div>
+				</div>  
+				<div class="fix_box" v-if="dis_status!=3 && dis_status!=2 && dis_status!=11">
+					<button class="btn btn-green" type="button" @tap="unconfirm" >取消抢单</button>
 				</div>
-				<div class="fix_box">
-					<button class="btn btn-green" type="button" @tap="unconfirm">取消抢单</button>
-				</div>
+			</div>
+			<div id="sheet1" class="mui-popover mui-popover-bottom mui-popover-action">
+			    <!-- 可选择菜单 -->
+			    <ul class="mui-table-view">
+				    <li class="mui-table-view-cell">
+				    	<a href="#sheet1">
+				    		<p class="fz28 c99 tx-c ptb30">分享到</p>
+					        <div class="clear"> 
+					        	<div class="share_item" v-for="(shareItem,index) in shareBts" @tap="shareAction(shareBts[index], true)">
+					        		<div class="y_icon" :class="shareItem.icon"></div>
+					        		<p class="fz28 c33 tx-c">{{shareItem.title}}</p>
+					        	</div>
+					        </div>
+				    	</a>
+				    </li>
+			    </ul>
+			    <!-- 取消菜单 -->
+			    <ul class="mui-table-view">
+			        <li class="mui-table-view-cell">
+			        	<a href="#sheet1"><b class="fz28 c33">取消</b></a>
+			        </li>
+			    </ul>
 			</div>
 		</div>
 		<script>
@@ -97,7 +122,11 @@
 						dis_id: null,
 						workfare : '',
 						status:'',
-						dis_status : ''
+						dis_status : '',
+						shares:'',
+						share_data:null,
+						shareBts:[],
+						isFirst:true
 					}
 				},
 				methods:{
@@ -110,7 +139,8 @@
 						}, function(data, status) {
 							this.item = data.data.info;
 							this.workfare = data.data.info.workfare
-							console.log(JSON.stringify(data.data.info))
+							console.log(JSON.stringify(this.item))
+							console.log(this.item.skill_status)
 						}.bind(this));
 						/**
 						 * 获取分享规则
@@ -124,24 +154,46 @@
 					 */
 					unconfirm: function() {
 						var that = this;
-						
-						mui.confirm("您确认取消抢单吗？", "", ["再考虑一下", "立即取消"], function(e) {
-							if(e.index == 1) {
-								if(e.index == 1) {
-									App.http('v1/distribute.distribute/delDistribute', {
-										dis_id: that.dis_id
-									}, function(data, status) {
-										mui.toast(data.msg);
-										if(data.status == 1) {
+						App.http('v1/distribute.distribute/delDistribute', {
+							dis_id: that.dis_id
+						}, function(data, status) {
+							mui.toast(data.msg);
+							if(data.status == 1) {
 //											window.location.reload();
-											App.send('project/rush', 'update');
-											mui.back()
-										}
-									});
-								}
+								App.send('project/rush', 'update');
+								mui.back()
 							}
 						});
+//						mui.confirm("您确认取消抢单吗？", "", ["再考虑一下", "立即取消"], function(e) {
+//							if(e.index == 1) {
+//								if(e.index == 1) {
+//									App.http('v1/distribute.distribute/delDistribute', {
+//										dis_id: that.dis_id
+//									}, function(data, status) {
+//										mui.toast(data.msg);
+//										if(data.status == 1) {
+////											window.location.reload();
+//											App.send('project/rush', 'update');
+//											mui.back()
+//										}
+//									});
+//								}
+//							}
+//						});
 					},
+					/**
+					 * 转换时间
+					 * */
+					timestampToTime:function(timestamp) {
+		              var date = new Date(timestamp * 1000);
+		              Y = date.getFullYear() + '-';
+		              M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+		              D = date.getDate() + ' ';
+		              h = date.getHours() + ':';
+		              m = date.getMinutes() + ':';
+		              s = date.getSeconds();
+		              return Y+M+D;
+		            },
 					/**
 					 * 收藏
 					 * @param {Object} type
@@ -170,6 +222,94 @@
 							App.setItem('user', data.data);
 						}.bind(this));
 					},
+					/**
+		             * 分享
+		             * */
+		            share:function(){
+//		            	var shareBts = [];
+						// 更新分享列表
+						if(this.isFirst){
+							var ss = this.shares['weixin'];
+//							console.log(JSON.stringify(ss))
+							ss && ss.nativeClient &&  (this.shareBts.push({
+									title: '微信好友',
+									s: ss, 
+									x: 'WXSceneSession',
+									icon:'y_weixin_icon'
+								}),this.shareBts.push({
+									title: '朋友圈',
+									s: ss,
+									x: 'WXSceneTimeline',
+									icon:'y_quan_icon'
+								}));
+							//微博
+							ss = this.shares['sinaweibo'];
+							ss && ss.nativeClient && this.shareBts.push({
+								title: '新浪微博',
+								s: ss,
+								icon:'y_xinlang_icon'
+							});
+							//QQ
+							ss = this.shares['qq'];
+							ss && ss.nativeClient && this.shareBts.push({
+								title: 'QQ好友',
+								s: ss,
+								icon:'y_qq_icon'
+							});
+//							console.log(JSON.stringify(this.shareBts));
+							this.isFirst = false;
+						}
+						
+		            },
+		            /**
+		             * 分享操作
+		             * */
+		            shareAction:function(sb, bh){
+		            	if(!sb || !sb.s) {
+							mui.toast('无效的分享服务！');
+							return;
+						}
+						var msg = {
+							extra: {
+								scene: sb.x
+							}
+						};
+						if(bh) {
+							msg.href = share_data.rule_params.url;
+							msg.title = share_data.rule_params.title;
+							msg.content = share_data.rule_params.content;
+			//				msg.thumbs = [share_data.rule_params.thumb];
+			//				msg.pictures = [share_data.rule_params.thumb];
+			
+						} else {
+							if(pic && pic.realUrl) {
+								msg.pictures = [pic.realUrl];
+							}
+						}
+						// 发送分享
+						if(sb.s.authenticated) {
+							this.shareMessage(msg, sb.s);
+						} else {
+							sb.s.authorize(function() {
+								this.shareMessage(msg, sb.s);
+							}.bind(this), function(e) {
+								mui.toast('认证授权失败：' + e.code + ' - ' + e.message);
+							});
+						}
+		            }, 
+		            /**
+					 * 发送分享消息
+					 * @param {JSON} msg
+					 * @param {plus.share.ShareService} s
+					 */
+					shareMessage:function(msg, s) {
+						s.send(msg, function() {
+							mui.toast('分享到' + s.description + '成功');
+						}, function(e) {
+							App.log(e);
+							mui.toast('分享到' + s.description + '失败');
+						});
+					}
 				},
 				filters: {
 					formatSex: function(sex) {
@@ -213,110 +353,121 @@
 						this.dis_status = self.dis_status;
 						this.getinfo();
 						this.getuser();
+						plus.share.getServices(function(s) {
+//							console.log(JSON.stringify(s))
+							this.shares = {};
+							for(var i in s) {
+								var t = s[i];
+								this.shares[t.id] = t;
+							}
+//							console.log(JSON.stringify(this.shares))
+						}.bind(this), function(e) {
+							mui.toast('获取分享服务列表失败：' + e.message);
+						});
 					}.bind(this));
 				}
 			})
-			var shares = null;
-			var share_data;
-			mui.plusReady(function() {
-				plus.share.getServices(function(s) {
-					shares = {};
-					for(var i in s) {
-						var t = s[i];
-						shares[t.id] = t;
-					}
-				}, function(e) {
-					mui.toast('获取分享服务列表失败：' + e.message);
-				});
-			});
-	
-			/**
-			 * 分享操作
-			 * @param {JSON} sb 分享操作对象s.s为分享通道对象(plus.share.ShareService)
-			 * @param {Boolean} bh 是否分享链接
-			 */
-			function shareAction(sb, bh) {
-				if(!sb || !sb.s) {
-					mui.toast('无效的分享服务！');
-					return;
-				}
-				var msg = {
-					extra: {
-						scene: sb.x
-					}
-				};
-				if(bh) {
-					msg.href = share_data.rule_params.url;
-					msg.title = share_data.rule_params.title;
-					msg.content = share_data.rule_params.content;
-	//				msg.thumbs = [share_data.rule_params.thumb];
-	//				msg.pictures = [share_data.rule_params.thumb];
-	
-				} else {
-					if(pic && pic.realUrl) {
-						msg.pictures = [pic.realUrl];
-					}
-				}
-				// 发送分享
-				if(sb.s.authenticated) {
-					shareMessage(msg, sb.s);
-				} else {
-					sb.s.authorize(function() {
-						shareMessage(msg, sb.s);
-					}, function(e) {
-						mui.toast('认证授权失败：' + e.code + ' - ' + e.message);
-					});
-				}
-			}
-			/**
-			 * 发送分享消息
-			 * @param {JSON} msg
-			 * @param {plus.share.ShareService} s
-			 */
-			function shareMessage(msg, s) {
-				s.send(msg, function() {
-					mui.toast('分享到' + s.description + '成功');
-				}, function(e) {
-					App.log(e);
-					mui.toast('分享到' + s.description + '失败');
-				});
-			}
-	
-			// 分析链接
-			function share() {
-				var shareBts = [];
-				// 更新分享列表
-				var ss = shares['weixin'];
-				ss && ss.nativeClient && (shareBts.push({
-						title: '分享到微信朋友圈',
-						s: ss,
-						x: 'WXSceneTimeline'
-					}),
-					shareBts.push({
-						title: '发送给微信好友',
-						s: ss,
-						x: 'WXSceneSession'
-					}));
-				//微博
-				ss = shares['sinaweibo'];
-				ss && ss.nativeClient && shareBts.push({
-					title: '分享到新浪微博',
-					s: ss
-				});
-				//QQ
-				ss = shares['qq'];
-				ss && ss.nativeClient && shareBts.push({
-					title: '发送给QQ好友',
-					s: ss
-				});
-				// 弹出分享列表
-				shareBts.length > 0 ? plus.nativeUI.actionSheet({
-					cancel: '取消',
-					buttons: shareBts
-				}, function(e) {
-					(e.index > 0) && shareAction(shareBts[e.index - 1], true);
-				}) : plus.nativeUI.alert('当前环境无法支持分享链接操作!');
-			}
+//			var shares = null;
+//			var share_data;
+//			mui.plusReady(function() {
+//				plus.share.getServices(function(s) {
+//					shares = {};
+//					for(var i in s) {
+//						var t = s[i];
+//						shares[t.id] = t;
+//					}
+//				}, function(e) {
+//					mui.toast('获取分享服务列表失败：' + e.message);
+//				});
+//			});
+//	
+//			/**
+//			 * 分享操作
+//			 * @param {JSON} sb 分享操作对象s.s为分享通道对象(plus.share.ShareService)
+//			 * @param {Boolean} bh 是否分享链接
+//			 */
+//			function shareAction(sb, bh) {
+//				if(!sb || !sb.s) {
+//					mui.toast('无效的分享服务！');
+//					return;
+//				}
+//				var msg = {
+//					extra: {
+//						scene: sb.x
+//					}
+//				};
+//				if(bh) {
+//					msg.href = share_data.rule_params.url;
+//					msg.title = share_data.rule_params.title;
+//					msg.content = share_data.rule_params.content;
+//	//				msg.thumbs = [share_data.rule_params.thumb];
+//	//				msg.pictures = [share_data.rule_params.thumb];
+//	
+//				} else {
+//					if(pic && pic.realUrl) {
+//						msg.pictures = [pic.realUrl];
+//					}
+//				}
+//				// 发送分享
+//				if(sb.s.authenticated) {
+//					shareMessage(msg, sb.s);
+//				} else {
+//					sb.s.authorize(function() {
+//						shareMessage(msg, sb.s);
+//					}, function(e) {
+//						mui.toast('认证授权失败：' + e.code + ' - ' + e.message);
+//					});
+//				}
+//			}
+//			/**
+//			 * 发送分享消息
+//			 * @param {JSON} msg
+//			 * @param {plus.share.ShareService} s
+//			 */
+//			function shareMessage(msg, s) {
+//				s.send(msg, function() {
+//					mui.toast('分享到' + s.description + '成功');
+//				}, function(e) {
+//					App.log(e);
+//					mui.toast('分享到' + s.description + '失败');
+//				});
+//			}
+//	
+//			// 分析链接
+//			function share() {
+//				var shareBts = [];
+//				// 更新分享列表
+//				var ss = shares['weixin'];
+//				ss && ss.nativeClient && (shareBts.push({
+//						title: '分享到微信朋友圈',
+//						s: ss,
+//						x: 'WXSceneTimeline'
+//					}),
+//					shareBts.push({
+//						title: '发送给微信好友',
+//						s: ss,
+//						x: 'WXSceneSession'
+//					}));
+//				//微博
+//				ss = shares['sinaweibo'];
+//				ss && ss.nativeClient && shareBts.push({
+//					title: '分享到新浪微博',
+//					s: ss
+//				});
+//				//QQ
+//				ss = shares['qq'];
+//				ss && ss.nativeClient && shareBts.push({
+//					title: '发送给QQ好友',
+//					s: ss
+//				});
+//				// 弹出分享列表
+//				shareBts.length > 0 ? plus.nativeUI.actionSheet({
+//					cancel: '取消',
+//					buttons: shareBts
+//				}, function(e) {
+//					(e.index > 0) && shareAction(shareBts[e.index - 1], true);
+//				}) : plus.nativeUI.alert('当前环境无法支持分享链接操作!');
+//			}
 		</script>
 	</body>
 </html>

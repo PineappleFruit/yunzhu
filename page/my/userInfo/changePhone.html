@@ -48,27 +48,29 @@
 					}
 				},
 				methods:{
-					sure(){
-//						mui.openWindow({
-//						    url: './success.html', 
-//						    id:'success'
-//						});
+					sure:function(){
 						App.http('v1/user.base/changePhone', {
 							phone : this.newPhone,
 							proving : this.code
 						}, function(data, status) {
-//							this.item = data.data;
-//							App.setItem('user', data.data);
-							if(data.status != 1) {
-								mui.toast(data.msg);
-								return false;
+							if(data.status == 1){
+								App.setItem('user', data.data);
+								if(data.status != 1) {
+									mui.toast(data.msg);
+									return false;
+								}
+								App.send('my/userInfo/index', 'update');
+								App.send('my/index', 'update');
+								var page = {
+									"url":'my/userInfo/success',
+									"title":"修改手机号",
+									"ani" : "none"
+								}
+								App.open(page)
+								mui.toast('修改成功');
 							}
-//							App.send('my/userInfo/index', 'update');
-							mui.toast('修改密码成功');
-							mui.openWindow({
-							    url: './success.html', 
-							    id:'success'
-							});
+							mui.toast(data.msg)
+							
 						}.bind(this));
 					},
 					getuser: function() {
@@ -77,12 +79,11 @@
 							App.setItem('user', data.data);
 						}.bind(this));
 					},
-					getCode(){
+					getCode:function(){
 						var that = this;
 						App.http('v1/publics.sms/sendRegSms', {
 							phone:this.newPhone
 						},function(data, status) {
-							console.log(data)
 				            mui.toast(data.msg, {duration: 'short', type: 'button'});
 				            if(data.status==1){
 				            	that.gettimer();

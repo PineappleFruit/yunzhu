@@ -94,13 +94,13 @@
 											</div>
 										</div>
 									</div>
-									<div class="y_icon y_edit_icon pl20" to="find/shop/editAddress" title="none" v-bind:param="addressitem | formatParam"></div>
+									<a href="#address"><div class="y_icon y_edit_icon pl20" to="find/shop/editAddress" title="none" v-bind:param="addressitem | formatParam"></div></a>
 								</div>
 							</li>
 							<li class="mui-table-view-cell" to="find/shop/addAddress" title="新增收货地址">
 								<div class="ub ub-pac ptb10">
 									<div class="y_icon y_add_green"></div>
-									<p class="fz32 c33 pl20">新增收货地址</p>
+									<p class="fz32 c33 pl20"><a href="#address">新增收货地址</a></p>
 								</div>
 							</li>
 						</ul>	
@@ -171,6 +171,7 @@
 										return false;
 									}
 									App.send('find/shop/goods', 'update');
+									App.send('my/integral/index', 'update');
 									mui.toast('兑换成功！');
 									mui.back();
 		

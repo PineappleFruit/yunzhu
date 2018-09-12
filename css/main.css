@@ -1130,3 +1130,9 @@ i.y_rotete{
 	height: 1.15rem;
 	background-image: url(../images/y-qq.png);
 }
+.mui-table-view:before{
+	background-color: transparent;
+}
+.mui-table-view:after{
+	background-color: transparent;
+}

@@ -71,7 +71,7 @@
 					}
 				},
 				methods:{
-					offcanvasShow(item){
+					offcanvasShow:function(item){
 						this.item = item
 						//获取技能名称
 						App.http('v1/publics.skill/getList', {
@@ -86,7 +86,6 @@
 							}
 							this.skilllist = list;
 							mui('.mui-off-canvas-wrap').offCanvas('show');
-							console.log(JSON.stringify(this.skilllist))
 						}.bind(this));
 					},
 					/*

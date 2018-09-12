@@ -166,7 +166,10 @@
 						}
 					},
 					saveAddress:function(){
-						console.log(JSON.stringify(this.item))
+						if(this.item.det_add == ''){
+							mui.toast('请填写详细地址')
+							return 
+						}
 						App.http('v1/user.address/add',this.item, function(data, status) {
 							if(data.status == 1){
 								//更新数据 
