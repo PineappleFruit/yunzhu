@@ -17,7 +17,7 @@
 		body{
 			background-color: rgba(247,247,249,1);
 		}
-		.mui-table-view{
+		.mui-table-view,.mui-content{
 			background-color: rgba(247,247,249,1);
 		}
 		.mui-table-view-cell{
@@ -30,8 +30,42 @@
 	</style>
 	<body id="e_fish_container">
 		<div id="app">
-			<div v-if="list.length == 0" style="margin: 80px;text-align: center;font-size: 16px;color: #ccc;">啊哦，暂时没有技能 ⊙﹏⊙ </div>
-			<ul id="OA_task_1" class="mui-table-view" v-else>
+			<div id="refreshContainer" class="mui-content mui-scroll-wrapper">
+				<div v-if="list.length == 0" style="margin: 80px;text-align: center;font-size: 16px;color: #ccc;">啊哦，暂时没有技能 ⊙﹏⊙ </div>
+				<div class="mui-scroll">
+				    <!--数据列表-->
+				    <ul class="mui-table-view" id="OA_task_1">
+				      	<li class="mui-table-view-cell" v-for="(skill,index) in list" to="my/skill/addSkill" title="none" :param="skill | formatSkill">
+							<div class="mui-slider-right mui-disabled" @click="delItem(index,skill.skill_id,$event)">
+								<a class="mui-btn mui-btn-red">删除</a>
+							</div>
+							<div class="mui-slider-handle">
+								<div class="ub ub-ac plr30 ptb25">
+									<div class="ub-f1">
+										<p class="fz32 c33">{{skill.skill_name}}</p>
+										<p class="fz28 c66">证书：
+											<span>{{skill.aptitude_name}}</span>
+											<span v-if="skill.status==1">(待认证)</span>
+				                    		<span v-else-if="skill.status==2">(已认证)</span>
+				                    	 	<span v-else-if="skill.status==3">(未通过：{{skill.skill_err_remark}})</span>
+										</p>
+									</div>
+									<span class="fz32 c-red" v-if="skill.balance!=6">{{skill.min_salary}}-{{skill.max_salary | formatSalary}}元/{{skill.balance | formatUnit}}</span>
+									<span class="fz32 c-red" v-if="skill.balance==6">面议</span>
+								</div>
+							</div>
+						</li>
+				    </ul>
+				</div>
+				<div class="y_skill_list">
+					<div class="y_add_skill ub ub-pac" to="my/skill/addSkill" title="none">
+						<div class="y_add_green y_icon"></div>
+						<p class="fz32 c-green pl20">添加技能</p>
+					</div>
+				</div>
+			</div>
+			
+			<!--<ul id="OA_task_1" class="mui-table-view" v-else>
 				<li class="mui-table-view-cell" v-for="(skill,index) in list" to="my/skill/addSkill" title="none" :param="skill | formatSkill">
 					<div class="mui-slider-right mui-disabled" @click="delItem(index,skill.skill_id,$event)">
 						<a class="mui-btn mui-btn-red">删除</a>
@@ -52,13 +86,8 @@
 						</div>
 					</div>
 				</li>
-			</ul>
-			<div class="y_skill_list">
-				<div class="y_add_skill ub ub-pac" to="my/skill/addSkill" title="none">
-					<div class="y_add_green y_icon"></div>
-					<p class="fz32 c-green pl20">添加技能</p>
-				</div>
-			</div>
+			</ul>-->
+			
 		</div>
 		<script>
 			new Vue({
@@ -74,6 +103,7 @@
 						App.http('v1/user.base/mySkillList', {},function(data, status) {
 				           this.list = data.data.list;
 				           console.log(JSON.stringify(this.list))
+				           mui('#refreshContainer').pullRefresh().endPulldown();
 						}.bind(this));	
 					},
 					delItem:function(index,id,event){ 
@@ -123,6 +153,23 @@
 					App.request('update', function() {
 						this.getlist();
 					}.bind(this));
+					mui.init({
+						pullRefresh: {
+							container: "#refreshContainer", //下拉刷新容器标识，querySelector能定位的css选择器均可，比如：id、.class等
+							down: {
+								style: 'circle', //必选，下拉刷新样式，目前支持原生5+ ‘circle’ 样式
+								color: '#2BD009', //可选，默认“#2BD009” 下拉刷新控件颜色
+								height: '50px', //可选,默认50px.下拉刷新控件的高度,
+								range: '100px', //可选 默认100px,控件可下拉拖拽的范围
+								offset: '0px', //可选 默认0px,下拉刷新控件的起始位置
+								auto: false, //可选,默认false.首次加载自动上拉刷新一次
+								callback: function() {
+									mui('#refreshContainer').pullRefresh().refresh(true);
+									this.getlist();
+								}.bind(this)
+							}
+						}
+					});
 			   	}
 			})
 		</script>

@@ -98,19 +98,24 @@
 						}.bind(this));
 					},
 					loginout:function(){
+//						var appId = App.getItem("appId")
+//						App.send(appId,'plusready')
 						mui.confirm('确定要退出吗？', '', ['取消', '确定退出'], function(e) {
 							if(e.index == 1) {
 								App.delItem('token');
 								App.delItem('user');
+								App.delItem('selected');
+								mui.back();
 								var page = {
 									"url": "my/login/login",
 									"title": "none",
 									"ani": "slide-out-top"
 								};
+								var appId = App.getItem("appId")
+								App.send(appId,'plusready')
 								mui.plusReady(function() { 
-									App.open(page);
-								
-									mui.toast('已成功退出');
+									App.open(page); 
+//									mui.toast('已成功退出');
 								});
 							}
 						})

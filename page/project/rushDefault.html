@@ -35,7 +35,7 @@
 							<div class="ub-f1 word-break pr20">
 								<p class="fz44 c33 fw-b word-break">{{item.skill_name}}</p>
 								<div class="fz28 c66 y_label pt20 word-break">
-									<span>{{item.address}}</span>
+									<span>{{item.province}}-{{item.city}}</span>
 									<span class="cc7">|</span>
 									<span>{{item.aptitude | formatCertificates}}</span>
 									<span class="cc7" v-if="item.aptitude == 2">|</span>
@@ -139,8 +139,6 @@
 						}, function(data, status) {
 							this.item = data.data.info;
 							this.workfare = data.data.info.workfare
-							console.log(JSON.stringify(this.item))
-							console.log(this.item.skill_status)
 						}.bind(this));
 						/**
 						 * 获取分享规则

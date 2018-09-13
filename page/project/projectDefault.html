@@ -36,7 +36,7 @@
 							<div class="ub-f1 word-break pr20">
 								<p class="fz44 c33 fw-b word-break">{{item.skill_name}}</p>
 								<div class="fz28 c66 y_label pt20 word-break">
-									<span>{{item.address}}</span>
+									<span>{{item.province}}-{{item.city}}</span>
 									<span class="cc7">|</span>
 									<span>{{item.aptitude | formatCertificates}}</span>
 									<span class="cc7" v-if="item.aptitude == 2">|</span>
@@ -67,7 +67,7 @@
 						</div>
 						<div class="ptb40 bt word-break">
 							<p class="fz32 fw-b c33">项目详情</p>
-							<p class="fz28 c66 pt20">项目工期:<span>{{item.duration}}</span></p>
+							<p class="fz28 c66 pt20">项目工期:<span>{{item.duration}}日历天</span></p>
 							<p class="fz28 c66 pt20">项目类型:<span>{{item.type_name}}</span></p>
 							<p class="fz28 c66 pt20">项目法人:<span>{{item.legal}}</span></p>
 							<p class="fz28 c66 pt20">监理公司:<span>{{item.com_name}}</span></p>
@@ -136,7 +136,6 @@
 						}, function(data, status) {
 							this.item = data.data.info;
 							this.workfare = data.data.info.workfare
-							console.log(JSON.stringify(this.item)) 
 						}.bind(this));
 						/**
 						 * 获取分享规则

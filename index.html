@@ -8,11 +8,13 @@
     <link href="css/mui.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="css/base.css" />
     <link rel="stylesheet" href="css/main.css" />
-    <link rel="stylesheet" href="http://at.alicdn.com/t/font_789951_kyusbimc9e.css" />
+    <link rel="stylesheet" href="css/iconfont.css" />
     <script type="text/javascript" src="js/e_fish.js" ></script>
     <style>
     	
-    	
+    	.mui-bar .iconfont{
+    		font-size: 0.30rem;
+    	}
     </style>
     <script type="text/javascript" charset="utf-8">
       	mui.init();
@@ -21,16 +23,16 @@
 <body id="e_fish_container">
 	<nav class="mui-bar mui-bar-tab">
 	    <a id="defaultTab" class="mui-tab-item mui-active" href="page/project/index.html">
-			<span class="mui-icon mui-icon-home-filled"></span>
+			<span class="mui-icon iconfont icon-y-project"></span>
 			<span class="mui-tab-label">项目</span>
 		</a>
 
 		<a class="mui-tab-item" href="page/find/index.html">
-			<span class="mui-icon mui-icon-navigate"></span>
+			<span class="mui-icon iconfont icon-y-find"></span>
 			<span class="mui-tab-label">发现</span>
 		</a>
-		<a class="mui-tab-item"  href="page/my/index.html">
-			<span class="mui-icon mui-icon-contact mui-icon-icon-contact-filled"></span>
+		<a class="mui-tab-item"  href="page/my/index.html"> 
+			<span class="mui-icon iconfont icon-y-my"></span>
 			<span class="mui-tab-label">我的</span>
 		</a>
 	</nav>
@@ -44,6 +46,7 @@
 		color: '#777',
 	};
 	var activeTab = subpages[0];
+	var targetTab;
 	//创建子页面，首个选项卡页面显示，其它均隐藏；
 	mui.plusReady(function() {
 		plus.navigator.setFullscreen(false);
@@ -60,9 +63,9 @@
 		mui('.mui-bar-tab').on('tap', 'a', function(e) {
 			//更新数据 
 //			App.send('page/project/index.html', 'update');
-//			App.send('page/my/index.html', 'update');
+			App.send('page/my/index.html', 'update');
 			
-			var targetTab = this.getAttribute('href');
+			targetTab = this.getAttribute('href');
 			if(targetTab == activeTab) { 
 				return;
 			}
@@ -177,5 +180,19 @@
 		App.networkStatus();
 	}, false);
 	
+	/**
+	 * 退出登录事件
+	 * */
+//	document.addEventListener('plusready', function(){
+//		var ws=plus.webview.currentWebview();
+//		App.setItem('appId',ws.id);
+//		activeTab = subpages[0];
+//		if(targetTab){
+//			plus.webview.hide(targetTab);
+//		}
+//		
+//		plus.webview.show(activeTab); 
+//		
+//	}, false);
 </script>
 </html>

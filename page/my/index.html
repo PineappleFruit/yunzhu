@@ -132,7 +132,7 @@
 						this.item = data.data;
 						this.geade = data.data.geade 
 						console.log(JSON.stringify(this.item))
-						App.setItem('user', data.data);   
+						App.setItem('user', data.data);    
 					}.bind(this));
 				},
 
@@ -141,7 +141,6 @@
 				this.getuser();
 				//状态更改监听
 				App.request('update', function() {
-					console.log('技能更新')
 					this.getuser();
 				}.bind(this));
 
