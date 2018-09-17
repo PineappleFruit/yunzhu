@@ -45,7 +45,7 @@
 				getCode:function(){
 					
 					var that = this;
-					App.http('v1/publics.sms/sendRegSms/url', {
+					App.http('v1/publics.sms/sendForgetPwdSms', {
 						phone:this.tel
 					},function(data, status) {
 						console.log(JSON.stringify(data))

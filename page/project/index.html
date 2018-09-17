@@ -247,7 +247,10 @@
 					},
 					spilceNum:function(item){
 						if(item){
-							let str = item.split(",")
+							let str = item.split(",");
+							if(str.length >5){
+								str.length = 5
+							}
 							return str
 						}
 					}

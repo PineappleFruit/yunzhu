@@ -78,7 +78,7 @@
                         <span class="c-green fz32 y_codelogin" to="my/login/messageCode" title="登录">使用短信验证码登录</span>
                         <button class="btn btn-green" type="button" @tap="login">登录</button>
                         <div class="tx-c">
-                        	<span class="c-green fz32 y_codelogin" to="my/login/forget" title="找回密码">找回密码</span>
+                        	<span class="c-green fz32 y_codelogin" to="my/login/forget" title="找回密码" ani="slide-in-bottom">找回密码</span>
                         </div> 
                 	</div>
                 </div>
@@ -552,11 +552,15 @@
 							App.setItem('token', data.data.token);
 							App.setItem('user',data.data.userinfo);
 							upDevice();
+							this.username = '';
+							this.userpwd = '';
 							//更新数据 
 							App.send('page/project/index.html', 'update');
 							App.send('page/my/index.html', 'update');
 							mui.toast('登陆成功');
-							mui.currentWebview.close('slide-out-bottom',300);
+//							mui.currentWebview.close('slide-out-bottom',300);
+							var index=plus.webview.getLaunchWebview();//获得初始窗口
+							plus.webview.show(index);//打开初始窗口
 						}
 						mui.toast(data.msg);
 //						return;

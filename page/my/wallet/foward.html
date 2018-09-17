@@ -77,9 +77,17 @@
 					getlist:function(){
 						this.balance= App.getItem('balance');
 						this.selected = App.getItem('selected')
+						let isOff = false
+						this.list.forEach(function(item){
+							if(item.card_id == this.selected.card_id){
+								isOff = true
+								return
+							}
+						}.bind(this))
+						console.log(isOff)
 						App.http('v1/user.base/bankCardList', {},function(data, status) {
 				            this.list = data.data.list;
-				            if(this.selected.card_id && this.isCard()){
+				            if(this.selected && isOff){
 					            this.item.card_id = this.selected.card_id;
 					            this.item.bank_no = this.selected.bank_no;
 //					            this.item.money = this.balance;
@@ -97,7 +105,6 @@
 										}
 									})
 				            	});
-		
 				            }
 						}.bind(this));	
 							
@@ -126,15 +133,15 @@
 					/**
 					 * 判断当前列表中有选中银行卡
 					 * */
-					isCard:function(){
-						let isOff = false
-						this.list.forEach(function(item){
-							if(item.card_id == this.selected.card_id){
-								return isOff = true
-							}
-						}.bind(this))
-						return isOff
-					}
+//					isCard:function(){
+//						let isOff = false
+//						this.list.forEach(function(item){
+//							if(item.card_id == this.selected.card_id){
+//								return isOff = true
+//							}
+//						}.bind(this))
+//						return isOff
+//					}
 					
 				},
 				filters: {

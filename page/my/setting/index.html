@@ -105,17 +105,17 @@
 								App.delItem('token');
 								App.delItem('user');
 								App.delItem('selected');
-								mui.back();
+//								mui.back();
 								var page = {
 									"url": "my/login/login",
 									"title": "none",
-									"ani": "slide-out-top"
+									"ani": "none"
 								};
 								var appId = App.getItem("appId")
-								App.send(appId,'plusready')
+//								App.send(appId,'plusready')
 								mui.plusReady(function() { 
 									App.open(page); 
-//									mui.toast('已成功退出');
+									mui.toast('已成功退出');
 								});
 							}
 						})

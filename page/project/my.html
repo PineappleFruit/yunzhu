@@ -76,8 +76,8 @@
 							</div>
 							<div class="c-yellow y_classify" v-if="item.skill_status == 1">【未开工】</div>
 							<div class="c-red2 y_classify" v-else-if="item.skill_status == 4">【已解雇】</div>
-							<div class="c-green y_classify" v-else-if="item.skill_status == 2">【进行中】</div>
-							<div class="c-red2 y_classify" v-else-if="item.skill_status == 3">【已完工】</div>
+							<div class="c-blue y_classify" v-else-if="item.skill_status == 2">【进行中】</div>
+							<div class="c-green y_classify" v-else-if="item.skill_status == 3">【已完工】</div>
 						</li>
 					</ul>
 				</div>
@@ -160,7 +160,10 @@
 						},
 						spilceNum:function(item){
 							if(item){
-								let str = item.split(",") 
+								let str = item.split(",")
+								if(str.length >5){
+									str.length = 5
+								}
 								return str
 							}
 						},

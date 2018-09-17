@@ -80,10 +80,10 @@
 						</div>
 					</div>
 				</div>
-				<div class="fix_box" v-if="!item.dis_status">
+				<div class="fix_box" v-if="item.per_del == 2">
 					<button class="btn btn-green" type="button" @tap="confirm" >抢单</button>
 				</div>
-				<div class="fix_box" v-if="item.dis_status == 1">
+				<div class="fix_box" v-if="item.per_del == 1">
 					<button class="btn btn-green" type="button" disabled="disabled">已抢单</button> 
 				</div>
 			</div>
@@ -135,7 +135,9 @@
 							project_skill_id: this.skill_id
 						}, function(data, status) {
 							this.item = data.data.info;
-							this.workfare = data.data.info.workfare
+							this.workfare = data.data.info.workfare;
+							console.log(JSON.stringify(this.item))
+							console.log(this.item.per_del)
 						}.bind(this));
 						/**
 						 * 获取分享规则
@@ -171,6 +173,7 @@
 								}
 								that.item.dis_status = 1;
 								mui.toast('已抢单'); 
+								that.item.per_del = 1
 								App.send('page/project/index.html', 'updateItem', that.item.project_skill_id);
 							});
 						}

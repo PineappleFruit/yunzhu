@@ -51,7 +51,7 @@
 									<div class="ub-f1">
 										<p class="fz32 c33 fw-b">{{item.skill_name}}<span class="c66 fz28 plr20">[招{{item.number}}人]</span></p>
 										<div class="fz24 c66 y_label pt20">
-											<span>{{item.province}}-{{item.city}}</span>
+											<span>{{item.province_name}}-{{item.city_name}}</span>
 											<span class="cc7">|</span>
 											<span>{{item.aptitude | formatCertificates}}</span>
 											<span class="cc7" v-if="item.aptitude == 2">|</span>
@@ -137,6 +137,7 @@
 									return;
 								}
 								this.list = data.data.list;
+								console.log(JSON.stringify(this.list))
 							}.bind(this));
 						},
 						delItem: function(index, id, event) {
@@ -162,7 +163,10 @@
 						},
 						spilceNum:function(item){
 							if(item){
-								let str = item.split(",") 
+								let str = item.split(",");
+								if(str.length >5){
+									str.length = 5
+								}
 								return str
 							}
 						}

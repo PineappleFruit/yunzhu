@@ -1,9 +1,9 @@
 {
 	"@platforms": ["android", "iPhone", "iPad"],
 	"id": "H57DDC46A",/*应用的标识，创建应用时自动生成，勿手动修改*/
-	"name": "yunzhu-app1.2",/*应用名称，程序桌面图标名称*/
+	"name": "yunzhu",/*应用名称，程序桌面图标名称*/
 	"version": {
-		"name": "1.0.0",/*应用版本名称*/
+		"name": "5.5.5",/*应用版本名称*/
 		"code": "83"
 	},
 	"description": "",/*应用描述信息*/
@@ -37,7 +37,7 @@
         },
         "Speech": {
             "description": "管理语音识别插件"
-        },"Push":{},"Share":{}
+        },"Push":{},"Share":{},"OAuth":{}
 	},
 	"plus": {
 		"statusbar": {
@@ -508,6 +508,13 @@
 				"resources": [],
 				"refer": [
 					"page/my/integral/index.html"
+				],
+				"priority": 0
+			},
+			"page/my/follow/index.html": {
+				"resources": [],
+				"refer": [
+					"page/project/projectDefault.html"
 				],
 				"priority": 0
 			}

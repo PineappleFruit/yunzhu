@@ -44,7 +44,7 @@
 			<header class="mui-bar mui-bar-nav mui-bar-transparent header">
 				<a id="icon-menu" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 				<h2 class="mui-title">项目关注</h2>
-				<div class="fz32 y_right" @tap="clear">清空</div>
+				<div class="fz32 y_right" v-if="list.length != 0" @tap="clear">清空</div>
 			</header>
 			<!--下拉刷新容器-->
 			<div id="pullrefresh6" class="mui-content mui-scroll-wrapper">
@@ -53,7 +53,7 @@
 					<div v-if="list.length == 0" style="margin: 80px;text-align: center;font-size: 16px;color: #ccc;">您还没关注项目 ⊙﹏⊙ </div>
 					<!--数据列表-->
 					<ul v-else class="mui-table-view mui-table-view-chevron">
-						<li class="mui-table-view-cell"  v-for="(item,index) in list">
+						<li class="mui-table-view-cell"  v-for="(item,index) in list" to="project/projectDefault" title='none' v-bind:param="item | formatParam">
 							<div class="y_details_item bg-ff mb20">
 								<div class="bb plr30 ptb25">
 									<div class="ub">
@@ -141,6 +141,7 @@
 								return;
 							}
 							this.list = data.data.list;
+							console.log(JSON.stringify(this.list)) 
 						}.bind(this));
 					},
 

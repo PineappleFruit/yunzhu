@@ -32,10 +32,43 @@
 		#offCanvasSideScroll .mui-table-view-cell{
 			padding: 0.3rem;
 		}
+		.mui-scroll-wrapper{
+			width: 50%;
+		}
+		.skill_box{
+			right: 0;
+			left: auto;
+			background: #fff;
+		}
+		.skill_box li{
+			padding: 0.15rem 0.44rem;
+		}
 	</style>
 	<body id="e_fish_container">
-		<div id="app" class="mui-off-canvas-wrap mui-draggable mui-slide-in">
-			<aside id="offCanvasSide" class="mui-off-canvas-right">
+		<div id="app">
+			<div class="ub">
+				<div class="ub-1f2">
+					<div class="mui-content mui-scroll-wrapper ">
+						<div class="mui-scroll">
+							<div class="mui-table-view-cell" :class="{'bg-ff':chooseIndex == index}" v-for="(item,index) in typelist" @tap="offcanvasShow(item,index)">
+								<div class="ptb35 ub ub-ac plr30">
+									<p class="fz32 c33 y_title">{{item.text}}</p> 
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="ub-1f2">
+					<div class="mui-scroll-wrapper skill_box">
+						<div class="mui-scroll">
+							<ul class="fz28 c66"> 
+								<li class="word-break mui-table-view-cell" v-for="tag in skilllist" @tap="setSkill(tag)">{{tag.text}}</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--<aside id="offCanvasSide" class="mui-off-canvas-right">
 				<div id="offCanvasSideScroll" class="mui-scroll-wrapper">
 					<div class="mui-scroll">
 						<ul class="fz28 c66">
@@ -56,9 +89,8 @@
 						</div>
 					</div>
 				</div>
-				<!-- off-canvas backdrop -->
 				<div class="mui-off-canvas-backdrop"></div>
-			</div>
+			</div>-->
 		</div>
 		<script>
 			new Vue({
@@ -67,12 +99,14 @@
 					return {
 						typelist: [], 
 						skilllist: [],
-						item:{}
+						item:{},
+						chooseIndex : 0
 					}
 				},
 				methods:{
-					offcanvasShow:function(item){
+					offcanvasShow:function(item,index){
 						this.item = item
+						this.chooseIndex = index
 						//获取技能名称
 						App.http('v1/publics.skill/getList', {
 							type: item.value
@@ -85,23 +119,30 @@
 								});
 							}
 							this.skilllist = list;
-							mui('.mui-off-canvas-wrap').offCanvas('show');
+//							mui('.mui-off-canvas-wrap').offCanvas('show');
+							console.log(this.skilllist)
 						}.bind(this));
 					},
 					/*
 					 *获取技能类型
 					*/
 					gettype: function() {
-						App.http('v1/publics.skill/getList', {}, function(data, status) {
-							var list = [];
-							for(var i = 0; i < data.data.list.length; i++) {
-								list.push({
-									value: data.data.list[i].skill_id,
-									text: data.data.list[i].name
-								});
-							}
-							this.typelist = list;
-						}.bind(this));
+						new Promise((resolve,reject)=>{
+							App.http('v1/publics.skill/getList', {}, function(data, status) {
+								var list = [];
+								for(var i = 0; i < data.data.list.length; i++) {
+									list.push({
+										value: data.data.list[i].skill_id,
+										text: data.data.list[i].name
+									});
+								}
+								this.typelist = list;
+								resolve()
+							}.bind(this));
+						}).then(()=>{
+							this.offcanvasShow(this.typelist[0],0)
+						})
+						
 					},
 					setSkill:function(tag){
 						App.setItem('skill_type', this.item);
@@ -120,6 +161,9 @@
 					mui.plusReady(function() {
 						this.gettype();
 					}.bind(this));
+					mui('.mui-scroll-wrapper').scroll({
+						deceleration: 0.0005 //flick 减速系数，系数越大，滚动速度越慢，滚动距离越小，默认值0.0006
+					});
 				}
 			})
 		</script>

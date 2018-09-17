@@ -1,299 +1,304 @@
 {
-	"index.html": {
-		"resources": [
-			"pages/my/index.html",
-			"pages/project/index.html",
-			"page/project/index.html",
-			"page/find/index.html"
-		],
-		"refer": [
-			"pages/find/index.html",
-			"pages/project/index.html",
-			"pages/my/index.html",
-			"pages/my/login/login.html",
-			"page/my/index.html",
-			"page/find/index.html",
-			"page/project/index.html",
-			"page/my/login/login.html",
-			"page/push-notice-dialog.html"
-		]
-	},
-	"pages/my/login/login.html": {
-		"refer": [
-			"pages/my/login/login.html",
-			"pages/my/login/messageCode.html"
-		]
-	},
-	"pages/my/login/messageCode.html": {
-		"refer": [
-			"pages/my/login/messageCode.html",
-			"pages/project/index.html"
-		]
-	},
-	"pages/my/index.html": {
-		"refer": [
-			"pages/my/userInfo/index.html",
-			"pages/my/wallet/wallet.html",
-			"pages/my/wallet/redPackage.html",
-			"pages/my/integral/index.html",
-			"pages/my/skill/index.html",
-			"pages/my/follow/index.html",
-			"pages/my/collection/index.html",
-			"pages/my/setting/index.html"
-		]
-	},
-	"pages/my/userInfo/index.html": {
-		"refer": [
-			"pages/my/userInfo/attestation/attes.html",
-			"pages/my/userInfo/phone/changePhone.html",
-			"pages/my/userInfo/address/address.html",
-			"pages/my/userInfo/attes.html",
-			"pages/my/userInfo/changePhone.html",
-			"pages/my/userInfo/address.html"
-		]
-	},
-	"pages/my/userInfo/attestation/attes.html": {
-		"refer": [
-			"pages/my/userInfo/attestation/attesSuccess.html"
-		]
-	},
-	"pages/my/userInfo/attes.html": {
-		"refer": [
-			"pages/my/userInfo/attesSuccess.html"
-		]
-	},
-	"pages/my/wallet/wallet.html": {
-		"refer": [
-			"pages/my/wallet/walletDetailed.html",
-			"pages/my/wallet/payroll.html",
-			"pages/my/wallet/foward.html",
-			"pages/my/wallet/manageCard.html"
-		]
-	},
-	"pages/my/wallet/foward.html": {
-		"refer": [
-			"pages/my/wallet/chooseCard.html"
-		]
-	},
-	"pages/my/wallet/chooseCard.html": {
-		"refer": [
-			"pages/my/wallet/addCard.html"
-		]
-	},
-	"pages/my/wallet/manageCard.html": {
-		"refer": [
-			"pages/my/wallet/addCard.html"
-		]
-	},
-	"pages/my/integral/index.html": {
-		"refer": [
-			"pages/my/integral/signin.html",
-			"pages/my/integral/rule.html",
-			"pages/my/integral/exchange.html",
-			"pages/my/integral/integralDetail.html",
-			"pages/my/integral/share.html"
-		]
-	},
-	"pages/my/skill/index.html": {
-		"refer": [
-			"pages/my/skill/addSkill.html"
-		]
-	},
-	"pages/my/skill/addSkill.html": {
-		"refer": [
-			"pages/my/skill/chooseSkill.html"
-		]
-	},
-	"pages/my/collection/index.html": {
-		"refer": [
-			"pages/my/collection/collectInfo.html"
-		]
-	},
-	"pages/my/setting/index.html": {
-		"refer": [
-			"pages/my/setting/contact.html",
-			"pages/my/setting/modifyPwd.html",
-			"pages/my/setting/feedback.html",
-			"pages/my/setting/aboutUs.html"
-		]
-	},
-	"pages/find/index.html": {
-		"refer": [
-			"pages/my/integral/signin.html"
-		]
-	},
-	"page/find/index.html": {
-		"refer": [
-			"page/find/news/index.html",
-			"page/my/integral/signin.html",
-			"page/find/shop/index.html"
-		]
-	},
-	"page/my/index.html": {
-		"refer": [
-			"page/my/setting/index.html",
-			"page/my/wallet/wallet.html",
-			"page/my/integral/index.html",
-			"page/my/collection/index.html",
-			"page/my/skill/index.html",
-			"page/my/userInfo/index.html",
-			"page/my/wallet/redPackage.html",
-			"page/my/follow/index.html",
-			"page/my/login/login.html"
-		]
-	},
-	"page/my/collection/index.html": {
-		"refer": [
-			"page/my/collection/collectInfo.html",
-			"page/find/news/info.html"
-		]
-	},
-	"page/find/news/index.html": {
-		"refer": [
-			"page/find/news/info.html"
-		]
-	},
-	"page/find/shop/index.html": {
-		"refer": [
-			"page/find/shop/goods.html"
-		]
-	},
-	"page/find/shop/goods.html": {
-		"refer": [
-			"page/find/shop/shop.html"
-		]
-	},
-	"page/find/shop/shop.html": {
-		"refer": [
-			"page/find/shop/addAddress.html",
-			"page/find/shop/editAddress.html"
-		]
-	},
-	"page/my/skill/index.html": {
-		"refer": [
-			"page/my/skill/addSkill.html"
-		]
-	},
-	"page/my/userInfo/index.html": {
-		"refer": [
-			"page/my/userInfo/address.html",
-			"page/my/userInfo/attes.html",
-			"page/my/userInfo/changePhone.html",
-			"page/my/userInfo/attesSuccess.html",
-			"page/my/login/login.html"
-		]
-	},
-	"page/my/integral/index.html": {
-		"refer": [
-			"page/my/integral/share.html",
-			"page/my/integral/signin.html",
-			"page/my/integral/integralDetail.html",
-			"page/my/integral/rule.html",
-			"page/my/integral/exchange.html"
-		]
-	},
-	"page/my/skill/addSkill.html": {
-		"refer": [
-			"page/my/skill/chooseSkill.html"
-		]
-	},
-	"page/my/wallet/wallet.html": {
-		"refer": [
-			"page/my/wallet/payroll.html",
-			"page/my/wallet/walletDetailed.html",
-			"page/my/wallet/manageCard.html",
-			"page/my/wallet/foward.html"
-		]
-	},
-	"page/my/setting/index.html": {
-		"refer": [
-			"page/my/setting/modifyPwd.html",
-			"page/my/setting/feedback.html",
-			"page/my/setting/contact.html",
-			"page/my/setting/aboutUs.html",
-			"page/my/login/login.html"
-		]
-	},
-	"page/project/index.html": {
-		"refer": [
-			"page/project/projectDefault.html",
-			"page/project/paidan.html",
-			"page/project/rush.html",
-			"page/project/my.html",
-			"page/my/integral/signin.html"
-		]
-	},
-	"page/my/login/login.html": {
-		"refer": [
-			"page/my/login/messageCode.html",
-			"page/my/login/forget.html"
-		]
-	},
-	"page/my/wallet/payroll.html": {
-		"refer": [
-			"page/my/wallet/payrollDetailed.html"
-		]
-	},
-	"page/my/wallet/foward.html": {
-		"refer": [
-			"page/my/wallet/chooseCard.html"
-		]
-	},
-	"page/my/wallet/chooseCard.html": {
-		"refer": [
-			"page/my/wallet/foward.html",
-			"page/my/wallet/addCard.html"
-		]
-	},
-	"page/my/wallet/manageCard.html": {
-		"refer": [
-			"page/my/wallet/addCard.html"
-		]
-	},
-	"page/project/projectDefault.html": {
-		"refer": [
-			"page/project/map.html",
-			"page/my/userInfo/attes.html"
-		]
-	},
-	"page/project/paidan.html": {
-		"refer": [
-			"page/project/projectDefault.html",
-			"page/my/wallet/addCard.html",
-			"page/my/skill/index.html"
-		]
-	},
-	"page/project/rush.html": {
-		"refer": [
-			"page/project/rushDefault.html",
-			"page/project/index.html"
-		]
-	},
-	"page/project/my.html": {
-		"refer": [
-			"page/project/rushDefault.html",
-			"page/project/myDefault.html",
-			"page/project/index.html"
-		]
-	},
-	"page/my/setting/feedback.html": {
-		"refer": [
-			"page/my/setting/feedback.html"
-		]
-	},
-	"page/project/myDefault.html": {
-		"refer": [
-			"page/project/map.html"
-		]
-	},
-	"page/my/integral/exchange.html": {
-		"refer": [
-			"page/my/integral/changeinfo.html"
-		]
-	},
-	"page/my/integral/signin.html": {
-		"refer": [
-			"page/my/integral/index.html"
-		]
-	}
+  "index.html": {
+    "resources": [
+      "pages/my/index.html",
+      "pages/project/index.html",
+      "page/project/index.html",
+      "page/find/index.html"
+    ],
+    "refer": [
+      "pages/find/index.html",
+      "pages/project/index.html",
+      "pages/my/index.html",
+      "pages/my/login/login.html",
+      "page/my/index.html",
+      "page/find/index.html",
+      "page/project/index.html",
+      "page/my/login/login.html",
+      "page/push-notice-dialog.html"
+    ]
+  },
+  "pages/my/login/login.html": {
+    "refer": [
+      "pages/my/login/login.html",
+      "pages/my/login/messageCode.html"
+    ]
+  },
+  "pages/my/login/messageCode.html": {
+    "refer": [
+      "pages/my/login/messageCode.html",
+      "pages/project/index.html"
+    ]
+  },
+  "pages/my/index.html": {
+    "refer": [
+      "pages/my/userInfo/index.html",
+      "pages/my/wallet/wallet.html",
+      "pages/my/wallet/redPackage.html",
+      "pages/my/integral/index.html",
+      "pages/my/skill/index.html",
+      "pages/my/follow/index.html",
+      "pages/my/collection/index.html",
+      "pages/my/setting/index.html"
+    ]
+  },
+  "pages/my/userInfo/index.html": {
+    "refer": [
+      "pages/my/userInfo/attestation/attes.html",
+      "pages/my/userInfo/phone/changePhone.html",
+      "pages/my/userInfo/address/address.html",
+      "pages/my/userInfo/attes.html",
+      "pages/my/userInfo/changePhone.html",
+      "pages/my/userInfo/address.html"
+    ]
+  },
+  "pages/my/userInfo/attestation/attes.html": {
+    "refer": [
+      "pages/my/userInfo/attestation/attesSuccess.html"
+    ]
+  },
+  "pages/my/userInfo/attes.html": {
+    "refer": [
+      "pages/my/userInfo/attesSuccess.html"
+    ]
+  },
+  "pages/my/wallet/wallet.html": {
+    "refer": [
+      "pages/my/wallet/walletDetailed.html",
+      "pages/my/wallet/payroll.html",
+      "pages/my/wallet/foward.html",
+      "pages/my/wallet/manageCard.html"
+    ]
+  },
+  "pages/my/wallet/foward.html": {
+    "refer": [
+      "pages/my/wallet/chooseCard.html"
+    ]
+  },
+  "pages/my/wallet/chooseCard.html": {
+    "refer": [
+      "pages/my/wallet/addCard.html"
+    ]
+  },
+  "pages/my/wallet/manageCard.html": {
+    "refer": [
+      "pages/my/wallet/addCard.html"
+    ]
+  },
+  "pages/my/integral/index.html": {
+    "refer": [
+      "pages/my/integral/signin.html",
+      "pages/my/integral/rule.html",
+      "pages/my/integral/exchange.html",
+      "pages/my/integral/integralDetail.html",
+      "pages/my/integral/share.html"
+    ]
+  },
+  "pages/my/skill/index.html": {
+    "refer": [
+      "pages/my/skill/addSkill.html"
+    ]
+  },
+  "pages/my/skill/addSkill.html": {
+    "refer": [
+      "pages/my/skill/chooseSkill.html"
+    ]
+  },
+  "pages/my/collection/index.html": {
+    "refer": [
+      "pages/my/collection/collectInfo.html"
+    ]
+  },
+  "pages/my/setting/index.html": {
+    "refer": [
+      "pages/my/setting/contact.html",
+      "pages/my/setting/modifyPwd.html",
+      "pages/my/setting/feedback.html",
+      "pages/my/setting/aboutUs.html"
+    ]
+  },
+  "pages/find/index.html": {
+    "refer": [
+      "pages/my/integral/signin.html"
+    ]
+  },
+  "page/find/index.html": {
+    "refer": [
+      "page/find/news/index.html",
+      "page/my/integral/signin.html",
+      "page/find/shop/index.html"
+    ]
+  },
+  "page/my/index.html": {
+    "refer": [
+      "page/my/setting/index.html",
+      "page/my/wallet/wallet.html",
+      "page/my/integral/index.html",
+      "page/my/collection/index.html",
+      "page/my/skill/index.html",
+      "page/my/userInfo/index.html",
+      "page/my/wallet/redPackage.html",
+      "page/my/follow/index.html",
+      "page/my/login/login.html"
+    ]
+  },
+  "page/my/collection/index.html": {
+    "refer": [
+      "page/my/collection/collectInfo.html",
+      "page/find/news/info.html"
+    ]
+  },
+  "page/find/news/index.html": {
+    "refer": [
+      "page/find/news/info.html"
+    ]
+  },
+  "page/find/shop/index.html": {
+    "refer": [
+      "page/find/shop/goods.html"
+    ]
+  },
+  "page/find/shop/goods.html": {
+    "refer": [
+      "page/find/shop/shop.html"
+    ]
+  },
+  "page/find/shop/shop.html": {
+    "refer": [
+      "page/find/shop/addAddress.html",
+      "page/find/shop/editAddress.html"
+    ]
+  },
+  "page/my/skill/index.html": {
+    "refer": [
+      "page/my/skill/addSkill.html"
+    ]
+  },
+  "page/my/userInfo/index.html": {
+    "refer": [
+      "page/my/userInfo/address.html",
+      "page/my/userInfo/attes.html",
+      "page/my/userInfo/changePhone.html",
+      "page/my/userInfo/attesSuccess.html",
+      "page/my/login/login.html"
+    ]
+  },
+  "page/my/integral/index.html": {
+    "refer": [
+      "page/my/integral/share.html",
+      "page/my/integral/signin.html",
+      "page/my/integral/integralDetail.html",
+      "page/my/integral/rule.html",
+      "page/my/integral/exchange.html"
+    ]
+  },
+  "page/my/skill/addSkill.html": {
+    "refer": [
+      "page/my/skill/chooseSkill.html"
+    ]
+  },
+  "page/my/wallet/wallet.html": {
+    "refer": [
+      "page/my/wallet/payroll.html",
+      "page/my/wallet/walletDetailed.html",
+      "page/my/wallet/manageCard.html",
+      "page/my/wallet/foward.html"
+    ]
+  },
+  "page/my/setting/index.html": {
+    "refer": [
+      "page/my/setting/modifyPwd.html",
+      "page/my/setting/feedback.html",
+      "page/my/setting/contact.html",
+      "page/my/setting/aboutUs.html",
+      "page/my/login/login.html"
+    ]
+  },
+  "page/project/index.html": {
+    "refer": [
+      "page/project/projectDefault.html",
+      "page/project/paidan.html",
+      "page/project/rush.html",
+      "page/project/my.html",
+      "page/my/integral/signin.html"
+    ]
+  },
+  "page/my/login/login.html": {
+    "refer": [
+      "page/my/login/messageCode.html",
+      "page/my/login/forget.html"
+    ]
+  },
+  "page/my/wallet/payroll.html": {
+    "refer": [
+      "page/my/wallet/payrollDetailed.html"
+    ]
+  },
+  "page/my/wallet/foward.html": {
+    "refer": [
+      "page/my/wallet/chooseCard.html"
+    ]
+  },
+  "page/my/wallet/chooseCard.html": {
+    "refer": [
+      "page/my/wallet/foward.html",
+      "page/my/wallet/addCard.html"
+    ]
+  },
+  "page/my/wallet/manageCard.html": {
+    "refer": [
+      "page/my/wallet/addCard.html"
+    ]
+  },
+  "page/project/projectDefault.html": {
+    "refer": [
+      "page/project/map.html",
+      "page/my/userInfo/attes.html"
+    ]
+  },
+  "page/project/paidan.html": {
+    "refer": [
+      "page/project/projectDefault.html",
+      "page/my/wallet/addCard.html",
+      "page/my/skill/index.html"
+    ]
+  },
+  "page/project/rush.html": {
+    "refer": [
+      "page/project/rushDefault.html",
+      "page/project/index.html"
+    ]
+  },
+  "page/project/my.html": {
+    "refer": [
+      "page/project/rushDefault.html",
+      "page/project/myDefault.html",
+      "page/project/index.html"
+    ]
+  },
+  "page/my/setting/feedback.html": {
+    "refer": [
+      "page/my/setting/feedback.html"
+    ]
+  },
+  "page/project/myDefault.html": {
+    "refer": [
+      "page/project/map.html"
+    ]
+  },
+  "page/my/integral/exchange.html": {
+    "refer": [
+      "page/my/integral/changeinfo.html"
+    ]
+  },
+  "page/my/integral/signin.html": {
+    "refer": [
+      "page/my/integral/index.html"
+    ]
+  },
+  "page/my/follow/index.html": {
+    "refer": [
+      "page/project/projectDefault.html"
+    ]
+  }
 }

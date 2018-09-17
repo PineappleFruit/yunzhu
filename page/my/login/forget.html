@@ -25,10 +25,10 @@
                             <span class="y_getcode" v-else>剩余{{timer}}秒</span>
 	                    </div>
 	                    <div class="mui-input-row y_input_item">
-					    	<input type="text" class="mui-input-clear" placeholder="请输入新密码" v-model="password">
+					    	<input type="password" class="mui-input-clear" placeholder="请输入新密码" v-model="password">
 					    </div>
 					</div>
-                    <button class="btn btn-green" type="button" @tap="login">登录</button>
+                    <button class="btn btn-green" type="button" @tap="login">重置密码</button>
 				</form>
 			</div>
 		</div>
@@ -64,15 +64,15 @@
 						pwd: this.password,
 						proving: this.code
 					},function(result, status){
+						if(result.status == 1) {
+							mui.toast('重置成功，请登陆');
+							mui.currentWebview.close('slide-out-bottom');
+//							mui.back();
+						}
 						mui.toast(result.msg, {
 							duration: 'short',
 							type: 'button'
 						});
-						
-						if(result.stauts == 1) {
-							mui.toast('重置成功，请登陆');
-							mui.currentWebview.close('slide-out-bottom');
-						}
 					})
 				},
 				getCode: function() {

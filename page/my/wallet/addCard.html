@@ -347,6 +347,21 @@
 				mounted:function(){
 					this.user = App.getItem('user');
 				    this.getbank();
+				    console.log(JSON.stringify(this.user))
+				    if(!this.user.card){
+				    	mui.confirm("你还未进行实名认证，不能添加银行卡", "", ["取消", "去认证"], function(e) {
+							if(e.index == 1) {
+								var page={
+										"url":"my/userInfo/attes",
+										"title":"实名认证",
+										"ani":"slide-out-top"
+									};
+								App.open(page);
+							}else{
+								mui.back()
+							}
+						});
+				    }
 				}
 	    	})
 	    </script>
