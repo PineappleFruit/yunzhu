@@ -62,7 +62,7 @@
 		}
 		.input-width{
 			border: none !important; 
-			width: 1.5rem !important;
+			width: 1.5rem !important; 
 		}
 		.show{
 			position: relative;
@@ -92,7 +92,7 @@
 							<div class="y_arrow"></div>
 						</div>
 					</div>
-					<div class="mui-table-view-cell bg-ff">
+					<!--<div class="mui-table-view-cell bg-ff">
 						<div class="bb ub ub-ac plr30 ptb10">
 							<p class="fz32 c33 y_title ub-f1">期望薪资</p>
 							<div class=" ub ub-ac tx-r">
@@ -102,6 +102,13 @@
 								<span class="danwei">元</span>
 							</div>
 							
+						</div>
+					</div>-->
+					<div class="mui-table-view-cell bg-ff">
+						<div class="bb ub ub-ac plr30 ptb35" @tap="hopeSalary">
+							<p class="fz32 c33 y_title">期望薪资</p>
+							<div class="ub-f1 pl30">{{min_salary_text}}<span class="plr20">-</span>{{max_salary_text}}</div>
+							<div class="y_arrow"></div>
 						</div>
 					</div>
 					<div class="mui-table-view-cell bg-ff">
@@ -216,13 +223,15 @@
 								value: 6,
 								text: '面议'
 							}
-						]
-
+						],
+						salaryData : [],
+						min_salary_text:'',
+						max_salary_text:''
 					}
 
 				},
 				methods:{
-					salaryMethod(){
+					salaryMethod:function(){
 						var picker = new mui.PopPicker();
 						picker.setData(
 							this.balance_arr
@@ -237,10 +246,9 @@
 
 							this.item.skill_file_url = data.data.url;
 							this.item.skill_file = data.data.original;
-							console.log(this.item.skill_file_url)
 						}.bind(this));
 					},
-					getTime(){
+					getTime:function(){
 						var dtPicker = new mui.DtPicker({
 							type: 'date',
 							beginDate: new Date(1990) //设置开始日期
@@ -248,7 +256,6 @@
 						});
 						dtPicker.show(function(selectItems) {
 							this.item.skill_time = selectItems.y.value + '-' + selectItems.m.value + '-' + selectItems.d.value;
-							console.log()
 						}.bind(this))
 					},
 					toggle: function() {
@@ -299,7 +306,6 @@
 					 * */
 					save: function() {
 						var that = this;
-						console.log(JSON.stringify(this.item))
 						if(parseInt(that.item.min_salary) > parseInt(that.item.max_salary)) {
 							mui.toast('最低薪资不能大于最高薪资');
 						} else {
@@ -358,11 +364,67 @@
 					 * */
 					deletImg:function(){
 						this.item.skill_file_url = ''
+					},
+					/**
+					 * 获取薪资数据
+					 * */
+					getsalary:function(){
+						App.http('v1/publics.skill/levels',{},function(data,status){
+							if(data.status == 1){
+								console.log(JSON.stringify(data));
+								var salarydata = data.data;
+								var choosedata = [];
+						        var childrendata = [];
+								for(var i = 0 ; i < salarydata.length ; i++){
+						      		for(var j = i + 1; j < salarydata.length ;j++){
+						      			childrendata.push(
+						      				{
+						      					value:salarydata[j].val,
+												text:salarydata[j].alias
+						      				}
+						      			)
+						      		}
+						      		choosedata.push({
+						      			value:salarydata[i].val,
+										text:salarydata[i].alias,
+										children:childrendata
+						      		})
+						      		//重置二级数据
+						      		childrendata = []
+						      	}
+								this.salaryData = choosedata
+								console.log(JSON.stringify(choosedata))
+							}else{
+								mui.toast(data.msg)
+							}
+							
+						}.bind(this),'get')
+					},
+					/**
+					 * 选择期望薪资
+					 * */
+					hopeSalary:function(){
+						var pickerSalary = new mui.PopPicker(
+							{layer: 2}
+						);
+						pickerSalary.setData(this.salaryData);
+						pickerSalary.show(function (selectItems) {
+							this.item.min_salary = selectItems[0].value;
+							this.min_salary_text = selectItems[0].text;
+							this.item.max_salary = selectItems[1].value;
+							this.max_salary_text = selectItems[1].text;
+							if(!this.item.max_salary){
+								this.item.max_salary = this.item.min_salary
+								this.max_salary_text = this.min_salary_text
+							}
+						}.bind(this))
 					}
 				},
 				mounted:function(){
 					mui.plusReady(function() {
 						this.gettype();
+						//获取薪资
+						this.getsalary();
 						var self = plus.webview.currentWebview();
 						if(self.skill_id) {
 							this.skill_id = self.skill_id;
@@ -388,6 +450,7 @@
 								})
 							};
 						}
+						
 					}.bind(this));
 				}
 			})

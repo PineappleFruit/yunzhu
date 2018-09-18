@@ -65,29 +65,6 @@
 				</div>
 			</div>
 			
-			<!--<ul id="OA_task_1" class="mui-table-view" v-else>
-				<li class="mui-table-view-cell" v-for="(skill,index) in list" to="my/skill/addSkill" title="none" :param="skill | formatSkill">
-					<div class="mui-slider-right mui-disabled" @click="delItem(index,skill.skill_id,$event)">
-						<a class="mui-btn mui-btn-red">删除</a>
-					</div>
-					<div class="mui-slider-handle">
-						<div class="ub ub-ac plr30 ptb25">
-							<div class="ub-f1">
-								<p class="fz32 c33">{{skill.skill_name}}</p>
-								<p class="fz28 c66">证书：
-									<span>{{skill.aptitude_name}}</span>
-									<span v-if="skill.status==1">(待认证)</span>
-		                    		<span v-else-if="skill.status==2">(已认证)</span>
-		                    	 	<span v-else-if="skill.status==3">(未通过：{{skill.skill_err_remark}})</span>
-								</p>
-							</div>
-							<span class="fz32 c-red" v-if="skill.balance!=6">{{skill.min_salary}}-{{skill.max_salary | formatSalary}}元/{{skill.balance | formatUnit}}</span>
-							<span class="fz32 c-red" v-if="skill.balance==6">面议</span>
-						</div>
-					</div>
-				</li>
-			</ul>-->
-			
 		</div>
 		<script>
 			new Vue({
@@ -102,7 +79,6 @@
 						
 						App.http('v1/user.base/mySkillList', {},function(data, status) {
 				           this.list = data.data.list;
-				           console.log(JSON.stringify(this.list))
 				           mui('#refreshContainer').pullRefresh().endPulldown();
 						}.bind(this));	
 					},
@@ -119,7 +95,6 @@
 									}
 									App.send('my/index', 'update');
 									window.location.reload();
-//									this.getlist();
 								}.bind(this));
 							} 
 							
@@ -145,8 +120,8 @@
 			        }
 			    },
 			   	mounted:function(){
-			   		this.getlist();
 				    mui.plusReady(function() {	
+				    	this.getlist();
 						var self = plus.webview.currentWebview();
 					}.bind(this)); 
 				    //状态更改监听

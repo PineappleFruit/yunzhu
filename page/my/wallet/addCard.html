@@ -91,7 +91,7 @@
 						<div class="ub ub-ac">
 							<div class="y_action_left clear">
 								<div class="y_bank_small">
-									<img :src="item.phone_icon_s" alt="" />
+									<img :src="item.icon_s" alt="" />
 								</div>
 							</div>
 							<p class="fz40 c66">{{item.name}}</p>
@@ -335,6 +335,7 @@
 						
 						App.http('v1/user.base/bankList', {},function(data, status) {
 				            this.bank=data.data.list;
+				            console.log(JSON.stringify(this.bank)) 
 						}.bind(this));	
 					},
 					select:function(item){

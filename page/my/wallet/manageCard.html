@@ -18,7 +18,7 @@
 		}
 		.mui-slider-handle{
 			width: 6.9rem;
-			height: 1.8rem;
+			height: 2.8rem;
 		}
 		.mui-slider-handle img{
 			width: 100%;
@@ -87,15 +87,20 @@
 					},
 					delItem:function(index,id){
 						var that =this;
-						var parent = event.path[2];
-						mui.swipeoutClose(parent);
+//						var parent = event.path[2];
+//						mui.swipeoutClose(parent);
 						mui.confirm('确认解绑此银行卡吗？', '', ['取消', '确定'], function(e) {
 							if (e.index == 1) {
 								App.http('v1/user.base/bankCardDelete', {
 									card_id: id
 								}, function(data, status) {
-									mui.swipeoutClose(parent);
-									this.getlist();
+									mui.toast(data.msg);
+									if(data.status!=1){
+										return false;
+									}
+//									mui.swipeoutClose(parent);
+//									this.getlist();
+									window.location.reload();
 								}.bind(this));
 							} 
 						}.bind(this));

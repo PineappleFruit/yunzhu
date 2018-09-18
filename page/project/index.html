@@ -119,14 +119,6 @@
 			</div>
 		</div>
 		<script>
-//			window.onscroll = function () {
-//				
-//				if(vm.$refs.mybox){
-//					var height = vm.$refs.mybox.scrollTop;
-//				}
-////				console.log(document.documentElement.scrollTop )
-//				console.log(height)
-//			}
 			let vm = new Vue({
 				el:"#app",
 				data: function() {
@@ -196,8 +188,7 @@
 					getlist: function(type) {
 						App.http('v1/distribute.distribute/getList', {
 							page: this.page
-						}, function(data, status) { 
-							console.log(JSON.stringify(data.data.list))  
+						}, function(data, status) {  
 							this.page = data.data.page;
 							/** 
 							 * 默认关闭下拉提示  
@@ -308,7 +299,14 @@
 					
 					mui.plusReady(function(){
 						this.getlist();
+						
+						//监听滚动事件
+						
+
 					}.bind(this)) 
+					
+					
+					
 				}
 			})
 		</script>

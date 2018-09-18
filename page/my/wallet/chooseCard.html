@@ -37,7 +37,7 @@
 					<div class="mui-table-view-cell bg-ff" v-for="(item,index) in list" @tap="select(item)">
 						<div class="y_back_item bb ub ub-ac ptb20" :class="{'active' : card_id ==item.card_id}">
 							<div class="y_back_choose">
-								<img :src="item.phone_icon_s" alt="" />
+								<img :src="item.icon" alt="" />
 							</div>
 							<div class="ub-f1 pl30">
 								<p class="fz32 c33">{{item.name}}</p>
@@ -65,7 +65,8 @@
 					getlist:function(){
 						this.balance= App.getItem('balance');
 						App.http('v1/user.base/bankCardList', {},function(data, status) {
-				            this.list = data.data.list;
+				            this.list = data.data.list; 
+				            console.log(JSON.stringify(this.list))
 						}.bind(this));	
 							
 					},

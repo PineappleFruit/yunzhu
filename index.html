@@ -59,7 +59,6 @@
 			}
 			self.append(sub);
 		}
-
 		mui('.mui-bar-tab').on('tap', 'a', function(e) {
 //			//更新数据 
 //			App.send('page/project/index.html', 'update');
@@ -183,16 +182,24 @@
 	/**
 	 * 退出登录事件
 	 * */
-//	document.addEventListener('plusready', function(){
-//		var ws=plus.webview.currentWebview();
-//		App.setItem('appId',ws.id);
-//		activeTab = subpages[0];
-//		if(targetTab){
-//			plus.webview.hide(targetTab);
-//		}
-//		
-//		plus.webview.show(activeTab); 
-//		
-//	}, false);
+	App.request('update',function(){
+		
+		var defaultTab = document.getElementById("defaultTab");
+	    //模拟首页点击
+	    mui.trigger(defaultTab, 'tap');
+	    //切换选项卡高亮
+	    var current = document.querySelector(".mui-bar-tab>.mui-tab-item.mui-active");
+	    if (defaultTab !== current) {
+	        current.classList.remove('mui-active');
+	        defaultTab.classList.add('mui-active');
+	    }
+	})
+	/***
+	 * 禁止返回事件
+	 * */
+	if(mui.os.ios){ //判断是ios还是安卓设备
+        ws=plus.webview.currentWebview();    
+        ws.setStyle({'popGesture':'none'});//ios关闭右划
+    }
 </script>
 </html>

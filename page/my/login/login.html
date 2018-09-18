@@ -519,10 +519,10 @@
 				}
 			},
 			methods:{
-				change(index){
+				change:function(index){
 					this.index = index
 				},
-				nextstep(){
+				nextstep:function(){
 					this.nextTap = false
 					App.http('v1/publics.user/stepOne',{
 						tel:this.tel,
@@ -553,19 +553,18 @@
 							App.setItem('user',data.data.userinfo);
 							upDevice();
 							this.username = '';
-							this.userpwd = '';
+							this.userpwd = ''; 
 							//更新数据 
 							App.send('page/project/index.html', 'update');
 							App.send('page/my/index.html', 'update');
 							mui.toast('登陆成功');
-//							mui.currentWebview.close('slide-out-bottom',300);
+							App.send('HBuilder','update')
 							var index=plus.webview.getLaunchWebview();//获得初始窗口
 							plus.webview.show(index);//打开初始窗口
 						}
 						mui.toast(data.msg);
-//						return;
 
-					});	
+					}.bind(this));	
 				},
 				getCode:function(){
 					var that = this;

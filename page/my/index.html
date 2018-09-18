@@ -131,7 +131,6 @@
 					App.http('v1/user.base/getInfo', {}, function(data, status) {
 						this.item = data.data;
 						this.geade = data.data.geade 
-						console.log(JSON.stringify(this.item))
 						App.setItem('user', data.data);    
 					}.bind(this));
 				},

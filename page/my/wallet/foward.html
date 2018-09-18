@@ -28,7 +28,7 @@
 				<div class="mui-table-view-cell" v-if="selected" to="my/wallet/chooseCard" title="none" v-bind:param = 'selected | formatParam'>
 					<div class="y_back_type bg-ff plr30 ub ub-ac ptb20">
 						<div class="y_back_choose">
-							<img :src="selected.phone_icon_s" alt="" />
+							<img :src="selected.icon" alt="" />
 						</div>
 						<div class="ub-f1 pl30">
 							<p class="fz32 c33">{{selected.name}}</p>
@@ -84,13 +84,12 @@
 								return
 							}
 						}.bind(this))
-						console.log(isOff)
 						App.http('v1/user.base/bankCardList', {},function(data, status) {
 				            this.list = data.data.list;
+				            console.log(JSON.stringify(this.list))
 				            if(this.selected && isOff){
 					            this.item.card_id = this.selected.card_id;
 					            this.item.bank_no = this.selected.bank_no;
-//					            this.item.money = this.balance;
 				            }else if(this.list[0]){
 				            	this.selected = this.list[0];
 				            }else{
