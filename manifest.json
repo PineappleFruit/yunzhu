@@ -518,6 +518,13 @@
 					"page/project/projectDefault.html"
 				],
 				"priority": 0
+			},
+			"page/my/userInfo/attesSuccess.html": {
+				"resources": [],
+				"refer": [
+					"page/project/index.html"
+				],
+				"priority": 0
 			}
 		},
 		"idle": {

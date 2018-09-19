@@ -543,6 +543,10 @@
 						mui.toast('请填写密码');
 						return;
 					}
+//					var h=plus.webview.getLaunchWebview();
+//					console.log(h.id) 
+//					console.log(JSON.stringify(h))
+//					App.send('HBuilder','update')
 					App.http('v1/publics.user/login/url', {
 						account:this.username,
 			            pwd:this.userpwd,
@@ -558,7 +562,8 @@
 							App.send('page/project/index.html', 'update');
 							App.send('page/my/index.html', 'update');
 							mui.toast('登陆成功');
-							App.send('HBuilder','update')
+							var h=plus.webview.getLaunchWebview();
+							App.send(h.id,'update')
 							var index=plus.webview.getLaunchWebview();//获得初始窗口
 							plus.webview.show(index);//打开初始窗口
 						}

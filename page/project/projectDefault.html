@@ -277,9 +277,9 @@
 							msg.href = share_data.rule_params.url;
 							msg.title = share_data.rule_params.title;
 							msg.content = share_data.rule_params.content;
-			//				msg.thumbs = [share_data.rule_params.thumb];
+							msg.type="web";
+//							msg.thumbs = [share_data.rule_params.thumb];
 			//				msg.pictures = [share_data.rule_params.thumb];
-			
 						} else {
 							if(pic && pic.realUrl) {
 								msg.pictures = [pic.realUrl];
@@ -358,7 +358,6 @@
 								var t = s[i];
 								this.shares[t.id] = t;
 							}
-//							console.log(JSON.stringify(this.shares))
 						}.bind(this), function(e) {
 							mui.toast('获取分享服务列表失败：' + e.message);
 						});

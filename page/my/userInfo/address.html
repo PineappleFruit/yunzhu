@@ -53,10 +53,10 @@
 					<button type="button" class="btn btn-green" @tap="save">保存</button>
 				</div>
 			</div>
-			<div v-show="isShow" class="modal mui-popup mui-popup-in y_choose_address">
+			<div v-show="isShow" class="modal mui-popup mui-popup-in y_choose_address" ref="address">
 				<div style="margin: 10px 0 20px 0;">请选择省市区</div>
-				<ul class="mui-table-view" v-for="(item,index) in list" @tap="select(item)">
-					<li class="mui-table-view-cell">
+				<ul class="mui-table-view" >
+					<li class="mui-table-view-cell" v-for="(item,index) in list" @tap="select(item)">
 						<a class="mui-navigate-right" style="text-align: left;">{{item.name}}</a>
 					</li>
 				</ul>
@@ -90,11 +90,14 @@
 					}
 				},
 				methods: {
-					setAdd:function (){
-						console.log(123213);
-					},
 					get: function(code, type) {
 						var url = '';
+						this.param.live_province = '';
+						this.province = '';
+						this.param.live_city = '';
+						this.city = '';
+						this.param.live_area = '';
+						this.area = '';	
 						switch(type) {
 							case 'province':
 								url = 'v1/user.base/getProvinceList';
@@ -111,15 +114,16 @@
 						}
 						App.http(url, {
 								code: code
-							}, function(data, status) {
-								this.list = data.data.list;
-	//
-	//							if(data.data.list.length == 0) {
-	//								this.isShow = false;
-	//								this.type = 'province';
-	//								this.id = 0;
-	//							}
-							}.bind(this));
+						}, function(data, status) {
+							this.$refs.address.scrollTo(0,0)
+							this.list = data.data.list;
+//
+//							if(data.data.list.length == 0) {
+//								this.isShow = false;
+//						 		this.type = 'province';
+//								this.id = 0;
+//							}
+						}.bind(this));
 	
 					},
 					save: function() {
@@ -153,27 +157,27 @@
 				},
 				mounted: function() {
 			
-						var userinfo = App.getItem('user');
-						//				App.log(App.getItem('user'));
-						this.province = userinfo.province_name;
-						this.city = userinfo.city_name;
-						this.area = userinfo.area_name;
-			
-						this.param.det_add = userinfo.det_add;
-						this.param.live_province = userinfo.province;
-						this.param.live_city = userinfo.city;
-						this.param.live_area = userinfo.area;
+					var userinfo = App.getItem('user');
+					//				App.log(App.getItem('user'));
+					this.province = userinfo.province_name;
+					this.city = userinfo.city_name;
+					this.area = userinfo.area_name;
 		
-						this.param.name = userinfo.name;
-						this.param.card = userinfo.card;
-		
-						if(userinfo.address_id) {
-							this.param.province = userinfo.address_id[0];
-							this.param.city = userinfo.address_id[1];
-							if(userinfo.address_id.length > 2) {
-								this.param.area = userinfo.address_id[2];
-							}
+					this.param.det_add = userinfo.det_add;
+					this.param.live_province = userinfo.province;
+					this.param.live_city = userinfo.city;
+					this.param.live_area = userinfo.area;
+	
+					this.param.name = userinfo.name;
+					this.param.card = userinfo.card;
+	
+					if(userinfo.address_id) {
+						this.param.province = userinfo.address_id[0];
+						this.param.city = userinfo.address_id[1];
+						if(userinfo.address_id.length > 2) {
+							this.param.area = userinfo.address_id[2];
 						}
+					}
 			
 					
 				

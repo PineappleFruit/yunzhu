@@ -15,6 +15,16 @@
 		.y_input_item{
 			margin-top: 0;
 		}
+		.modal {
+			right: 0;
+			top: 50%;
+			background: #fff;
+			text-align: center;
+			height: 100%;
+			overflow: auto;
+			width: 100%;
+			padding: 10px;
+		}
 	</style>
 	<body id="e_fish_container">
 		<div id="app">
@@ -74,10 +84,10 @@
 					<button class="btn btn-green mb30" type="button" @tap="upload">提交实名认证</button>
 				</form>
 			</div>
-			<div v-show="isShow" class=" mui-popup mui-popup-in" style="right: 0;top:50%;background: #fff;text-align: center;height: 100%;overflow: auto;width: 100%;padding: 10px;">
+			<div v-show="isShow" class="modal mui-popup mui-popup-in "  ref="address">
 				<div style="margin: 10px 0 20px 0;">请选择省市区</div>
-				<ul class="mui-table-view" v-for="(item,index) in list" @tap="select(item)">
-					<li class="mui-table-view-cell">
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell" v-for="(item,index) in list" @tap="select(item)">
 						<a class="mui-navigate-right" style="text-align: left;">{{item.name}}</a>
 					</li>
 				</ul>
@@ -139,7 +149,13 @@
 						App.http(url, {
 							code: code
 						}, function(data, status) {
+							this.$refs.address.scrollTo(0,0)
 							this.list = data.data.list;
+//							if(data.data.list.length == 0) {
+//								this.isShow = false;
+//								this.type = 'province';
+//								this.id = 0;
+//							}
 						}.bind(this));
 					},
 			
@@ -224,32 +240,32 @@
 					 * 验证身份证是否为18位
 					 * */
 					codeCard:function(){
-						console.log(this.item.card.length)
 						if(this.item.card.length != 18){
 							mui.toast('身份证号码格式有误');
 							this.isCardTrue = false
 						}else{
 							this.isCardTrue = true
 						}
-						console.log(this.isCardTrue)
 					}
 				},
 				mounted:function(){
 					App.http('v1/user.base/getIdentityInfo', {}, function(data, status) {
-//						console.log(JSON.stringify(data.data));
 //						this.item.det_add = data.data.det_add;
-						this.item.province = data.data.province_id;
-						this.item.city = data.data.city_id;
-						this.item.county = data.data.county_id;
-						this.errInfo = data.data.reason;
-						this.item.name = data.data.name;
-						this.item.card = data.data.card; 
-						this.item.live_province = data.data.province;
-						this.item.live_city = data.data.city;
-						this.item.live_county = data.data.county; 
-						this.item.id_card_just = data.data.id_card_just;
-						this.item.id_card_back = data.data.id_card_back;
-						this.item.id_card_in_hand = data.data.id_card_in_hand;
+						if(data.data){
+							this.item.province = data.data.province_id;
+							this.item.city = data.data.city_id;
+							this.item.county = data.data.county_id;
+							this.errInfo = data.data.reason;
+							this.item.name = data.data.name;
+							this.item.card = data.data.card; 
+							this.item.live_province = data.data.province;
+							this.item.live_city = data.data.city;
+							this.item.live_county = data.data.county; 
+							this.item.id_card_just = data.data.id_card_just;
+							this.item.id_card_back = data.data.id_card_back;
+							this.item.id_card_in_hand = data.data.id_card_in_hand;
+						}
+						
 					}.bind(this),'get');
 				}
 				

@@ -76,11 +76,12 @@
 						App.http('v1/user.base/redPacketType', {}, function(data, status) {
 							this.limit_money = data.data.money;
 						}.bind(this));
-	
+						
 						App.http('v1/user.base/redPacketList', {
 							page: this.page
 						}, function(data, status) {
 							this.page = data.data.page;
+							this.item = data.data.user;
 							/**
 							 * 默认关闭下拉提示
 							 */
@@ -119,8 +120,6 @@
 								return;
 							}
 							this.list = data.data.list;
-							this.item = data.data.user;
-	
 						}.bind(this));
 					},
 					withdraw: function() {
