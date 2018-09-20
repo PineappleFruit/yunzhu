@@ -136,7 +136,7 @@
 									});
 								}
 								this.typelist = list;
-								resolve()
+								resolve();
 							}.bind(this));
 						}).then(()=>{
 							this.offcanvasShow(this.typelist[0],0)
@@ -147,12 +147,14 @@
 						App.setItem('skill_type', this.item);
 						App.setItem('skill_name', tag);
 				        App.send('my/skill/addSkill', 'update');
-				        var page={
-								"url":"my/skill/addSkill",
-								"title":"none",
-								"ani":"slide-out-top"
-							};
-						App.open(page);
+				        App.send('my/skill/editSkill', 'update');
+//				        var page={
+//								"url":"my/skill/addSkill",
+//								"title":"none",
+//								"ani":"slide-out-top"
+//							};
+//						App.open(page);
+						mui.back();
 						mui('.mui-off-canvas-wrap').offCanvas('close');
 					}
 				},

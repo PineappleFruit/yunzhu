@@ -297,6 +297,18 @@
 					</div>
 		        </div>
 		    </div>
+		    <!--实名认证提示-->
+			<div class="masking" v-if="isAttes">
+				<div class="dialog"></div>
+				<div class="mask-con">
+					<p class="fz36 c33 tx-c fw-b mask-con-hd">未实名认证</p>
+					<p class="ptb35 tx-c fz32 c66">您还未进行实名认证，不能添加银行卡 是否进行认证？</p>
+					<div class="ub ub-pac tx-c mask-con-btn">
+						<div class="ub-f1 fz32 c99" @tap="cancleAttes">取消</div>
+						<div class="ub-f1 fz32 c-green" to="my/userInfo/attes" title="实名认证" @tap="isAttes = false">去认证</div>
+					</div>
+				</div>
+			</div>
 		</div>
 		
 	    <script>
@@ -315,7 +327,8 @@
 				            bank_id:'',
 				    	},
 				    	bank:[],
-						card_id :''
+						card_id :'',
+						isAttes:false,
 				    }
 				},
 				methods:{
@@ -335,7 +348,6 @@
 						
 						App.http('v1/user.base/bankList', {},function(data, status) {
 				            this.bank=data.data.list;
-				            console.log(JSON.stringify(this.bank)) 
 						}.bind(this));	
 					},
 					select:function(item){
@@ -344,24 +356,28 @@
 						this.bankname = item.name;
 				        mui('#picture').popover('toggle');
 					},
+					cancleAttes:function(){
+						this.isAttes = false
+						mui.back()
+					}
 				},
 				mounted:function(){
 					this.user = App.getItem('user');
 				    this.getbank();
-				    console.log(JSON.stringify(this.user))
 				    if(!this.user.card){
-				    	mui.confirm("你还未进行实名认证，不能添加银行卡", "", ["取消", "去认证"], function(e) {
-							if(e.index == 1) {
-								var page={
-										"url":"my/userInfo/attes",
-										"title":"实名认证",
-										"ani":"slide-out-top"
-									};
-								App.open(page);
-							}else{
-								mui.back()
-							}
-						});
+//				    	mui.confirm("你还未进行实名认证，不能添加银行卡", "", ["取消", "去认证"], function(e) {
+//							if(e.index == 1) {
+//								var page={
+//										"url":"my/userInfo/attes",
+//										"title":"实名认证",
+//										"ani":"slide-out-top"
+//									};
+//								App.open(page);
+//							}else{
+//								mui.back()
+//							}
+//						});
+						this.isAttes = true
 				    }
 				}
 	    	})

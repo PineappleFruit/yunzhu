@@ -109,6 +109,29 @@
 			        </li>
 			    </ul>
 			</div>
+			<!--实名认证提示-->
+			<div class="masking" v-if="isAttes">
+				<div class="dialog"></div>
+				<div class="mask-con">
+					<p class="fz36 c33 tx-c fw-b mask-con-hd">未实名认证</p>
+					<p class="ptb35 tx-c fz32 c66">您还未进行实名认证，不能进行抢单 是否进行认证？</p>
+					<div class="ub ub-pac tx-c mask-con-btn">
+						<div class="ub-f1 fz32 c99" @tap="isAttes = false">取消</div>
+						<div class="ub-f1 fz32 c-green" to="my/userInfo/attes" title="实名认证" @tap="isAttes = false">去认证</div>
+					</div>
+				</div>
+			</div>
+			<!--已抢单提示-->
+			<div class="masking" v-if="isRush">
+				<div class="dialog"></div>
+				<div class="mask-con">
+					<p class="fz36 c33 tx-c fw-b mask-con-hd">已抢单</p>
+					<p class="ptb35 tx-c fz32 c66">可在我的抢单中查看抢单任务</p>
+					<div class="ub ub-pac tx-c mask-con-btn">
+						<div class="ub-f1 fz32 c-green" @tap="isRush = false">我知道了</div>
+					</div>
+				</div>
+			</div>
 		</div>
 		<script>
 			new Vue({
@@ -123,7 +146,9 @@
 						shares:'',
 						share_data:null,
 						shareBts:[],
-						isFirst:true
+						isFirst:true,
+						isAttes:false,
+						isRush:false
 					}
 				},
 				methods:{
@@ -150,16 +175,17 @@
 					confirm: function() {
 						var that = this;
 						if(this.status != 2){
-							mui.confirm("你还未进行实名认证，不能进行抢单，是否进行实名认证？", "未实名认证", ["取消", "去认证"], function(e) {
-								if(e.index == 1) {
-									var page={
-											"url":"my/userInfo/attes",
-											"title":"实名认证",
-											"ani":"slide-out-top"
-										};
-									App.open(page);
-								}
-							});
+							this.isAttes = true;
+//							mui.confirm("你还未进行实名认证，不能进行抢单，是否进行实名认证？", "未实名认证", ["取消", "去认证"], function(e) {
+//								if(e.index == 1) {
+//									var page={
+//											"url":"my/userInfo/attes",
+//											"title":"实名认证",
+//											"ani":"slide-out-top"
+//										};
+//									App.open(page);
+//								}
+//							});
 						}else{
 							App.http('v1/distribute.distribute/rob', {
 								dis_id: that.item.dis_id,
@@ -171,7 +197,8 @@
 								}
 								that.item.dis_status = 1;
 								mui.toast('已抢单'); 
-								that.item.per_del = 1
+								that.item.per_del = 1;
+								that.isRush = true;
 								App.send('page/project/index.html', 'updateItem', that.item.project_skill_id);
 							});
 						}

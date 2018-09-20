@@ -56,6 +56,17 @@
 					<button class="btn btn-green  mt20" @tap="withdraw" :disabled="item.card_id == 0 || item.bank_no=='' || item.money ==0 || balance <=0 || parseInt(item.money) > balance">申请提现</button>
 				</div>
 			</div>
+			<!--提现提示-->
+			<div class="masking" v-if="isFoward">
+				<div class="dialog"></div>
+				<div class="mask-con">
+					<p class="ptb35 tx-c fz32 c66">您需要绑定银行卡才能提现</p>
+					<div class="ub ub-pac tx-c mask-con-btn">
+						<div class="ub-f1 fz32 c99" @tap="cancleFoward">取消</div>
+						<div class="ub-f1 fz32 c-green"  to="my/wallet/addcard" title="绑定银行卡">确定绑定</div>
+					</div>
+				</div>
+			</div>
 		</div>
 		<script>
 			new Vue({
@@ -70,7 +81,8 @@
 				    		bank_no:'',
 				    		money: null
 				    	},
-				    	card_id :''
+				    	card_id :'',
+				    	isFoward : false
 				    }
 				},
 				methods:{
@@ -86,24 +98,24 @@
 						}.bind(this))
 						App.http('v1/user.base/bankCardList', {},function(data, status) {
 				            this.list = data.data.list;
-				            console.log(JSON.stringify(this.list))
 				            if(this.selected && isOff){
 					            this.item.card_id = this.selected.card_id;
 					            this.item.bank_no = this.selected.bank_no;
 				            }else if(this.list[0]){
 				            	this.selected = this.list[0];
 				            }else{
-				            	mui.plusReady(function() {
-					            	mui.confirm('您需要绑定银行卡才能提现？', '', ['取消', '确定绑定'], function(e) {
-										if (e.index == 1) {
-											var page={"url":"my/wallet/addcard","title":"绑定银行卡","ani":"slide-out-top"};
-											App.open(page);
-											
-										}else{
-											mui.back();
-										}
-									})
-				            	});
+				            	this.isFoward = true
+//				            	mui.plusReady(function() {
+//					            	mui.confirm('您需要绑定银行卡才能提现？', '', ['取消', '确定绑定'], function(e) {
+//										if (e.index == 1) {
+//											var page={"url":"my/wallet/addcard","title":"绑定银行卡","ani":"slide-out-top"};
+//											App.open(page);
+//											
+//										}else{
+//											mui.back();
+//										}
+//									})
+//				            	});
 				            }
 						}.bind(this));	
 							
@@ -129,19 +141,10 @@
 					allMoney:function(item){
 						this.item.money = this.balance;	
 					},
-					/**
-					 * 判断当前列表中有选中银行卡
-					 * */
-//					isCard:function(){
-//						let isOff = false
-//						this.list.forEach(function(item){
-//							if(item.card_id == this.selected.card_id){
-//								return isOff = true
-//							}
-//						}.bind(this))
-//						return isOff
-//					}
-					
+					cancleFoward:function(){
+						mui.back();
+						this.isFoward = false;
+					}
 				},
 				filters: {
 			        getLastNum: function (value) {

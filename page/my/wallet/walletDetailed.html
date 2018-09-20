@@ -75,7 +75,6 @@
 						App.http('v1/user.base/accountList', {
 							page: this.page
 						}, function(data, status) {
-							console.log(JSON.stringify(data.data))
 							this.page = data.data.page;
 							/**
 							 * 默认关闭下拉提示

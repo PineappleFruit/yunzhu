@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+    	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<title></title>
+		<link rel="stylesheet" href="../../../css/mui.min.css" />
+		<link rel="stylesheet" href="../../../css/mui.picker.min.css" />
+		<link rel="stylesheet" href="../../../css/base.css" />
+		<link rel="stylesheet" href="../../../css/main.css" />
+		<script type="text/javascript" src="../../../js/e_fish.js" ></script>
+		<script type="text/javascript" src="../../../js/mui.min.js" ></script>
+		<script type="text/javascript" src="../../../js/vue.js" ></script>
+		<script type="text/javascript" src="../../../js/mui.picker.min.js" ></script>
+	</head>
+	<style>
+		.y_right{
+			padding-top: 0.4rem;
+		}
+		.mui-table-view-cell{
+			padding:  0 ;
+		}
+		.mui-table-view-cell:after{
+			background-color: transparent;
+		}
+		.y_input_item{
+			border-bottom: none;
+			margin-top: 0;
+			height: 1rem;
+		}
+		.mui-table-view-cell>a:not(.mui-btn){
+			margin: 0 0.3rem;
+		}
+		.upload_box{
+			padding: 0 0.3rem;
+		}
+		.upload{
+			width: 2.4rem;
+			height: 2rem;
+			border: 1px dashed #d7d7d7;
+			margin-right: 0.3rem;
+		}
+		.mui-btn-blue{
+			background: #52a557;
+			border-color: #52a557;
+		}
+		[data-type="datetime"] [data-id="picker-i"],{
+			display: none;
+		}
+		.picture{
+			width: 2.4rem;
+			height: 2rem;
+			border: 1px dashed #d7d7d7;
+			background-position: center center;
+			background-repeat: no-repeat;
+			background-size: cover;
+		}
+		.salary_to{
+			padding: 0 0.1rem;
+		}
+		.input-width{
+			border: none !important; 
+			width: 1.5rem !important; 
+		}
+		.show{
+			position: relative;
+		}
+	</style>
+	<body id="e_fish_container">
+		<div id="app">
+			<header class="mui-bar mui-bar-nav mui-bar-transparent header">
+				<a id="icon-menu" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+				<h2 class="mui-title">添加技能</h2>
+				<div class="fz32 y_right"   @click="update">更新</div>
+			</header>
+			<div class="fix_hd">
+				<div class="y_choose_skill bg-grey pt20">
+					<div class="mui-table-view-cell bg-ff" to="my/skill/chooseSkill" title="选择技能类型">
+						<div class="bb ptb35 ub ub-ac plr30" >
+							<p class="fz32 c33 y_title">技能</p>
+							<div class="ub-f1 pl30">{{skill}}</div>
+							<div class="y_arrow"></div>
+						</div>
+					</div>
+					<div class="mui-table-view-cell bg-ff">
+						<div class="bb ptb35 ub ub-ac plr30" @tap="salaryMethod">
+							<p class="fz32 c33 y_title">薪资方式</p>
+							<div class="ub-f1 pl30">{{salary}}</div>
+							<div class="y_arrow"></div>
+						</div>
+					</div>
+					<div class="mui-table-view-cell bg-ff">
+						<div class="bb ub ub-ac plr30 ptb10">
+							<p class="fz32 c33 y_title ub-f1">期望薪资</p>
+							<div class=" ub ub-ac tx-r">
+								<input type="number" placeholder="最低薪资" v-model="item.min_salary" class="input-width">
+								<span class="salary_to">~</span>
+								<input type="number" v-model="item.max_salary" placeholder="最高薪资" class="input-width">
+								<span class="danwei">元</span>
+							</div>
+							
+						</div>
+					</div>
+					<!--<div class="mui-table-view-cell bg-ff">
+						<div class="bb ub ub-ac plr30 ptb35" @tap="hopeSalary">
+							<p class="fz32 c33 y_title">期望薪资</p>
+							<div class="ub-f1 pl30">{{min_salary_text}}<span class="plr20">-</span>{{max_salary_text}}</div>
+							<div class="y_arrow"></div>
+						</div>
+					</div>-->
+					<div class="mui-table-view-cell bg-ff">
+						<div class="bb ptb35 ub ub-ac plr30">
+							<p class="fz32 c33 y_title">技能证书</p>
+							<div class="ub-f1"></div>
+							<div class="mui-switch mui-switch-mini" :class="{'mui-active':flag}">
+							  	<div class="mui-switch-handle"  @click="toggle"></div>
+							</div>
+						</div>
+					</div>
+					<div v-show="flag">
+						<div class="bg-ff">
+							<div class="bb ub ub-ac plr30">
+								<p class="fz32 c33 y_title">证书名称</p>
+								<div class="ub-f1"></div>
+								<div class="mui-input-row y_input_item">
+							    	<input type="text" class="mui-input-clear" placeholder="请输入证书名称" v-model="item.aptitude_name">
+							    </div>
+							</div>
+						</div>
+						<div class="bg-ff">
+							<div class="bb ub ub-ac plr30">
+								<p class="fz32 c33 y_title">证书等级</p>
+								<div class="ub-f1"></div>
+								<div class="mui-input-row y_input_item">
+							    	<input type="text" class="mui-input-clear" placeholder="请输入证书等级" v-model="item.grade">
+							    </div>
+							</div>
+						</div>
+						<div class="mui-table-view-cell bg-ff">
+							<div class="bb ptb35 ub ub-ac plr30" @tap="getTime">
+								<p class="fz32 c33 y_title">获得证书时间</p>
+								<div class="ub-f1 pl30">{{item.skill_time}}</div>
+								<div class="y_arrow"></div>
+							</div>
+						</div>
+						<div class="mui-table-view-cell bg-ff">
+							<div class="ptb35 ub ub-ac plr30">
+								<p class="fz32 c33 y_title">上传证书图片</p>
+								<div class="ub-f1"></div>
+							</div>
+						</div>
+						<div class="bg-ff mb30 plr30" >
+							<a class="upload_box ub ub-ac">
+								<div class="ub ub-pac ub-ver upload" @tap="upload">
+									<i class="mui-icon mui-icon-plusempty"></i>
+									<p>更换证书图片</p>
+								</div>
+								<div v-if="item.skill_file_url">
+								<!--<div>-->
+									<div class="show">
+										<div class="picture" :style="'backgroundImage:url('+item.skill_file_url+')'"></div>
+										<!--<div class="picture" style="background-image: url(http://test-file.cnccgt.com//upload/20180524/87597fc5978a430fc7e272fea95ecdf9.jpg);"></div>-->
+										<div class="y_delet" @tap="deletImg"></div>
+									</div>
+								</div>
+							</a>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+			<!--退出提示-->
+			<div class="masking" v-if="isExit">
+				<div class="dialog"></div>
+				<div class="mask-con">
+					<p class="ptb35 tx-c fz32 c66">当前意向未保存，是否退出</p>
+					<div class="ub ub-pac tx-c mask-con-btn">
+						<div class="ub-f1 fz32 c-green" @tap="isExit = false">取消</div>
+						<div class="ub-f1 fz32 c-green"  @tap="exit">退出</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+			new Vue({
+				el:'#app',
+				data: function() {
+					return {
+						flag: false,
+						typelist: [],
+						skilllist: [],
+						type: '',
+						skill: '',
+						salary: '',
+						skill_id: null,
+						item: {
+							type: '',
+							name: '',
+							balance: '',
+							min_salary: '',
+							max_salary: '',
+							aptitude_name: '',
+							grade: '',
+							skill_time: '',
+							status: 1,
+							skill_file: '',
+							skill_file_url :''
+						},
+						balance_arr: [{
+								value: 1,
+								text: '按天计算'
+							},
+							{
+								value: 2,
+								text: '按件计算'
+							},
+							{
+								value: 3,
+								text: '按月计算'
+							},
+							{
+								value: 4,
+								text: '按平方计算'
+							},
+							{
+								value: 5,
+								text: '按立方计算'
+							},
+							{
+								value: 6,
+								text: '面议'
+							}
+						],
+//						salaryData : [],
+//						min_salary_text:'',
+//						max_salary_text:'',
+						isBack:false,//是否返回
+						isExit:false,
+						_oldBack:null,
+						isShow: false,//显示技能
+					}
+
+				},
+				computed:{
+					isEdit(){
+						const {skill,salary,min_salary_text,max_salary_text} = this
+						return{
+							skill,
+							salary,
+							min_salary_text,
+							max_salary_text
+						}
+					}
+				},
+				watch:{
+					isEdit:{
+						handler:function(val){
+							if(val.skill || val.salary || val.min_salary_text || val.max_salary_text){
+								this.isBack = true
+							}
+							if(this.isBack){ 
+								var backButtonPress = 0;
+								var that = this;
+								mui.back = function(event) {  
+//									var btnArray = ['退出', '取消']; 
+//									mui.confirm('当前意向未保存，是否退出', '', btnArray, function(e) {
+//										if (e.index == 0) {
+//											_oldBack()
+//										} else {
+//											return
+//										} 
+//									})
+									that.isExit = true
+									
+								};
+							} 
+						},
+						deep:true
+					}
+				},
+				methods:{
+					salaryMethod:function(){
+						var picker = new mui.PopPicker();
+						picker.setData(
+							this.balance_arr
+						);
+						picker.show(function(items) {
+							this.salary = items[0].text;
+							this.item.balance = items[0].value;
+						}.bind(this));
+					},
+					upload: function() {
+						App.images('v1/user.base/uploadSkillImg', function(data, status) {
+
+							this.item.skill_file_url = data.data.url;
+							this.item.skill_file = data.data.original;
+						}.bind(this));
+					},
+					getTime:function(){
+						var dtPicker = new mui.DtPicker({
+							type: 'date',
+							beginDate: new Date(1990) //设置开始日期
+							//   endDate: new Date(2016)//设置结束日期 
+						});
+						dtPicker.show(function(selectItems) {
+							this.item.skill_time = selectItems.y.value + '-' + selectItems.m.value + '-' + selectItems.d.value;
+						}.bind(this))
+					},
+					toggle: function() {
+						this.flag = this.flag ? false : true;
+						this.item.status = this.flag ? 2 : 1;
+					},
+					/*
+					 *获取技能类型
+					*/
+					gettype: function() {
+						App.http('v1/publics.skill/getList', {}, function(data, status) {
+							var list = [];
+							for(var i = 0; i < data.data.list.length; i++) {
+								list.push({
+									value: data.data.list[i].skill_id,
+									text: data.data.list[i].name
+								});
+							}
+							this.typelist = list;
+						}.bind(this));
+						
+					},
+					/*
+					 *获取技能信息
+					 * */
+					getInfo: function() {
+						App.http('v1/user.base/skillInfo', {
+							skill_id: this.skill_id
+						}, function(data, status) {
+							this.item = data.data;
+							this.skill = this.item.skill_name;
+							this.type = this.item.skill_type_name;
+							this.item.name = this.item.skills_id;
+							this.item.type = this.item.skill_type;
+							for(var i = 0; i < this.balance_arr.length; i++) {
+								if(this.item.balance == this.balance_arr[i].value) {
+									this.salary = this.balance_arr[i].text;
+								}
+							}
+							if(this.item.grade != '') {
+								this.toggle();
+							}
+							console.log(JSON.stringify(data.data))
+						}.bind(this));
+					},
+					/**
+					 * 更新
+					 * */
+					update: function() {
+						var that = this;
+						if(parseInt(that.item.min_salary) > parseInt(that.item.max_salary)) {
+							mui.toast('最低薪资不能大于最高薪资');
+						} else {
+							App.log(that.item);
+							console.log(JSON.stringify(that.item))
+//							mui.confirm('确认更新技能？', '', ['取消', '确定'], function(e) {
+//								if(e.index == 1) {
+									App.http('v1/user.base/skillUpdate', that.item, function(data, status) {
+										if(data.status != 1) {
+											mui.toast(data.msg);
+											return false;
+										}
+										App.send('my/skill/index', 'update');
+										App.send('page/my/index.html', 'update');
+										//清空数据
+										that.item = {};
+										that.skill = '';
+										that.salary = '';
+										this.isBack = false;
+//										var page = {
+//											"url":"my/skill/index",
+//											"title":"技能工种"
+//										}
+//										App.open(page);
+										that._oldBack();
+										that.item = {}
+										mui.toast('更新技能成功');
+									});
+//								}
+//							})
+						}
+					},
+					/**
+					 * 删除当前图片
+					 * */
+					deletImg:function(){
+						this.item.skill_file_url = ''
+					},
+					/**
+					 * 获取薪资数据
+					 * */
+					getsalary:function(){
+						App.http('v1/publics.skill/levels',{},function(data,status){
+							if(data.status == 1){
+								var salarydata = data.data;
+								var choosedata = [];
+						        var childrendata = [];
+								for(var i = 0 ; i < salarydata.length ; i++){
+						      		for(var j = i + 1; j < salarydata.length ;j++){
+						      			childrendata.push(
+						      				{
+						      					value:salarydata[j].val,
+												text:salarydata[j].alias
+						      				}
+						      			)
+						      		}
+						      		choosedata.push({
+						      			value:salarydata[i].val,
+										text:salarydata[i].alias,
+										children:childrendata
+						      		})
+						      		//重置二级数据
+						      		childrendata = []
+						      	}
+								this.salaryData = choosedata
+							}else{
+								mui.toast(data.msg)
+							}
+							
+						}.bind(this),'get')
+					},
+					/**
+					 * 选择期望薪资
+					 * */
+//					hopeSalary:function(){
+//						var pickerSalary = new mui.PopPicker(
+//							{layer: 2}
+//						);
+//						pickerSalary.setData(this.salaryData);
+//						pickerSalary.show(function (selectItems) {
+//							this.item.min_salary = selectItems[0].value;
+//							this.min_salary_text = selectItems[0].text;
+//							this.item.max_salary = selectItems[1].value;
+//							this.max_salary_text = selectItems[1].text;
+//							if(!this.item.max_salary){
+//								this.item.max_salary = this.item.min_salary
+//								this.max_salary_text = this.min_salary_text
+//							}
+//						}.bind(this))
+//					},
+					/*
+					 * 退出
+					 */
+					exit:function(e){
+						e.preventDefault();
+//						var page = {
+//							"url":"my/skill/index",
+//							"title":"技能工种"
+//						}
+//						App.open(page)
+						this._oldBack();
+						this.isExit = false;
+						this.isBack = false;
+					},
+					/**
+					 * 
+					 * */
+				},
+				mounted:function(){
+					mui.plusReady(function() {
+						this.gettype();
+						//获取薪资
+						this.getsalary();
+						var self = plus.webview.currentWebview();
+						if(self.skill_id) {
+							this.skill_id = self.skill_id;
+							this.getInfo();
+						}
+						App.request('update', function() {
+							this.item.name = App.getItem('skill_name').value;
+							this.item.type = App.getItem('skill_type').value;
+							this.skill = App.getItem('skill_name').text;
+							this.type = App.getItem('skill_type').text;
+						}.bind(this));
+						this._oldBack = mui.back; 
+					}.bind(this));
+				}
+			})
+		</script>
+	</body>
+</html>

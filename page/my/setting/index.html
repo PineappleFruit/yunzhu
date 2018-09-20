@@ -75,12 +75,24 @@
 					</div>
 				</div>
 			</div>
+			<!--退出登录提示-->
+			<div class="masking" v-if="isLoginout">
+				<div class="dialog"></div>
+				<div class="mask-con">
+					<p class="ptb35 tx-c fz32 c66">确定要退出吗</p>
+					<div class="ub ub-pac tx-c mask-con-btn">
+						<div class="ub-f1 fz32 c99" @tap="isLoginout = false">取消</div>
+						<div class="ub-f1 fz32 c-green" @tap="sureLoginout">确定退出</div>
+					</div>
+				</div>
+			</div>
 		</div>
 		<script>
 			new Vue({
 				el:'#app',
 				data: {
-					type: 0
+					type: 0,
+					isLoginout:false
 				},
 				methods:{
 					onpush: function() {
@@ -98,25 +110,38 @@
 						}.bind(this));
 					},
 					loginout:function(){
-//						var appId = App.getItem("appId")
-//						App.send(appId,'plusready')
-						mui.confirm('确定要退出吗？', '', ['取消', '确定退出'], function(e) {
-							if(e.index == 1) {
-								App.delItem('token');
-								App.delItem('user');
-								App.delItem('selected');
-//								mui.back();
-								var page = {
-									"url": "my/login/login",
-									"title": "none",
-									"ani": "none"
-								};
-								mui.plusReady(function() { 
-									App.open(page); 
-									mui.toast('已成功退出');
-								});
-							}
-						})
+						this.isLoginout = true
+//						mui.confirm('确定要退出吗？', '', ['取消', '确定退出'], function(e) {
+//							if(e.index == 1) {
+//								App.delItem('token');
+//								App.delItem('user');
+//								App.delItem('selected');
+//								var page = {
+//									"url": "my/login/login",
+//									"title": "none",
+//									"ani": "none"
+//								};
+//								mui.plusReady(function() { 
+//									App.open(page); 
+//									mui.toast('已成功退出');
+//								});
+//							}
+//						})
+					},
+					sureLoginout:function(){
+						this.isLoginout = false
+						App.delItem('token');
+						App.delItem('user');
+						App.delItem('selected');
+						var page = {
+							"url": "my/login/login",
+							"title": "none",
+							"ani": "none"
+						};
+						mui.plusReady(function() { 
+							App.open(page); 
+							mui.toast('已成功退出');
+						});
 					}
 				}
 			})

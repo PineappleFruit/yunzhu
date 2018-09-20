@@ -53,9 +53,9 @@
 					<div v-if="list.length == 0" style="margin: 80px;text-align: center;font-size: 16px;color: #ccc;">您还没关注项目 ⊙﹏⊙ </div>
 					<!--数据列表-->
 					<ul v-else class="mui-table-view mui-table-view-chevron">
-						<li class="mui-table-view-cell"  v-for="(item,index) in list" to="project/projectDefault" title='none' v-bind:param="item | formatParam">
+						<li class="mui-table-view-cell"  v-for="(item,index) in list">
 							<div class="y_details_item bg-ff mb20">
-								<div class="bb plr30 ptb25">
+								<div class="bb plr30 ptb25" to="project/projectDefault" title='none' v-bind:param="item | formatParam">
 									<div class="ub">
 										<div class="ub-f1 word-break pr20">
 											<p class="fz32 c33 fw-b word-break">{{item.skill_name}}</p>
@@ -70,7 +70,7 @@
 											</div>
 											<ul class="y_tag_list clear pt30 mb30">
 												<li v-for="tag in spilceNum(item.workfare)">{{tag}}</li>
-											</ul>
+											</ul> 
 										</div>
 										<div class="tx-r">
 											<p class="fz28 c-red fw-b" v-if="item.skill_type==6">面议</p>
@@ -87,6 +87,29 @@
 					</ul>
 				</div>
 			</div>
+			<!--清空提示-->
+			<div class="masking" v-if="isClear">
+				<div class="dialog"></div>
+				<div class="mask-con">
+					<p class="fz36 c33 tx-c fw-b mask-con-hd">清空关注</p>
+					<p class="ptb35 tx-c fz32 c66">清空关注列表后将不可恢复，是否清空？</p>
+					<div class="ub ub-pac tx-c mask-con-btn">
+						<div class="ub-f1 fz32 c99" @tap="isClear = false">取消</div>
+						<div class="ub-f1 fz32 c-green"  @tap="sureClear">确定</div>
+					</div>
+				</div>
+			</div>
+			<!--删除提示-->
+			<div class="masking" v-if="isDelet">
+				<div class="dialog"></div>
+				<div class="mask-con">
+					<p class="ptb35 tx-c fz32 c66">确认删除该条记录？</p>
+					<div class="ub ub-pac tx-c mask-con-btn">
+						<div class="ub-f1 fz32 c99" @tap="isDelet = false">取消</div>
+						<div class="ub-f1 fz32 c-green"  @tap="sureDelet">确定</div>
+					</div>
+				</div>
+			</div>
 		</div>
 		<script>
 			new Vue({
@@ -94,7 +117,10 @@
 				data: function() {
 					return {
 						page: 1,
-						list: []
+						list: [],
+						isClear:false,
+						item:null,
+						isDelet:false
 					}
 				},
 				methods:{
@@ -147,17 +173,28 @@
 
 					delItem: function(index, item, event) {
 						var that = this;
-						mui.confirm('确认删除该条记录？', '', ['取消', '确认'], function(e) {
-							if(e.index == 1) {
-								App.http('v1/distribute.distribute/collection', {
-									project_skill_id: item.project_skill_id,
-								}, function(data, status) {
-									//									that.list.splice(index, 1);
-									window.location.reload();
-								});
-							}
-
-						});
+						this.isDelet = true;
+						this.item = item
+//						mui.confirm('确认删除该条记录？', '', ['取消', '确认'], function(e) {
+//							if(e.index == 1) {
+//								App.http('v1/distribute.distribute/collection', {
+//									project_skill_id: item.project_skill_id,
+//								}, function(data, status) {
+//									//									that.list.splice(index, 1);
+//									window.location.reload();
+//								});
+//							}
+//
+//						});
+					},
+					sureDelet:function(index, item, event){
+						this.isDelet = false;
+						App.http('v1/distribute.distribute/collection', {
+							project_skill_id: this.item.project_skill_id,
+						}, function(data, status) {
+							//									that.list.splice(index, 1);
+							window.location.reload();
+						})
 					},
 					spilceNum:function(item){
 						if(item){
@@ -167,15 +204,22 @@
 					},
 					clear:function(){
 						var that = this;
-						mui.confirm('确认清空？', '', ['取消', '确认'], function(e) {
-							if(e.index == 1) {
-								App.http('v1/distribute.distribute/clearCollection', {}, function(data, status) {
-									window.location.reload();
-								});
-							}
-
-						});
+						this.isClear = true;
+//						mui.confirm('确认清空？', '', ['取消', '确认'], function(e) {
+//							if(e.index == 1) {
+//								App.http('v1/distribute.distribute/clearCollection', {}, function(data, status) {
+//									window.location.reload();
+//								});
+//							}
+//
+//						});
 						
+					},
+					sureClear:function(){
+						this.isClear = false;
+						App.http('v1/distribute.distribute/clearCollection', {}, function(data, status) {
+							window.location.reload();
+						});
 					}
 				},
 				filters: {

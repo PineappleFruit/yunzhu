@@ -348,7 +348,8 @@
 			"page/my/skill/index.html": {
 				"resources": [],
 				"refer": [
-					"page/my/skill/addSkill.html"
+					"page/my/skill/addSkill.html",
+					"page/my/skill/editSkill.html"
 				],
 				"priority": 0
 			},
@@ -523,6 +524,20 @@
 				"resources": [],
 				"refer": [
 					"page/project/index.html"
+				],
+				"priority": 0
+			},
+			"page/my/skill/chooseSkill.html": {
+				"resources": [],
+				"refer": [
+					"page/my/skill/addSkill.html"
+				],
+				"priority": 0
+			},
+			"page/my/skill/editSkill.html": {
+				"resources": [],
+				"refer": [
+					"page/my/skill/chooseSkill.html"
 				],
 				"priority": 0
 			}

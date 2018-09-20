@@ -32,8 +32,8 @@
 				<div class="ub ub-ac plr30 mb20 bg-ff ptb40">
 					<div class="ub-f1 fz28 c66">
 						<p class="fz32 c33 fw-b pb30">报道信息</p>
-						<p>联系人：{{item.director}}</p>
-						<p>联系电话：{{item.phone}}</p>
+						<p>联系人：{{item.sale_name}}</p>
+						<p>联系电话：{{item.sale_mobile}}</p>
 						<p>项目地址：{{item.address}} {{item.det_add}}</p>
 					</div>
 					<div class="y_icon y_phone" @tap="call"></div>
@@ -143,7 +143,8 @@
 							project_skill_id: this.skill_id
 						}, function(data, status) {
 							this.item = data.data.info;
-							this.workfare = data.data.info.workfare
+							this.workfare = data.data.info.workfare;
+							console.log(JSON.stringify(this.item));
 						}.bind(this));
 						/**
 						 * 获取分享规则

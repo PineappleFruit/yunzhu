@@ -68,6 +68,17 @@
 					</li>
 				</ul>
 			</div>
+			<!--删除提示-->
+			<div class="masking" v-if="isDelet">
+				<div class="dialog"></div>
+				<div class="mask-con">
+					<p class="ptb35 tx-c fz32 c66">确认解绑此银行卡？</p>
+					<div class="ub ub-pac tx-c mask-con-btn">
+						<div class="ub-f1 fz32 c99" @tap="isDelet = false">取消</div>
+						<div class="ub-f1 fz32 c-green"  @tap="sureDelet">确定</div>
+					</div>
+				</div>
+			</div>
 		</div>
 		<script>
 			new Vue({
@@ -75,7 +86,8 @@
 				data :function() {
 				    return {
 				    	list:[],
-
+						isDelet:false,
+						id:''
 				    }
 				},
 				methods:{
@@ -87,22 +99,35 @@
 					},
 					delItem:function(index,id){
 						var that =this;
-//						var parent = event.path[2];
-//						mui.swipeoutClose(parent);
-						mui.confirm('确认解绑此银行卡吗？', '', ['取消', '确定'], function(e) {
-							if (e.index == 1) {
-								App.http('v1/user.base/bankCardDelete', {
-									card_id: id
-								}, function(data, status) {
-									mui.toast(data.msg);
-									if(data.status!=1){
-										return false;
-									}
+						this.id = id
+//						mui.confirm('确认解绑此银行卡吗？', '', ['取消', '确定'], function(e) {
+//							if (e.index == 1) {
+//								App.http('v1/user.base/bankCardDelete', {
+//									card_id: id
+//								}, function(data, status) {
+//									mui.toast(data.msg);
+//									if(data.status!=1){
+//										return false;
+//									}
+////									mui.swipeoutClose(parent);
+////									this.getlist();
+//									window.location.reload();
+//								}.bind(this));
+//							} 
+//						}.bind(this));
+						this.isDelet = true;
+					},
+					sureDelet:function(){
+						App.http('v1/user.base/bankCardDelete', {
+							card_id: this.id
+						}, function(data, status) {
+							mui.toast(data.msg);
+							if(data.status!=1){
+								return false;
+							}
 //									mui.swipeoutClose(parent);
 //									this.getlist();
-									window.location.reload();
-								}.bind(this));
-							} 
+							window.location.reload();
 						}.bind(this));
 					}
 				},

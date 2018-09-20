@@ -107,6 +107,17 @@
 				   	</div>
 			    </div>
 			</div>
+			<!--积分提示-->
+			<div class="masking" v-if="isExchange">
+				<div class="dialog"></div>
+				<div class="mask-con">
+					<p class="ptb35 tx-c fz32 c66">是否花费{{item.goods_integral}}积分兑换此商品？</p>
+					<div class="ub ub-pac tx-c mask-con-btn">
+						<div class="ub-f1 fz32 c99" @tap="isExchange = false">取消</div>
+						<div class="ub-f1 fz32 c-green"  @tap="sureExchange">确定</div>
+					</div>
+				</div>
+			</div>
 		</div>
 		<script>
 			
@@ -125,7 +136,8 @@
 						},
 						imgs: '',
 						select:{} ,
-						isChecked:null
+						isChecked:null,
+						isExchange:false
 					}
 				},
 				methods:{
@@ -161,22 +173,38 @@
 					},
 					exchange:function(){
 						let that = this;
-						mui.confirm('是否花费'+this.item.goods_integral+'积分兑换此商品？', '', ['取消', '确认'], function(e) {
-							if(e.index == 1) {
-								console.log(JSON.stringify(that.param))
-								App.http('v1/goods.base/createOrder', that.param, function(data, status) {
-									console.log(JSON.stringify(data))
-									if(data.status != 1) {
-										mui.toast(data.msg);
-										return false;
-									}
-									App.send('find/shop/goods', 'update');
-									App.send('my/integral/index', 'update');
-									mui.toast('兑换成功！');
-									mui.back();
-		
-								});
+						this.isExchange = true
+//						mui.confirm('是否花费'+this.item.goods_integral+'积分兑换此商品？', '', ['取消', '确认'], function(e) {
+//							if(e.index == 1) {
+//								console.log(JSON.stringify(that.param))
+//								App.http('v1/goods.base/createOrder', that.param, function(data, status) {
+//									console.log(JSON.stringify(data))
+//									if(data.status != 1) {
+//										mui.toast(data.msg);
+//										return false;
+//									}
+//									App.send('find/shop/goods', 'update');
+//									App.send('my/integral/index', 'update');
+//									mui.toast('兑换成功！');
+//									mui.back();
+//		
+//								});
+//							}
+//
+//						});
+					},
+					sureExchange:function(){
+						this.isExchange = false
+						App.http('v1/goods.base/createOrder', this.param, function(data, status) {
+							console.log(JSON.stringify(data))
+							if(data.status != 1) {
+								mui.toast(data.msg);
+								return false;
 							}
+							App.send('find/shop/goods', 'update');
+							App.send('my/integral/index', 'update');
+							mui.toast('兑换成功！');
+							mui.back();
 
 						});
 					}

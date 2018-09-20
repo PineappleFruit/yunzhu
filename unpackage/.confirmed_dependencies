@@ -171,7 +171,8 @@
 	},
 	"page/my/skill/index.html": {
 		"refer": [
-			"page/my/skill/addSkill.html"
+			"page/my/skill/addSkill.html",
+			"page/my/skill/editSkill.html"
 		]
 	},
 	"page/my/userInfo/index.html": {
@@ -304,6 +305,16 @@
 	"page/my/userInfo/attesSuccess.html": {
 		"refer": [
 			"page/project/index.html"
+		]
+	},
+	"page/my/skill/chooseSkill.html": {
+		"refer": [
+			"page/my/skill/addSkill.html"
+		]
+	},
+	"page/my/skill/editSkill.html": {
+		"refer": [
+			"page/my/skill/chooseSkill.html"
 		]
 	}
 }

@@ -212,7 +212,7 @@
 								if(data.status == 1){
 									mui.toast('操作成功，请等待审核');
 									App.send('my/userInfo/index', 'update');
-									App.send('my/index', 'update');
+									App.send('page/my/index.html', 'update');
 									mui.back();
 								}
 								mui.toast(data.msg)
