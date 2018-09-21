@@ -432,7 +432,8 @@
 			"page/my/wallet/foward.html": {
 				"resources": [],
 				"refer": [
-					"page/my/wallet/chooseCard.html"
+					"page/my/wallet/chooseCard.html",
+					"page/my/wallet/addCard.html"
 				],
 				"priority": 0
 			},

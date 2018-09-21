@@ -237,7 +237,8 @@
 	},
 	"page/my/wallet/foward.html": {
 		"refer": [
-			"page/my/wallet/chooseCard.html"
+			"page/my/wallet/chooseCard.html",
+			"page/my/wallet/addCard.html"
 		]
 	},
 	"page/my/wallet/chooseCard.html": {

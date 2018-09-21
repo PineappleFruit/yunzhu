@@ -31,7 +31,7 @@
 						</div>
 					</div>
 					<p class="fz28 c99 tx-c">温馨提示：添加技能工种认证，可以提升自身形象获得 更多工作机会哦</p>
-					<button class="btn btn-green fix-bd" to="project/index" title="none">去抢单</button>
+					<button class="btn btn-green fix-bd" @tap="goRush">去抢单</button>
 				</div>
 			</div>
 		</div>
@@ -67,6 +67,12 @@
 						if(info){
 							return info.replace(/^(.{3})(?:\d+)(.{3})$/,"$1*******$2")
 						}
+					},
+					goRush:function(){
+						var h=plus.webview.getLaunchWebview();
+						App.send(h.id,'update')
+						var index=plus.webview.getLaunchWebview();//获得初始窗口
+						plus.webview.show(index);//打开初始窗口
 					}
 				},
 				mounted:function(){

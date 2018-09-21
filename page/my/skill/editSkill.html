@@ -304,6 +304,7 @@
 							beginDate: new Date(1990) //设置开始日期
 							//   endDate: new Date(2016)//设置结束日期 
 						});
+						dtPicker.setSelectedValue(this.item.skill_time)
 						dtPicker.show(function(selectItems) {
 							this.item.skill_time = selectItems.y.value + '-' + selectItems.m.value + '-' + selectItems.d.value;
 						}.bind(this))

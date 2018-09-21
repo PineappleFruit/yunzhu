@@ -34,7 +34,12 @@
 			<div id="pullrefresh5" class="mui-content mui-scroll-wrapper">
 				<div class="mui-scroll">
 					<!--数据列表-->
-					<div v-if="list.length == 0" style="margin: 80px;text-align: center;font-size: 16px;color: #ccc;">啊哦，暂时没有数据 ⊙﹏⊙ </div>
+					<div class="y_exchange_no" v-if="list.length == 0" >
+						<div class="y_exchange_record">
+							<img src="../../../images/y-exchange-record.png"/>
+						</div>
+						<p class="tx-c fz32 c66">暂无积分 </p>
+					</div>
 					<ul class="mui-table-view mui-table-view-chevron">
 						<li class="mui-table-view-cell" v-for="(item,index) in list">
 							<div class="bb ptb25 plr30">

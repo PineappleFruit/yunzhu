@@ -46,7 +46,7 @@
 				data:function(){
 					return{
 						sended: false,
-						isSame : false,
+						isSame : true,
 						timer: 60,
 						item: {
 							password: '',
@@ -69,8 +69,12 @@
 					code:{
 						handler:function(val){
 							console.log(JSON.stringify(val))
-							if(val.pwad == val.pwds){
-								this.isSame = true
+							console.log(this.isSame)
+							if(val.pwd == val.pwds){
+								
+								this.isSame = false;
+								console.log('新旧密码一样')
+								console.log(this.isSame)
 							}
 						},
 						deep:true
@@ -78,7 +82,6 @@
 				},
 				methods:{
 					update: function() {
-						
 						App.http('v1/user.base/modifyPwd', this.item, function(data, status) {
 				
 							if(data.status != 1) {
@@ -97,6 +100,7 @@
 							mui.toast(data.msg);
 							that.gettimer();
 						});
+						console.log('发送验证码')
 					},
 					gettimer: function() {
 	

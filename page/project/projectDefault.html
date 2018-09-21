@@ -195,8 +195,7 @@
 									mui.toast(data.msg); 
 									return;
 								}
-								that.item.dis_status = 1;
-								mui.toast('已抢单'); 
+								that.item.dis_status = 1; 
 								that.item.per_del = 1;
 								that.isRush = true;
 								App.send('page/project/index.html', 'updateItem', that.item.project_skill_id);

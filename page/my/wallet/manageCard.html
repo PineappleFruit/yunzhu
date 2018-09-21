@@ -55,7 +55,12 @@
 				<a  class="mui-icon mui-icon-plusempty mui-icon-right-nav mui-pull-right" to="my/wallet/addCard" title="添加银行卡"></a>
 			</header>
 			<div class="fix_hd">
-				<div v-if="list.length == 0" style="margin: 80px;text-align: center;font-size: 16px;color: #ccc;">啊哦，还没有绑定银行卡 ⊙﹏⊙ </div>
+				<div class="y_exchange_no" v-if="list.length == 0" >
+					<div class="y_exchange_record">
+						<img src="../../../images/y-exchange-record.png"/>
+					</div>
+					<p class="tx-c fz32 c66">暂无银行卡 </p>
+				</div>
 				<ul id="OA_task_1" class="mui-table-view" v-else>
 					<li class="mui-table-view-cell" v-for="(item,index) in list">
 						<div class="mui-slider-right mui-disabled" @tap="delItem(index,item.card_id)">

@@ -155,9 +155,10 @@
 						App.http('v1/distribute.distribute/delDistribute', {
 							dis_id: that.dis_id
 						}, function(data, status) {
-							mui.toast(data.msg);
+							
 							if(data.status == 1) {
 //											window.location.reload();
+								mui.toast('取消成功');
 								App.send('project/rush', 'update');
 								mui.back()
 							}
